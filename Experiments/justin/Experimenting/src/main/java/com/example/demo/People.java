@@ -6,7 +6,6 @@ public class People {
 	private String DOB;
 	
 	public People() {
-
 	}
 	
 	public People(String sSN, String name, String dOB) {
