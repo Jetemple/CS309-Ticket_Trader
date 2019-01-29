@@ -1,4 +1,4 @@
-package com.example.sandbox;
+package com.example.tickettrader;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
     private void validate(String userName, String userPassword){
         if(userName.equals("Admin") && (userPassword.equals("password")))
         {
-            Intent intent = new Intent(com.example.sandbox.Login.this, SecondActivity.class);
+            Intent intent = new Intent(com.example.tickettrader.Login.this, SecondActivity.class);
             startActivity(intent);
         }
         else

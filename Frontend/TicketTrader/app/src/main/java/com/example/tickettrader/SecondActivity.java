@@ -1,7 +1,9 @@
-package com.example.sandbox;
+package com.example.tickettrader;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.tickettrader.R;
 
 public class SecondActivity extends AppCompatActivity {
 
