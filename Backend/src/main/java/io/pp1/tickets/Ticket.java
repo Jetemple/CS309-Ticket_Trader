@@ -9,7 +9,7 @@ public class Ticket {
 	
 	@Id
 	@NotNull
-	private String ticket_id;
+	private Integer ticket_id;
 	private Integer seller_id;
 	private Integer price;
 	private String game_date;
@@ -21,8 +21,7 @@ public class Ticket {
 		
 	}
 	
-	public Ticket(@NotNull String ticket_id, Integer seller_id, Integer price, 
-			String game_date, String sport,String game_location, Integer game_time) {
+	public Ticket(@NotNull Integer ticket_id, String sport, String game_location, String game_date,  Integer game_time,Integer price, Integer seller_id) {
 		
 		super();
 		this.ticket_id = ticket_id;
@@ -34,11 +33,11 @@ public class Ticket {
 		this.game_time = game_time;
 	}
 
-	public String getTicket_id() {
+	public Integer getTicket_id() {
 		return ticket_id;
 	}
 
-	public void setTicket_id(String ticket_id) {
+	public void setTicket_id(Integer ticket_id) {
 		this.ticket_id = ticket_id;
 	}
 
