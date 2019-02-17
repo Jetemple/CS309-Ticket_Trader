@@ -24,6 +24,7 @@ public class Login extends AppCompatActivity {
     private EditText Password;
     private TextView Info;
     private Button Login;
+    private Button Register;
     private int Counter = 3;
     private String url = "";
 
@@ -36,6 +37,11 @@ public class Login extends AppCompatActivity {
         Password = (EditText) findViewById(R.id.etPassword);
         Info = (TextView) findViewById(R.id.tvInfo);
         Login = (Button) findViewById(R.id.btnLogin);
+        Register = (Button) findViewById(R.id.btnRegister);
+
+
+
+
 
         Info.setText("# of attempts remaining: 3");
 
@@ -43,6 +49,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validate(Name.getText().toString(), Password.getText().toString());
+            }
+        });
+
+        Register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Registration = new Intent(com.example.tickettrader.Login.this, Registration.class);
+                startActivity(Registration);
             }
         });
 
