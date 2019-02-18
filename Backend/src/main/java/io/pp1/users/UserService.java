@@ -2,8 +2,6 @@ package io.pp1.users;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 public class UserService {
 
 	private List<User> user;

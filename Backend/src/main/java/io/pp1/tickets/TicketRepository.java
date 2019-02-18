@@ -1,4 +1,4 @@
-package io.tickets;
+package io.pp1.tickets;
 
 import java.util.List;
 
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
-	List<Ticket> findall();
+	public List<Ticket> findAll();
 
 }
