@@ -1,4 +1,4 @@
-package io.pp1.tickets;
+package io.tickets;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class Ticket {
 	
 	@Id
-	@NotNull
+	//@NotNull
 	private Integer ticket_id;
 	private Integer seller_id;
 	private Integer price;
@@ -21,9 +21,8 @@ public class Ticket {
 		
 	}
 	
-	public Ticket(@NotNull Integer ticket_id, String sport, String game_location, String game_date,  Integer game_time,Integer price, Integer seller_id) {
+	public Ticket(Integer ticket_id, String sport, String game_location, String game_date,  Integer game_time,Integer price, Integer seller_id) {
 		
-		super();
 		this.ticket_id = ticket_id;
 		this.seller_id = seller_id;
 		this.price = price;

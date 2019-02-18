@@ -1,4 +1,4 @@
-package io.pp1.tickets;
+package io.tickets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class TicketController {
 	
 	@GetMapping(value = "/tickets")
 	public TicketService getAll(){
-		return new TicketService(ticketRepository.findAll());
+		return (TicketService) ticketRepository.findAll();
 		
 	}
 	

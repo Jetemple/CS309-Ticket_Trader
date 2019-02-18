@@ -1,5 +1,4 @@
-package io.pp1.tickets;
-
+package io.tickets;
 
 import java.util.List;
 

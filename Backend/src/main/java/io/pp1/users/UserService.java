@@ -10,6 +10,7 @@ public class UserService {
 	
 	public UserService(List<User> user) {
 		this.user = user;
+		
 	}
 	
 	public List<User> getUsers() {
