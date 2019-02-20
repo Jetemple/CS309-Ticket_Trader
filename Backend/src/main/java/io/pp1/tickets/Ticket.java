@@ -14,7 +14,7 @@ public class Ticket {
 	private String sport;
 	private String game_location;
 	private String game_date;
-	private Integer game_time;
+	private String game_time;
 	private Integer price;
 	private Integer seller_id;
 
@@ -81,11 +81,11 @@ public class Ticket {
 		this.game_location = game_location;
 	}
 
-	public Integer getGame_time() {
+	public String getGame_time() {
 		return game_time;
 	}
 
-	public void setGame_time(Integer game_time) {
+	public void setGame_time(String game_time) {
 		this.game_time = game_time;
 	}
 	
