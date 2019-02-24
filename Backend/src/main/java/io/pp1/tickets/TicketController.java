@@ -21,24 +21,24 @@ public class TicketController {
 	private TicketRepository ticketRepository;
 	//private TicketService ticketService;
 	
-	@GetMapping(value = "/tickets")
+	@RequestMapping(method = RequestMethod.GET, path = "/tickets")
 	public List<Ticket> getAll(){
 		return ticketRepository.findAll();
 		
 	}
 	
-	@PostMapping(value = "/tickets")
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets") //@PostMapping(value = "/tickets")
 	public void persist(@RequestBody final Ticket ticket){
 		ticketRepository.save(ticket);
 	}
 	
 	
-    @RequestMapping(method = RequestMethod.POST, path = "/tickets/{ticket_id}")
+    @RequestMapping(method = RequestMethod.GET, path = "/tickets/{ticket_id}")
     public Ticket getTicket(@PathVariable Integer ticket_id) {
     	return (Ticket) ticketRepository.getTicketByID(ticket_id);
     }
     
-    @RequestMapping(method = RequestMethod.POST, path = "/tickets/getbydate/{game_date}")
+    @RequestMapping(method = RequestMethod.GET, path = "/tickets/getbydate/{game_date}")
     public List<Ticket> getByDate(@PathVariable String game_date) {
     	return  ticketRepository.getTicketByDate(game_date);
     }
@@ -46,5 +46,10 @@ public class TicketController {
     @RequestMapping(method = RequestMethod.DELETE, path = "/tickets/{ticket_id}")
     public void delete(@PathVariable Integer ticket_id) {
     	ticketRepository.deleteById(ticket_id);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/tickets/sport/{sport}")
+    public List<Ticket> getBySport(@PathVariable String sport) {
+    	return ticketRepository.getTicketBySport(sport);
     }
 }
