@@ -19,11 +19,11 @@ public class TicketController {
 	
 	@Autowired
 	private TicketRepository ticketRepository;
-	private TicketService ticketService;
+	//private TicketService ticketService;
 	
 	@GetMapping(value = "/tickets")
-	public TicketService getAll(){
-		return new TicketService(ticketRepository.findAll());
+	public List<Ticket> getAll(){
+		return ticketRepository.findAll();
 		
 	}
 	
