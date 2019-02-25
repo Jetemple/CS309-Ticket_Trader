@@ -1,8 +1,6 @@
 package io.pp1.tickets;
 
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,33 +16,33 @@ public class TicketController {
 	private TicketRepository ticketRepository;
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/tickets")
-	public List<Ticket> getAll(){
-		return ticketRepository.findAll();	
+	public TicketService getAll(){
+		return new TicketService(ticketRepository.findAll());	
 	}
 	
-    @RequestMapping(method = RequestMethod.GET, path = "/tickets/{ticket_id}")
-    public Ticket getTicket(@PathVariable Integer ticket_id) {
-    	return (Ticket) ticketRepository.getTicketByID(ticket_id);
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/ticket_id")
+    public TicketService getTicket(@RequestBody Ticket id) {
+    	return new TicketService(ticketRepository.getTicketByID(id.getTicket_id()));
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/tickets/sport/{sport}")
-    public List<Ticket> getBySport(@PathVariable String sport) {
-    	return ticketRepository.getTicketBySport(sport);
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/sport")
+    public TicketService getBySport(@RequestBody Ticket sport) {
+    	return new TicketService(ticketRepository.getTicketBySport(sport.getSport()));
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/tickets/date/{game_date}")
-    public List<Ticket> getByDate(@PathVariable String game_date) {
-    	return  ticketRepository.getTicketByDate(game_date);
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/date")
+    public TicketService getByDate(@RequestBody Ticket game_date) {
+    	return  new TicketService(ticketRepository.getTicketByDate(game_date.getGame_date()));
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/tickets/location/{game_location}")
-    public List<Ticket> getByLocation(@PathVariable String game_location) {
-    	return ticketRepository.getTicketByLocation(game_location);
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/location")
+    public TicketService getByLocation(@RequestBody Ticket game_location) {
+    	return new TicketService(ticketRepository.getTicketByLocation(game_location.getGame_location()));
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/tickets/opponent/{opponent}")
-    public List<Ticket> getByOpponent(@PathVariable String opponent) {
-    	return ticketRepository.getTicketByOpponent(opponent);
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/opponent")
+    public TicketService getByOpponent(@RequestBody Ticket opponent) {
+    	return new TicketService(ticketRepository.getTicketByOpponent(opponent.getOpponent()));
     }
     
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets") //@PostMapping(value = "/tickets")

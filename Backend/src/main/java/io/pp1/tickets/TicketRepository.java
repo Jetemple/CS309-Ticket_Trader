@@ -13,7 +13,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	public List<Ticket> findAll();
 	
 	@Query(value = "SELECT * FROM ticket u WHERE u.ticket_id = ?1", nativeQuery=true)
-	Ticket getTicketByID(Integer ticket_id);
+	List<Ticket> getTicketByID(Integer ticket_id);
 	
 	@Query(value = "SELECT * FROM ticket u WHERE u.game_date = ?1", nativeQuery=true)
 	List<Ticket> getTicketByDate(String game_date);
