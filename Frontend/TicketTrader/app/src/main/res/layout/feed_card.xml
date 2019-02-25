@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    >
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        >
+
+        <!--card_view:cardCornerRadius="10dp"-->
+        <!--card_view:cardElevation="5dp"-->
+        <!--card_view:cardUseCompatPadding="true"-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Price"
+
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+
+                    android:textColor="#666" />
+
+                <TextView
+                    android:id="@+id/sport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:text="Sport"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="photo"
+                android:id="@+id/photo"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/name"
+                android:textColor="#666"/>-->
+
+
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="user name"
+                android:id="@+id/gameLocation"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/name"
+                android:textColor="#666"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="ticketID"
+                android:id="@+id/ticketID"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/gameLocation"
+                android:textColor="#666"/>-->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Game_Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Game Date"
+
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+
+                    android:textColor="#666" />
+
+                <TextView
+                    android:id="@+id/Game_Time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:text="Game Time"
+
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+
+                    android:textColor="#666" />
+
+
+            </LinearLayout>
+
+
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="website"
+                android:id="@+id/website"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/gameDate"
+                android:textColor="#666"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="street"
+                android:id="@+id/street"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/website"
+                android:textColor="#666"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="suite"
+                android:id="@+id/sport"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/street"
+                android:textColor="#666"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="sellerID"
+                android:id="@+id/sellerID"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/sport"
+                android:textColor="#666"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="zipcode"
+                android:id="@+id/zip"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/sellerID"
+                android:textColor="#666"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="companyname"
+                android:id="@+id/cname"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/zip"
+                android:textColor="#666"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="catchpharse"
+                android:id="@+id/cp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/cname"
+                android:textColor="#666"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="bs"
+                android:id="@+id/bs"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/cp"
+                android:textColor="#666"/>
+-->
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -13,7 +13,9 @@
         >
         <activity android:name=".Registration"></activity>
         <activity android:name=".SecondActivity"></activity>
-        <activity android:name=".Login">
+
+        <!--This sets your main page-->
+        <activity android:name=".feedPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -190,12 +190,12 @@ public class Login extends AppCompatActivity {
 //
 //
 //
-//    private void login(String username, String password){
+//    private void login(String gameLocation, String password){
 //        String url= YOUR URL;
 //        JSONObject jsonObject = new JSONObject();
 //
 //        try {
-//            jsonObject .put("username", username);
+//            jsonObject .put("gameLocation", gameLocation);
 //            jsonObject .put("password", password);
 //
 //        } catch (JSONException e) {

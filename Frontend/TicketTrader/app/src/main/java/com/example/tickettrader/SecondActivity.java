@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.tickettrader.R;
-
 public class SecondActivity extends AppCompatActivity {
 
     private Button Back;
@@ -15,7 +13,7 @@ public class SecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_feed);
 
         Back = (Button) findViewById(R.id.btnBack);
 
