@@ -12,4 +12,7 @@ public class BackendApplication {
 
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> omar_branch1

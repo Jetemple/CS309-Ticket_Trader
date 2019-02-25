@@ -1,7 +1,0 @@
-#Fri Jan 25 11:49:18 CST 2019
-base.0=/Users/jacktemple/AndroidStudioProjects/Feed_Experiemnt/app/build/intermediates/dex/debug/mergeExtDexDebug/out
-path.1=classes.dex
-renamed.1=classes2.dex
-path.0=classes.dex
-renamed.0=classes.dex
-base.1=/Users/jacktemple/AndroidStudioProjects/Feed_Experiemnt/app/build/intermediates/dex/debug/mergeProjectDexDebug/out
