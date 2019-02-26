@@ -17,7 +17,6 @@ public class Ticket {
 	private String game_time;
 	private Integer price;
 	private Integer seller_id;
-<<<<<<< HEAD
 	private String opponent;
 	private String record;
 
@@ -34,13 +33,6 @@ public class Ticket {
 //	this.game_location = game_location;
 //	this.game_time = game_time;
 //}
-=======
-
-	public Ticket() {
-		
-	}
-	
->>>>>>> omar_branch1
 
 	public Integer getTicket_id() {
 		return ticket_id;
@@ -50,7 +42,6 @@ public class Ticket {
 		this.ticket_id = ticket_id;
 	}
 
-<<<<<<< HEAD
 	public String getSport() {
 		return sport;
 	}
@@ -65,22 +56,6 @@ public class Ticket {
 
 	public void setGame_location(String game_location) {
 		this.game_location = game_location;
-=======
-	public Integer getSeller_id() {
-		return seller_id;
-	}
-
-	public void setSeller_id(Integer seller_id) {
-		this.seller_id = seller_id;
-	}
-
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
->>>>>>> omar_branch1
 	}
 
 	public String getGame_date() {
@@ -91,7 +66,6 @@ public class Ticket {
 		this.game_date = game_date;
 	}
 
-<<<<<<< HEAD
 	public String getGame_time() {
 		return game_time;
 	}
@@ -131,33 +105,5 @@ public class Ticket {
 	public void setRecord(String record) {
 		this.record = record;
 	}	
-=======
-	public String getSport() {
-		return sport;
-	}
-
-	public void setSport(String sport) {
-		this.sport = sport;
-	}
-
-	public String getGame_location() {
-		return game_location;
-	}
-
-	public void setGame_location(String game_location) {
-		this.game_location = game_location;
-	}
-
-	public String getGame_time() {
-		return game_time;
-	}
-
-	public void setGame_time(String game_time) {
-		this.game_time = game_time;
-	}
-	
-	
-	
->>>>>>> omar_branch1
 	
 }
