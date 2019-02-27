@@ -5,18 +5,22 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import io.pp1.tickets.Ticket;
+
 @Service
 public class UserService {
 
 	private UserRepository userRepository;
 	
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	private List<User> user;
+	
+	public UserService(List<User> user) {
+		this.user = user;
 	}
 	
+	
 	public List<User> getUsers(){
-		List<User> users = (List<User>) userRepository.findAll();
-		return users;
+		return user;
 	}
 	
 	public boolean userExist(Integer id){

@@ -17,19 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	
 	@Autowired
+	private UserRepository userRepository;
 	private UserService userService;
+
 	
-	@GetMapping(value = "/users")
-	public List<User> getAll(){
-		
-		return userService.getUsers();
+	@RequestMapping(method = RequestMethod.GET, path = "/users")
+	public UserService getAll(){
+		return new UserService(userRepository.findAll());
 	}
 	
 	@GetMapping("/users/{id}")
 	public boolean userExist(@PathVariable Integer id) {
 		
 		
-		return userService.userExist(id);
+		return userRepository.existsById(id);
 	}
 	
 	@GetMapping(value = "/users/login")
