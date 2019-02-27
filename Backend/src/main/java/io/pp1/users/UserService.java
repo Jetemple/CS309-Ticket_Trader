@@ -27,4 +27,14 @@ public class UserService {
 	public void post(User user) {		
 		userRepository.save(user);
 	}
+	
+	public boolean userLogin(User user) {
+		
+		String temp = userRepository.getPassByNetID(user.getNet_Id());
+		
+		if(user.getPassword().equals(temp))
+			return true;
+		
+		return false;
+	}
 }

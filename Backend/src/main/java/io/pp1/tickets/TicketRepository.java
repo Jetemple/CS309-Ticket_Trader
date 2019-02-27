@@ -22,6 +22,4 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 //	@Query(value = "DELETE FROM ticket u WHERE  u.ticket_id = ?1", nativeQuery=true)
 //	List<Ticket> removeByID(Integer ticket_id);
 
-
-
 }
