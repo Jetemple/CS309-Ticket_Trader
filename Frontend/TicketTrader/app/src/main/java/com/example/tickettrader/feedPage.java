@@ -34,7 +34,9 @@ public class feedPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_feed);
+        mFeed = findViewById(R.id.ticketList);
+
 
 //        Back = (Button) findViewById(R.id.btnBack);
 //
@@ -81,7 +83,6 @@ public class feedPage extends AppCompatActivity {
 
                 }
 
-                mFeed = findViewById(R.id.ticketList);
                 mAdapter = new feedAdapter(feedPage.this, feedData);
                 mFeed.setAdapter(mAdapter);
                 mFeed.setLayoutManager(new LinearLayoutManager(feedPage.this));
