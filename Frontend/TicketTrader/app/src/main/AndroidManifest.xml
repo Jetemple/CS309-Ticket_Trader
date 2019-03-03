@@ -3,18 +3,20 @@
     package="com.example.tickettrader">
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
-        <activity android:name=".Registration"></activity>
-        <activity android:name=".SecondActivity"></activity>
-        <!--Sets the Activity at Start-->
-        <activity android:name=".Login">
+        android:theme="@style/AppTheme">
+        <activity android:name=".ticket_info"></activity>
+        <activity android:name=".Registration" />
+        <!--<activity android:name="." />-->
+        <activity android:name=".SecondActivity" /> <!-- This sets your main page -->
+        <activity android:name=".feedPage" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

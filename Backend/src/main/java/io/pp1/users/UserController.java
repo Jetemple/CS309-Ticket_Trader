@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,19 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	
 	@Autowired
+	private UserRepository userRepository;
 	private UserService userService;
+
 	
-	@GetMapping(value = "/users")
-	public List<User> getAll(){
-		
-		return userService.getUsers();
+	@RequestMapping(method = RequestMethod.GET, path = "/users")
+	public UserService getAll(){
+		return new UserService(userRepository.findAll());
 	}
 	
 	@GetMapping("/users/{id}")
 	public boolean userExist(@PathVariable Integer id) {
 		
 		
-		return userService.userExist(id);
+		return userRepository.existsById(id);
+	}
+	
+	@GetMapping(value = "/users/login")
+	public boolean userLogin(@RequestBody final User user) {
+		
+		return userService.userLogin(user);
+		
 	}
 	
 	@PostMapping(value = "/users")
