@@ -15,6 +15,9 @@ import com.example.tickettrader.feed;
 import java.util.Collections;
 import java.util.List;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
@@ -44,8 +47,11 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         MyHolder myHolder= (MyHolder) holder;
         feed current=data.get(position);
         myHolder.price.setText("$" + current.price);
-        myHolder.gameDate.setText("Date: " + current.gameDate);
-        myHolder.gameTime.setText("Start time: " + current.gameTime);
+        myHolder.gameDate.setText(current.gameDate);
+        myHolder.sport.setText(current.sport);
+//        myHolder.gameTime.setText("Start time: " + current.gameTime);
+        Glide.with(context).load(current.logo).into(myHolder.logo);
+        Glide.with(context).load("https://i.imgur.com/Mhi5WN9.png").into(myHolder.ISU);
     }
 
     @Override
@@ -56,27 +62,23 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     class MyHolder extends RecyclerView.ViewHolder{
 
-        TextView name, username, email, price, gameDate, gameTime;
-        ImageView image;
+        TextView name, username, email, price, gameDate, gameTime, opponent, sport;
+        ImageView logo, ISU;
         // create constructor to get widget reference
         public MyHolder(View itemView) {
             super(itemView);
-            name= (TextView) itemView.findViewById(R.id.sport);
-//            image = (ImageView) itemView.findViewById(R.id.image);
-            //photo= (TextView) itemView.findViewById(R.id.photo);
-            //gameLocation =(TextView) itemView.findViewById(R.id.gameLocation);
-            //ticketID = (TextView) itemView.findViewById(R.id.ticketID);
             price = (TextView) itemView.findViewById(R.id.price);
             gameDate = (TextView) itemView.findViewById(R.id.Game_Date);
-            gameTime = (TextView) itemView.findViewById(R.id.Game_Time);
-            //website = (TextView) itemView.findViewById(R.id.website);
-            //street = (TextView) itemView.findViewById(R.id.street);
-            //suite = (TextView) itemView.findViewById(R.id.sport);
-            //sellerID = (TextView) itemView.findViewById(R.id.sellerID);
-            //zip = (TextView) itemView.findViewById(R.id.zip);
-            //cname = (TextView) itemView.findViewById(R.id.cname);
-            //cp = (TextView) itemView.findViewById(R.id.cp);
-            //bs = (TextView) itemView.findViewById(R.id.bs);
+            logo = (ImageView) itemView.findViewById(R.id.logoIV);
+            sport = (TextView) itemView.findViewById(R.id.sport);
+            ISU = (ImageView) itemView.findViewById(R.id.isuLogo);
+
+            //logo= (TextView) itemView.findViewById(R.id.logo);
+            //gameLocation =(TextView) itemView.findViewById(R.id.gameLocation);
+            //ticketID = (TextView) itemView.findViewById(R.id.ticketID);
+//            gameTime = (TextView) itemView.findViewById(R.id.Game_Time);
+//            opponent = (TextView) itemView.findViewById(R.id.opponentTV);
+
         }
 
     }
