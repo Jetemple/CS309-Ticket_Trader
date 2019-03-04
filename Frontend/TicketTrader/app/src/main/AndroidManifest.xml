@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ticket_info"></activity>
+        <activity android:name=".sellPage"></activity>
         <activity android:name=".Registration" />
         <!--<activity android:name="." />-->
         <activity android:name=".SecondActivity" /> <!-- This sets your main page -->
