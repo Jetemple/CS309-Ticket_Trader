@@ -47,6 +47,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
     private EditText price;
     private EditText location;
     private String userId;
+    private String record;
     private Integer ticketId;
     private Button sell;
     RequestQueue requestQueue;
@@ -66,6 +67,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         price = (EditText)findViewById(R.id.sellPrice);
         sell = (Button)findViewById(R.id.sellBtn) ;
         userId = "";
+        record ="";
         ticketId = 0;
 
         Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
@@ -119,7 +121,8 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             jsonObject.put("game_time",time);
             jsonObject.put("price",price);
             jsonObject.put("game_location", location);
-            jsonObject.put("user_id", userId);
+            jsonObject.put("seller_id", userId);
+            jsonObject.put("record", record);
             jsonObject.put("ticket_id", ticketId);
         } catch (JSONException e) {
             e.printStackTrace();
