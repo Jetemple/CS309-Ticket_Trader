@@ -45,6 +45,9 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
     private EditText day;
     private EditText time;
     private EditText price;
+    private EditText location;
+    private String userId;
+    private Integer ticketId;
     private Button sell;
     RequestQueue requestQueue;
 
@@ -55,11 +58,15 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
 
         team1 = (EditText)findViewById(R.id.sellTeam1);
         team2 = (EditText)findViewById(R.id.sellTeam2);
+        sport = (Spinner)findViewById(R.id.sellGameSport);
         month = (EditText)findViewById(R.id.sellGameMon);
         day = (EditText)findViewById(R.id.sellGameDay);
         time = (EditText)findViewById(R.id.sellGameTime);
+        location = (EditText)findViewById(R.id.gameLocation);
         price = (EditText)findViewById(R.id.sellPrice);
         sell = (Button)findViewById(R.id.sellBtn) ;
+        userId = "";
+        ticketId = 0;
 
         Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
         Network network = new BasicNetwork(new HurlStack());
@@ -79,7 +86,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        url = "https://api.myjson.com/bins/77i0u";
+        url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
 
         sell.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +94,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
                 sellTicket(team1.getText().toString(), team2.getText().toString(),
                         sport.getSelectedItem().toString(),
                         month.getText().toString() + "/" + day.getText().toString(),
-                        time.getText().toString(), price.getText().toString());
+                        time.getText().toString(), price.getText().toString(), location.getText().toString());
 
                 team1.setText("First Team");
                 team2.setText("Second Team");
@@ -95,21 +102,25 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
                 day.setText("Day");
                 time.setText("Game time");
                 price.setText("Price");
+                location.setText("Game Location");
             }
         });
     }
 
-    private void sellTicket(String team1, String team2, String sport, String date, String time, String price)
+    private void sellTicket(String team1, String team2, String sport, String date, String time, String price, String location)
     {
         JSONObject jsonObject = new JSONObject();
 
         try{
-            jsonObject.put("first_team",team1);
-            jsonObject.put("second_team",team2);
+            //jsonObject.put("first_team",team1);
+            jsonObject.put("opponent",team2);
             jsonObject.put("sport",sport);
-            jsonObject.put("date",date);
-            jsonObject.put("time",time);
+            jsonObject.put("game_date",date);
+            jsonObject.put("game_time",time);
             jsonObject.put("price",price);
+            jsonObject.put("game_location", location);
+            jsonObject.put("user_id", userId);
+            jsonObject.put("ticket_id", ticketId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
