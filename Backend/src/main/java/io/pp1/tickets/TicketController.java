@@ -46,7 +46,7 @@ public class TicketController {
     }
     
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets") //@PostMapping(value = "/tickets")
-	public void persist(@RequestBody final Ticket ticket){
+	public void persist(@RequestBody Ticket ticket){
 		ticketRepository.save(ticket);
 	}
 	
