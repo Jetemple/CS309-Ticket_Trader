@@ -14,7 +14,4 @@
         <item>VolleyBall</item>
         <item>Wrestling</item>
     </string-array>
-
-    <color name="darkRed">#410707</color>
-    <color name="white">#FFFFFF</color>
 </resources>
