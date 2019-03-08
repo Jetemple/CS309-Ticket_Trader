@@ -19,14 +19,48 @@ public class TicketController {
 	@Autowired
 	private TicketRepository ticketRepository;
 	
-	@GetMapping(value = "/tickets")
+	@RequestMapping(method = RequestMethod.GET, path = "/tickets")
 	public List<Ticket> getAll(){
-		return ticketRepository.findAll();
-		
+		return ticketRepository.findAll();	
 	}
 	
-	@PostMapping(value = "/tickets")
-	public void persist(@RequestBody final Ticket ticket){
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/ticket_id")
+    public List<Ticket> getTicket(@RequestBody Ticket id) {
+    	return ticketRepository.getTicketByID(id.getTicket_id());
+    }
+	
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/seller_id")
+    public List<Ticket> getSellerTickets(@RequestBody Ticket seller_id) {
+    	return ticketRepository.getTicketBySellerID(seller_id.getSeller_id());
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/sport")
+    public List<Ticket> getBySport(@RequestBody Ticket sport) {
+    	return ticketRepository.getTicketBySport(sport.getSport());
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/date")
+    public List<Ticket> getByDate(@RequestBody Ticket game_date) {
+    	return ticketRepository.getTicketByDate(game_date.getGame_date());
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/location")
+    public List<Ticket> getByLocation(@RequestBody Ticket game_location) {
+    	return ticketRepository.getTicketByLocation(game_location.getGame_location());
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/opponent")
+    public List<Ticket> getByOpponent(@RequestBody Ticket opponent) {
+    	return ticketRepository.getTicketByOpponent(opponent.getOpponent());
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/price")
+    public List<Ticket> getByPrice(@RequestBody Ticket price) {
+    	return ticketRepository.getTicketByPricet(price.getPrice());
+    }
+    
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets") //@PostMapping(value = "/tickets")
+	public void persist(@RequestBody Ticket ticket){
 		ticketRepository.save(ticket);
 	}
 	
