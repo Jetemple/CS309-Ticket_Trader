@@ -26,6 +26,11 @@ public class TicketController {
     public List<Ticket> getTicket(@RequestBody Ticket id) {
     	return ticketRepository.getTicketByID(id.getTicket_id());
     }
+	
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/seller_id")
+    public List<Ticket> getSellerTickets(@RequestBody Ticket seller_id) {
+    	return ticketRepository.getTicketBySellerID(seller_id.getSeller_id());
+    }
     
     @RequestMapping(method = RequestMethod.POST, path = "/tickets/sport")
     public List<Ticket> getBySport(@RequestBody Ticket sport) {
@@ -45,6 +50,11 @@ public class TicketController {
     @RequestMapping(method = RequestMethod.POST, path = "/tickets/opponent")
     public List<Ticket> getByOpponent(@RequestBody Ticket opponent) {
     	return ticketRepository.getTicketByOpponent(opponent.getOpponent());
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/tickets/price")
+    public List<Ticket> getByPrice(@RequestBody Ticket price) {
+    	return ticketRepository.getTicketByPricet(price.getPrice());
     }
     
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets") //@PostMapping(value = "/tickets")
