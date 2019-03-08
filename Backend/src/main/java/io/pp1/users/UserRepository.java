@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //	//Give the netid of someone, it will look it up in database and return password
 	@Query(value = "SELECT password FROM user u WHERE u.net_id = ?1", nativeQuery=true)
 	String getPassByNetID(String netid);
+	
+	@Query(value = "SELECT * FROM user u WHERE u.password = ?1", nativeQuery=true)
+	User getUserByPass(String pass);
 }
