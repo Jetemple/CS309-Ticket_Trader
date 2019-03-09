@@ -19,14 +19,13 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
 
     final private String server_URL = "https://cs309-pp-1.misc.iastate.edu:8080/users";
-    private EditText Name;
+    private EditText userName;
     private EditText Password;
     private TextView Info;
     private Button Login;
@@ -40,60 +39,83 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
 
 
-        //Initializes all of the Variables
-        Counter = 3;
-        Name = (EditText) findViewById(R.id.etName);
+        //Initializes all of the UI aspects
+        userName = (EditText) findViewById(R.id.etName);
         Password = (EditText) findViewById(R.id.etPassword);
-        Info = (TextView) findViewById(R.id.info);
+        Info = (TextView) findViewById(R.id.incorrectAttempts);
         Login = (Button) findViewById(R.id.btnLogin);
         Register = (Button) findViewById(R.id.btnRegister);
+
+        //Used for Volley
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
+
         requestQueue.start();
 
+        //@FIXME
+        //Need to change this when we figure out a brute force stopper.
         Info.setText("# of attempts remaining: 3");
+
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginVerify(Name.getText().toString(), Password.getText().toString());
+                loginVerify(userName.getText().toString(), Password.getText().toString());
             }
         });
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(com.example.tickettrader.Login.this, Registration.class);
                 startActivity(intent);
-
             }
         });
     }
 
 
+    /*
+    This method will post a JSON filled with the inputted username and password. The backend then checks to
+    see if the password and username that the endUser entered was registered or not. If it is registered,
+    the POST request will return true and enter the app. If it isn't, then it returns false.
+    */
     private void loginVerify(final String userName, final String userPassword) {
 
-//        String url = "http://cs309-pp-1.misc.iastate.edu:8080/users";
-        String url = "https://api.myjson.com/bins/19kf52"; //NO VPN Required
+        String url = "http://cs309-pp-1.misc.iastate.edu:8080/users/login"; //Our Server
+        //String url = "https://api.myjson.com/bins/19kf52"; //NO VPN Required
 
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+        //Makes a JSON using the inputted userName and password
+        JSONObject loginInfo = new JSONObject();
+        try {
+            loginInfo.put("net_Id", userName);
+            loginInfo.put("password", userPassword);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, loginInfo, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONArray jsonArray = response.getJSONArray("users");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject color = jsonArray.getJSONObject(i);
 
-                        String first_name = color.getString("first_name");
-                        String last_name = color.getString("last_name");
+                    JSONObject auth = response;
+                    String verify = auth.getString("password");
 
-                        //If Username and Password both exist in the DataTable, Then Return True.
-                        if (userName.equals(first_name) && userPassword.equals(last_name)) {
-                            Intent intent = new Intent(com.example.tickettrader.Login.this, feedPage.class);
-                            startActivity(intent);
-                        }
+                    Info.setText(verify);
+                    if (verify.equals("true")) {
+                        Intent intent = new Intent(com.example.tickettrader.Login.this, feedPage.class);
+                        startActivity(intent);
+                    } else {
+                        //@TODO
+                        /*
+                        Need to figure out how to slow down brute force attacks by doing something
+                        if there are too many false requests.
+                        */
+
+                        //Info.setText("# of attempts remaining: 2");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
