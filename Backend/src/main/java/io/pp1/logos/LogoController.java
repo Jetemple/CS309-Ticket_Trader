@@ -2,7 +2,8 @@ package io.pp1.logos;
 
 
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestBody;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,17 @@ public class LogoController {
 	private LogoRepository logoRepository;
 	
 	@GetMapping(value = "/logos")
-	public List<Logo> getAll(){
+	public LogoService getAll(){
 		
-		return logoRepository.findAll();
+		return new LogoService(logoRepository.findAll());
+
+	}
+	
+	
+	@GetMapping(value = "/logos/{id}")
+	public Optional<Logo> getUrl(@PathVariable Integer id) {
+		
+		return logoRepository.findById(id);
 	}
 
 }
