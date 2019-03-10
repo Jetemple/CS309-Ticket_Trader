@@ -96,4 +96,7 @@ public class Ticket {
 		this.opponent = opponent;
 	}
 	
+	
+	
+	
 }

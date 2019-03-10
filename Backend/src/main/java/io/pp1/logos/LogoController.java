@@ -24,7 +24,7 @@ public class LogoController {
 	
 	
 	@GetMapping(value = "/logos/{opponent}")
-	public String getUrl(@PathVariable String opponent) {
+	public Logo getUrl(@PathVariable String opponent) {
 		
 		return logoRepository.getUrlFromOpponent(opponent);
 	}
