@@ -105,7 +105,6 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
                 time.setText("Game time");
                 price.setText("Price");
                 location.setText("Game Location");
-                ticketId++;
             }
         });
     }
@@ -122,8 +121,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             jsonObject.put("price",price);
             jsonObject.put("game_location", location);
             jsonObject.put("seller_id", userId);
-            jsonObject.put("record", record);
-            jsonObject.put("ticket_id", ticketId);
+            jsonObject.put("ticket_id", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
