@@ -109,6 +109,7 @@ public class TicketController {
     
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets") //@PostMapping(value = "/tickets")
 	public void persist(@RequestBody final Ticket ticket){
+		ticket.setLogoURL(ticketRepository.getIconURL(ticket.getOpponent()));
 		ticketRepository.save(ticket);
 	}
 	
