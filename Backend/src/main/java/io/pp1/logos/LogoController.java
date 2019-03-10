@@ -23,10 +23,10 @@ public class LogoController {
 	}
 	
 	
-	@GetMapping(value = "/logos/{id}")
-	public Optional<Logo> getUrl(@PathVariable Integer id) {
+	@GetMapping(value = "/logos/{opponent}")
+	public String getUrl(@PathVariable String opponent) {
 		
-		return logoRepository.findById(id);
+		return logoRepository.getUrlFromOpponent(opponent);
 	}
 
 }

@@ -22,6 +22,8 @@ public class Ticket {
 	private String game_time;
 	private Integer price;
 	private Integer seller_id;
+	private String opponent;
+	
 
 	public Ticket() {
 		
@@ -83,8 +85,15 @@ public class Ticket {
 	public void setGame_time(String game_time) {
 		this.game_time = game_time;
 	}
-	
-	
-	
+
+
+	public String getOpponent() {
+		return opponent;
+	}
+
+
+	public void setOpponent(String opponent) {
+		this.opponent = opponent;
+	}
 	
 }

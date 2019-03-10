@@ -12,5 +12,7 @@ import io.pp1.tickets.Ticket;
 @Repository
 public interface LogoRepository extends JpaRepository<Logo, Integer> {
 	
+	@Query(value = "SELECT url FROM logo u WHERE u.img_name = ?1", nativeQuery=true)
+	String getUrlFromOpponent(String opponent);
 
 }
