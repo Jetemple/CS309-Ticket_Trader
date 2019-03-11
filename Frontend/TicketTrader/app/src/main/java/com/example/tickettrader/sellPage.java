@@ -48,8 +48,6 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
     private EditText price;
     private EditText location;
     private String userId;
-    private String record;
-    private Integer ticketId;
     private Button sell;
     RequestQueue requestQueue;
 
@@ -66,8 +64,6 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         price = (EditText)findViewById(R.id.game_price);
         sell = (Button)findViewById(R.id.sell_btn);
         userId = "";
-        record ="";
-        ticketId = 0;
 
         ArrayAdapter sportAdapter = ArrayAdapter.createFromResource(this, R.array.sport_array, R.layout.sport_item);
         sport.setAdapter(sportAdapter);
@@ -121,7 +117,6 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             jsonObject.put("price",price);
             jsonObject.put("game_location", location);
             jsonObject.put("seller_id", userId);
-            jsonObject.put("ticket_id", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
