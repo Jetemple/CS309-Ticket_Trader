@@ -168,10 +168,11 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         if (id == R.id.feed) {
             // Handle the camera action
         } else if (id == R.id.sell) {
-            Intent sell = new Intent(com.example.tickettrader.feedPage.this, com.example.tickettrader.sellPage.class);
+            Intent sell = new Intent(feedPage.this, sellPage.class);
             startActivity(sell);
         } else if (id == R.id.userAccount) {
-
+            Intent user = new Intent(this, UserAccountPage.class);
+            startActivity(user);
         } else if (id == R.id.logout) {
 
         }
