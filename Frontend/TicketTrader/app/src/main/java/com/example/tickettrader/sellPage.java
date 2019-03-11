@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class sellPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private Toolbar toolbar;
@@ -47,7 +48,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
     private EditText time;
     private EditText price;
     private EditText location;
-    private String userId;
+    private int userId;
     private Button sell;
     RequestQueue requestQueue;
 
@@ -63,7 +64,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         location = (EditText)findViewById(R.id.game_location);
         price = (EditText)findViewById(R.id.game_price);
         sell = (Button)findViewById(R.id.sell_btn);
-        userId = "";
+        userId = 0;
 
         ArrayAdapter sportAdapter = ArrayAdapter.createFromResource(this, R.array.sport_array, R.layout.sport_item);
         sport.setAdapter(sportAdapter);
@@ -91,21 +92,24 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Scanner sc = new Scanner(price.getText().toString());
+                int priceNum = sc.nextInt();
+
                 sellTicket(opponent.getText().toString(),
                         sport.getSelectedItem().toString(),
                         date.getText().toString(),
-                        time.getText().toString(), price.getText().toString(), location.getText().toString());
+                        time.getText().toString(), priceNum, location.getText().toString());
 
-                opponent.setText("Opponent team");
-                date.setText("Game date");
-                time.setText("Game time");
-                price.setText("Price");
-                location.setText("Game Location");
+                opponent.setText("");
+                date.setText("");
+                time.setText("");
+                price.setText("");
+                location.setText("");
             }
         });
     }
 
-    private void sellTicket(String opponent, String sport, String date, String time, String price, String location)
+    private void sellTicket(String opponent, String sport, String date, String time, int price, String location)
     {
         JSONObject jsonObject = new JSONObject();
 
@@ -117,6 +121,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             jsonObject.put("price",price);
             jsonObject.put("game_location", location);
             jsonObject.put("seller_id", userId);
+            jsonObject.put("ticket_id", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
