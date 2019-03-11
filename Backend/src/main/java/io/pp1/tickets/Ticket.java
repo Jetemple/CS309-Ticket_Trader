@@ -19,6 +19,15 @@ public class Ticket {
 	private Integer seller_id;
 	private String opponent;
 	private String record;
+	private String LogoURL;
+
+	public String getLogoURL() {
+		return LogoURL;
+	}
+
+	public void setLogoURL(String logoURL) {
+		LogoURL = logoURL;
+	}
 
 	public Ticket() {	
 	}

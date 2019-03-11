@@ -133,7 +133,7 @@
                 app:layout_constraintVertical_bias="0.076" />
 
             <ImageButton
-                android:id="@+id/info"
+                android:id="@+id/incorrectAttemps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/info_outline"

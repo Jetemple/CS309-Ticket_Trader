@@ -2,20 +2,25 @@ package io.pp1.logos;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Service
+import io.pp1.tickets.Ticket;
+
 public class LogoService {
-
+	
 	private LogoRepository logoRepository;
 	
-	public LogoService(LogoRepository logoRepository) {
-		this.logoRepository = logoRepository;
+	private List<Logo> logo;
+	
+	
+	public LogoService(List<Logo> logo) {
+		this.logo= logo;
+		
 	}
 	
-	public List<Logo> getLogos(){
-		List<Logo> logos = (List<Logo>) logoRepository.findAll();
-		return logos;
+	public List<Logo> getLogo() {
+		return logo;
 	}
 	
+
 }
