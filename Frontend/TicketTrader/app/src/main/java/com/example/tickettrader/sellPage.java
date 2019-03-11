@@ -1,5 +1,6 @@
 package com.example.tickettrader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -38,13 +41,15 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private String url;
-    private EditText team1;
-    private EditText team2;
+    private EditText opponent;
     private Spinner sport;
-    private EditText month;
-    private EditText day;
+    private EditText date;
     private EditText time;
     private EditText price;
+    private EditText location;
+    private String userId;
+    private String record;
+    private Integer ticketId;
     private Button sell;
     RequestQueue requestQueue;
 
@@ -53,13 +58,19 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell_page);
 
-        team1 = (EditText)findViewById(R.id.sellTeam1);
-        team2 = (EditText)findViewById(R.id.sellTeam2);
-        month = (EditText)findViewById(R.id.sellGameMon);
-        day = (EditText)findViewById(R.id.sellGameDay);
-        time = (EditText)findViewById(R.id.sellGameTime);
-        price = (EditText)findViewById(R.id.sellPrice);
-        sell = (Button)findViewById(R.id.sellBtn) ;
+        opponent = (EditText)findViewById(R.id.opponent_team);
+        sport = (Spinner)findViewById(R.id.game_sport);
+        date = (EditText)findViewById(R.id.game_date);
+        time = (EditText)findViewById(R.id.game_time);
+        location = (EditText)findViewById(R.id.game_location);
+        price = (EditText)findViewById(R.id.game_price);
+        sell = (Button)findViewById(R.id.sell_btn);
+        userId = "";
+        record ="";
+        ticketId = 0;
+
+        ArrayAdapter sportAdapter = ArrayAdapter.createFromResource(this, R.array.sport_array, R.layout.sport_item);
+        sport.setAdapter(sportAdapter);
 
         Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
         Network network = new BasicNetwork(new HurlStack());
@@ -67,7 +78,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         requestQueue.start();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Sell");
+        toolbar.setTitle("Sell A Ticket");
         setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -79,37 +90,38 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        url = "https://api.myjson.com/bins/77i0u";
+        url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
 
         sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sellTicket(team1.getText().toString(), team2.getText().toString(),
+                sellTicket(opponent.getText().toString(),
                         sport.getSelectedItem().toString(),
-                        month.getText().toString() + "/" + day.getText().toString(),
-                        time.getText().toString(), price.getText().toString());
+                        date.getText().toString(),
+                        time.getText().toString(), price.getText().toString(), location.getText().toString());
 
-                team1.setText("First Team");
-                team2.setText("Second Team");
-                month.setText("Month");
-                day.setText("Day");
+                opponent.setText("Opponent team");
+                date.setText("Game date");
                 time.setText("Game time");
                 price.setText("Price");
+                location.setText("Game Location");
             }
         });
     }
 
-    private void sellTicket(String team1, String team2, String sport, String date, String time, String price)
+    private void sellTicket(String opponent, String sport, String date, String time, String price, String location)
     {
         JSONObject jsonObject = new JSONObject();
 
         try{
-            jsonObject.put("first_team",team1);
-            jsonObject.put("second_team",team2);
+            jsonObject.put("opponent",opponent);
             jsonObject.put("sport",sport);
-            jsonObject.put("date",date);
-            jsonObject.put("time",time);
+            jsonObject.put("game_date",date);
+            jsonObject.put("game_time",time);
             jsonObject.put("price",price);
+            jsonObject.put("game_location", location);
+            jsonObject.put("seller_id", userId);
+            jsonObject.put("ticket_id", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
