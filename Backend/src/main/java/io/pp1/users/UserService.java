@@ -1,11 +1,8 @@
 package io.pp1.users;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-
-import io.pp1.tickets.Ticket;
 
 @Service
 public class UserService {
