@@ -84,7 +84,8 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
         } else if (id == R.id.userAccount) {
 
         } else if (id == R.id.logout) {
-
+            Intent login = new Intent(UserAccountPage.this, Login.class);
+            startActivity(login);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

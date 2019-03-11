@@ -144,7 +144,8 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             Intent user = new Intent(sellPage.this, UserAccountPage.class);
             startActivity(user);
         } else if (id == R.id.logout) {
-
+            Intent login = new Intent(sellPage.this, Login.class);
+            startActivity(login);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

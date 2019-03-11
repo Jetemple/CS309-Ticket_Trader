@@ -174,7 +174,8 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
             Intent user = new Intent(this, UserAccountPage.class);
             startActivity(user);
         } else if (id == R.id.logout) {
-
+            Intent login = new Intent(feedPage.this, Login.class);
+            startActivity(login);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
