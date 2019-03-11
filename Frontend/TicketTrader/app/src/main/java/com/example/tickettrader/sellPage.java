@@ -141,7 +141,8 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         } else if (id == R.id.sell) {
 
         } else if (id == R.id.userAccount) {
-
+            Intent user = new Intent(sellPage.this, UserAccountPage.class);
+            startActivity(user);
         } else if (id == R.id.logout) {
 
         }

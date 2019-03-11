@@ -29,7 +29,8 @@ public class Registration extends AppCompatActivity {
     private Button Register;
     private EditText FirstName;
     private EditText LastName;
-    private EditText UserID;
+    private EditText netID;
+    private EditText password;
     RequestQueue requestQueue;
 
     @Override
@@ -41,9 +42,10 @@ public class Registration extends AppCompatActivity {
         //Initializes all of the buttons
         Back = (Button) findViewById(R.id.btnBack);
         Register = (Button) findViewById(R.id.btnRegister);
-        FirstName = (EditText) findViewById(R.id.etEmail); //Change to Email
-        LastName = (EditText) findViewById(R.id.etPassword); //Change to Password
-        UserID = (EditText) findViewById(R.id.etConfirm); //Change to Confirm Password
+        FirstName = (EditText) findViewById(R.id.first_name); //Change to Email
+        LastName = (EditText) findViewById(R.id.last_name); //Change to Password
+        netID = (EditText) findViewById(R.id.net_id); //Change to Confirm Password4
+        password = (EditText)findViewById(R.id.password);
 
 
         //Setups the Requests for Volley
@@ -57,7 +59,7 @@ public class Registration extends AppCompatActivity {
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Login = new Intent(com.example.tickettrader.Registration.this, Login.class);
+                Intent Login = new Intent(Registration.this, Login.class);
                 startActivity(Login);
 
             }
@@ -67,9 +69,9 @@ public class Registration extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register(FirstName.getText().toString(), LastName.getText().toString(), UserID.getText().toString());
+                register(FirstName.getText().toString(), LastName.getText().toString(), netID.getText().toString(), password.getText().toString());
 
-                Intent SecondActivity = new Intent(com.example.tickettrader.Registration.this, SecondActivity.class);
+                Intent SecondActivity = new Intent(Registration.this, Login.class);
                 startActivity(SecondActivity);
 
             }
@@ -77,7 +79,7 @@ public class Registration extends AppCompatActivity {
     }
 
 
-    private void register(final String FirstName, final String LastName, final String UserID)
+    private void register(final String FirstName, final String LastName, final String netID, final String password)
     {
 
         String url = "http://cs309-pp-1.misc.iastate.edu:8080/users";
@@ -88,8 +90,8 @@ public class Registration extends AppCompatActivity {
         try{
             jsonObject.put("first_name",FirstName);
             jsonObject.put("last_name",LastName);
-            jsonObject.put("user_Id",UserID);
-
+            jsonObject.put("net_Id",netID);
+            jsonObject.put("password", password);
 
         } catch (JSONException e) {
             e.printStackTrace();
