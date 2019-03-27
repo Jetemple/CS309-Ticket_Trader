@@ -1,5 +1,7 @@
 package io.pp1.messages;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +25,18 @@ public class MessageController {
 		messageRepository.save(message);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, path = "/message/{message_id}")
-	public void delete(@PathVariable Integer message_id) {
-		messageRepository.deleteById(message_id);
+//	@RequestMapping(method = RequestMethod.POST, path = "/message/get")
+//	public MessageService getMessgaeById(@RequestBody Message message) {
+//		return new MessageService(messageRepository.getMessageByID(message.getMessage_id()));
+//	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/message/get")
+	public MessageService getMessgaeById(@RequestBody Message message) {
+		return new MessageService(messageRepository.getMessage(message.getTicket_id(),message.getUser_1_id(),message.getUser_2_id()));
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, path = "/message")
+	public void delete(@RequestBody Message message) {
+		messageRepository.deleteById(message.getMessage_id());
 	}
 }
