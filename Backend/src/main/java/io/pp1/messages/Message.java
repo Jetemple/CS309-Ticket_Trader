@@ -16,10 +16,21 @@ public class Message {
 	private Integer ticket_id;
 	private String message;
 	
+	
+	public Message(@NotNull Integer message_id, Integer user_1_id, Integer user_2_id, Integer ticket_id,
+			String message) {
+		super();
+		this.message_id = message_id;
+		this.user_1_id = user_1_id;
+		this.user_2_id = user_2_id;
+		this.ticket_id = ticket_id;
+		this.message = message;
+	}
+
 	public Message() {
 		
 	}
-	
+
 	public Integer getMessage_id() {
 		return message_id;
 	}
