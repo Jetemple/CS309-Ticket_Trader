@@ -27,6 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void active()
     {
-        startActivity(new Intent(com.example.tickettrader.MainActivity.this, Login.class));
+        startActivity(new Intent(MainActivity.this, Login.class));
     }
 }

@@ -1,6 +1,7 @@
 package com.example.tickettrader;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +32,7 @@ public class Login extends AppCompatActivity {
     private Button Login;
     private Button Register;
     private int Counter;
+    private DatabaseHelper dbHelper;
     RequestQueue requestQueue;
 
     @Override
@@ -38,13 +40,13 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-
         //Initializes all of the UI aspects
         userName = (EditText) findViewById(R.id.etName);
         Password = (EditText) findViewById(R.id.etPassword);
         Info = (TextView) findViewById(R.id.incorrectAttempts);
         Login = (Button) findViewById(R.id.btnLogin);
         Register = (Button) findViewById(R.id.btnRegister);
+        dbHelper = new DatabaseHelper(this);
 
         //Used for Volley
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
@@ -106,6 +108,13 @@ public class Login extends AppCompatActivity {
 
                     Info.setText(verify);
                     if (verify.equals("true")) {
+                        dbHelper.removeAll();
+
+                        dbHelper.addData("first_name", auth.getString("first_name"));
+                        dbHelper.addData("last_name", auth.getString("last_name"));
+                        dbHelper.addData("net_ID", auth.getString("net_Id"));
+                        dbHelper.addData("user_ID", auth.getString("user_Id"));
+
                         Intent intent = new Intent(com.example.tickettrader.Login.this, feedPage.class);
                         startActivity(intent);
                     } else {
