@@ -116,6 +116,28 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 
                         mAdapter = new feedAdapter(feedPage.this, feedData);
                         mFeed.setAdapter(mAdapter);
+                        mAdapter.setOnItemClickListener(new feedAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                Intent intent = new Intent(feedPage.this, TicketEachActivity.class);
+                                int tmp_price = feedData.get(position).price;
+                                int tmp_ticketID = feedData.get(position).ticketID;
+                                int tmp_sellerID = feedData.get(position).sellerID;
+
+
+                                intent.putExtra("price",tmp_price);
+                                intent.putExtra("sport",feedData.get(position).sport);
+                                intent.putExtra("gameTime",feedData.get(position).gameTime);
+                                intent.putExtra("gameDate",feedData.get(position).gameDate);
+                                intent.putExtra("gameLocation",feedData.get(position).gameLocation);
+                                intent.putExtra("logoURL",feedData.get(position).logo);
+                                intent.putExtra("sellerID",feedData.get(position).sellerID);
+                                intent.putExtra("ticketID",tmp_ticketID);
+
+                                startActivity(intent);
+
+                            }
+                        });
                         mFeed.setLayoutManager(new LinearLayoutManager(feedPage.this));
                     } catch (JSONException e) {
                         e.printStackTrace();
