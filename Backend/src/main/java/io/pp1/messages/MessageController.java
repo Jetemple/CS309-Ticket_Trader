@@ -31,8 +31,8 @@ public class MessageController {
 //	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/message/get")
-	public MessageService getMessgaeById(@RequestBody Message message) {
-		return new MessageService(messageRepository.getMessage(message.getTicket_id(),message.getUser_1_id(),message.getUser_2_id()));
+	public Message getMessgaeById(@RequestBody Message message) {
+		return messageRepository.getMessage(message.getTicket_id(),message.getUser_1_id(),message.getUser_2_id());
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, path = "/message")

@@ -12,5 +12,9 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	public List<Message> findAll();
 
 	@Query(value = "SELECT * FROM message u WHERE u.ticket_id = ?1 and u.user_1_id = ?2 and u.user_2_id = ?3", nativeQuery=true)
-	List<Message> getMessage(Integer ticket_id, Integer user_1_id, Integer user_2_id);
+	Message getMessage(Integer ticket_id, Integer user_1_id, Integer user_2_id);
+	
+	
+	@Query(value = "SELECT message FROM message u WHERE (u.user_1_id =?2 or u.user_1_id =?3) and (u.user_2_id=?2 or u.user_2_id=?3)", nativeQuery=true)
+	String getMessageOnly(Integer user_1_id, Integer user_2_id);
 }
