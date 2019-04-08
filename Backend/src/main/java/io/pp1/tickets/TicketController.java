@@ -20,6 +20,33 @@ public class TicketController {
 		return new TicketService(ticketRepository.findAll());
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets/filter")
+	public TicketService getTicketsByFilter(@RequestBody Ticket filter) {
+		if(filter.getGame_date()!=null && filter.getSport()!=null && filter.getOpponent()!=null) {
+			return new TicketService(ticketRepository.filterTicketsByOpponentSportDate(filter.getOpponent(),filter.getSport(),filter.getGame_date()));
+		}
+		else if(filter.getGame_date()!=null && filter.getSport()!=null && filter.getOpponent()==null) {
+			return new TicketService(ticketRepository.filterTicketsBySportDate(filter.getSport(),filter.getGame_date()));
+		}
+		else if(filter.getGame_date()!=null && filter.getSport()==null && filter.getOpponent()!=null) {
+			return new TicketService(ticketRepository.filterTicketsByOpponentDate(filter.getOpponent(),filter.getGame_date()));
+		}
+		else if(filter.getGame_date()==null && filter.getSport()!=null && filter.getOpponent()!=null) {
+			return new TicketService(ticketRepository.filterTicketsByOpponentSport(filter.getOpponent(),filter.getSport()));
+		}
+		else if(filter.getGame_date()!=null && filter.getSport()==null && filter.getOpponent()==null) {
+			return new TicketService(ticketRepository.filterTicketsByDate(filter.getGame_date()));
+		}
+		else if(filter.getGame_date()==null && filter.getSport()!=null && filter.getOpponent()==null) {
+			return new TicketService(ticketRepository.filterTicketsBySport(filter.getSport()));
+		}
+		else if(filter.getGame_date()==null && filter.getSport()==null && filter.getOpponent()!=null) {
+			return new TicketService(ticketRepository.filterTicketsByOpponent(filter.getOpponent()));
+		}
+		else 
+			return new TicketService(ticketRepository.findAll());
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/ticket_id")
 	public TicketService getTicket(@RequestBody Ticket id) {
 		return new TicketService(ticketRepository.getTicketByID(id.getTicket_id()));
@@ -30,24 +57,9 @@ public class TicketController {
 		return new TicketService(ticketRepository.getTicketBySellerID(seller_id.getSeller_id()));
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/tickets/sport")
-	public TicketService getBySport(@RequestBody Ticket sport) {
-		return new TicketService(ticketRepository.getTicketBySport(sport.getSport()));
-	}
-
-	@RequestMapping(method = RequestMethod.POST, path = "/tickets/date")
-	public TicketService getByDate(@RequestBody Ticket game_date) {
-		return new TicketService(ticketRepository.getTicketByDate(game_date.getGame_date()));
-	}
-
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/location")
 	public TicketService getByLocation(@RequestBody Ticket game_location) {
 		return new TicketService(ticketRepository.getTicketByLocation(game_location.getGame_location()));
-	}
-
-	@RequestMapping(method = RequestMethod.POST, path = "/tickets/opponent")
-	public TicketService getByOpponent(@RequestBody Ticket opponent) {
-		return new TicketService(ticketRepository.getTicketByOpponent(opponent.getOpponent()));
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/price")
@@ -65,5 +77,5 @@ public class TicketController {
 	public void delete(@PathVariable Integer ticket_id) {
 		ticketRepository.deleteById(ticket_id);
 	}
-
+	
 }
