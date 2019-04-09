@@ -40,6 +40,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     private RecyclerView mFeed;
     private feedAdapter mAdapter;
     private ImageButton bRefresh;
+    private ImageButton bFilter;
     RequestQueue requestQueue;
     String url;
 
@@ -51,6 +52,8 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.activity_feed_page);
         mFeed = findViewById(R.id.ticketList);
         bRefresh = findViewById(R.id.refresh);
+        bFilter = findViewById(R.id.filter);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Feed");
@@ -73,6 +76,14 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 refresh("http://cs309-pp-1.misc.iastate.edu:8080/tickets");//Refresh data test
                 Toast.makeText(feedPage.this, "Refreshed!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        bFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(feedPage.this, popup_filter.class);
+                startActivity(intent);
             }
         });
 
