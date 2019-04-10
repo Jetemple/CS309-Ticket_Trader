@@ -8,5 +8,13 @@ public class StringResponse {
        this.response = s;
     }
 
+	public String getResponse() {
+		return response;
+	}
+
+	public void setResponse(String response) {
+		this.response = response;
+	}
+
     // get/set omitted...
 }

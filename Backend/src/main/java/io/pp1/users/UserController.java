@@ -62,21 +62,39 @@ public class UserController {
 		
 		return user;
 	}
-
+	
+	@PostMapping(value = "/users/checkuser")
+	public StringResponse checkNetId(@RequestBody final User users) {
+		
+		return new StringResponse(userRepository.existByNetID(users.getNet_Id()));
+	}
 	
 	@PostMapping(value = "/users")
-	public boolean post(@RequestBody final User users){
-		
+	public StringResponse post(@RequestBody final User users){
+		//init pass encoder
 		PasswordEncoder passEnc = passwordEncoder();
-		String givenNetid = users.getNet_Id();
 		
-		if(userRepository.existByNetID(givenNetid) != null){
-			return false;
+		//make sure netid isn't already in use,
+		if(userRepository.existByNetID(users.getNet_Id()) != null){
+			return new StringResponse("Sorry, this email is already in use");
 		}
 		
+		//check if its an ISU email
+		String givenNetId = users.getNet_Id();
+		if(givenNetId.indexOf("@") >= 0) {
+			String[] arr= givenNetId.split("@");
+			if(arr[arr.length-1].equals("iastate.edu")) {
+				
+				return new StringResponse("Correct Syntax");
+			}
+		}else {
+			
+			return new StringResponse("GIVE CORRECT SYNTAX");
+		}
 		users.setPassword(passEnc.encode(users.getPassword()));
 		userRepository.save(users);
-		return true;
+		
+		return new StringResponse("It worked, you are in!");
 	}
 
 }
