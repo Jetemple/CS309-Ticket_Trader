@@ -42,7 +42,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@null"
                 android:contentDescription="@string/action_refresh"
-                app:srcCompat="@drawable/outline_refresh_24" />
+                app:srcCompat="@drawable/filter_24" />
 
         </android.support.v7.widget.Toolbar>
 
