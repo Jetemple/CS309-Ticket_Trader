@@ -9,9 +9,19 @@
     <string name="action_refresh">Refresh</string>
 
     <string-array name="sport_array">
+        <item>All</item>
         <item>BasketBall</item>
         <item>FootBall</item>
         <item>VolleyBall</item>
         <item>Wrestling</item>
+    </string-array>
+
+
+    <string-array name="opponent_array">
+        <item>All</item>
+        <item>Iowa</item>
+        <item>TCU</item>
+        <item>Texas Tech</item>
+        <item>Baylor</item>
     </string-array>
 </resources>

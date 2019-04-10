@@ -11,18 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ticket_info"></activity>
-        <activity android:name=".sellPage" android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".UserAccountPage" />
-        <activity android:name=".Registration" />
-        <activity android:name=".SecondActivity" />
-        <activity android:name=".feedPage" android:noHistory="true"></activity>
-        <activity android:name=".Login">
+        <activity android:name=".TicketEachActivity"></activity>
+        <activity android:name=".feedPage" android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Registration" />
+        <!--<activity android:name="." />-->
+        <activity android:name=".SecondActivity" /> <!-- This sets your main page -->
+        <activity android:name=".sellPage" android:noHistory="true"></activity>
+        <activity android:name=".popup_filter"
+            android:theme="@style/AppTheme.popUpTheme"
+            ></activity>
     </application>
 
 </manifest>
