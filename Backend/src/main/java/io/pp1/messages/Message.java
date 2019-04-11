@@ -13,22 +13,25 @@ public class Message {
 	@NotNull
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer message_id;
+	private String sender;
+	private String receiver;
+	private String message;
+	
 //	private Integer user_1_id;
-	private String net_id;
+//	private Date localTime;
 //	private Integer user_2_id;
 //	private Integer ticket_id;
-	private String message;
-//	private Date localTime;
 
-	public Message(@NotNull Integer message_id, String net_id, String message) {
+	public Message(@NotNull Integer message_id, String sender,String receiver, String message) {
 		super();
 		this.message_id = message_id;
-		this.net_id = net_id;
+		this.sender = sender;
+		this.receiver = receiver;
+		this.message = message;
+//		this.net_id = net_id;
 //		this.user_2_id = user_2_id;
 //		this.ticket_id = ticket_id;
-		this.message = message;
 	}
-
 
 	public Message() {
 
@@ -50,13 +53,32 @@ public class Message {
 		this.message = message;
 	}
 	
-	public String getNet_id() {
-		return net_id;
+	public String getSender() {
+		return sender;
 	}
 
-	public void setNet_id(String net_id) {
-		this.net_id = net_id;
+
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
+
+
+	public String getReceiver() {
+		return receiver;
+	}
+
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+
+//	public String getNet_id() {
+//		return net_id;
+//	}
+//
+//	public void setNet_id(String net_id) {
+//		this.net_id = net_id;
+//	}
 
 //	public Integer getUser_1_id() {
 //	return user_1_id;

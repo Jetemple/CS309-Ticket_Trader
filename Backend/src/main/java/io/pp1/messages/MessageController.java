@@ -57,12 +57,17 @@ public class MessageController {
 //		return messageRepository.getConvo(userId1, userId2);
 //	}
 	
-	@RequestMapping(method = RequestMethod.GET, path = "/message/{net_id}")
-	public Message[] getConvo(@PathVariable String net_id) {
-		
-		return messageRepository.getConvo(net_id);
-	}
+//	@RequestMapping(method = RequestMethod.GET, path = "/message/{net_id}")
+//	public Message[] getConvo(@PathVariable String net_id) {
+//		
+//		return messageRepository.getConvo(net_id);
+//	}
 	
+	@RequestMapping(method = RequestMethod.GET, path = "/message/{sender}/{receiver}")
+	public Message[] getConvo(@PathVariable("sender") String sender, @PathVariable("receiver") String receiver) {
+		
+		return messageRepository.getConvo(sender, receiver);
+	}
 	@RequestMapping(method = RequestMethod.DELETE, path = "/message")
 	public void delete(@RequestBody Message message) {
 		messageRepository.deleteById(message.getMessage_id());
