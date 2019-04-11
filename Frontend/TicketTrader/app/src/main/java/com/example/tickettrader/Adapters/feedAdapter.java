@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,16 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     List<feed> data= Collections.emptyList();
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        mListener = listener;
+    }
 
     // create constructor to innitilize context and data sent from MainActivity
     public feedAdapter(Context context, List<feed> data){
@@ -52,6 +63,7 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        myHolder.gameTime.setText("Start time: " + current.gameTime);
         Glide.with(context).load(current.logo).into(myHolder.logo);
         Glide.with(context).load("https://i.imgur.com/Mhi5WN9.png").into(myHolder.ISU);
+
     }
 
     @Override
@@ -60,10 +72,12 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-    class MyHolder extends RecyclerView.ViewHolder{
+    class MyHolder extends RecyclerView.ViewHolder {
 
         TextView name, username, email, price, gameDate, gameTime, opponent, sport;
         ImageView logo, ISU;
+        private AdapterView.OnItemClickListener itemClickListener;
+
         // create constructor to get widget reference
         public MyHolder(View itemView) {
             super(itemView);
@@ -73,6 +87,16 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sport = (TextView) itemView.findViewById(R.id.sport);
             ISU = (ImageView) itemView.findViewById(R.id.isuLogo);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION){
+                        mListener.onItemClick(position);
+                    }
+                }
+            });
+
             //logo= (TextView) itemView.findViewById(R.id.logo);
             //gameLocation =(TextView) itemView.findViewById(R.id.gameLocation);
             //ticketID = (TextView) itemView.findViewById(R.id.ticketID);
@@ -80,6 +104,7 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //            opponent = (TextView) itemView.findViewById(R.id.opponentTV);
 
         }
+
 
     }
 
