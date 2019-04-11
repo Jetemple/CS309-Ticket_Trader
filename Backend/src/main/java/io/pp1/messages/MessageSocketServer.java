@@ -18,10 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.pp1.messages.MessageRepository;
 
+//this is the url front end should call in order to initialize the session.
 @ServerEndpoint(value="/websocket/{username}", configurator = CustomConfigurator.class)
 @Component
 public class MessageSocketServer {
-
 
 	// Store all socket session and their corresponding username.
 	private static Map<Session, String> sessionUsernameMap = new HashMap<>();
@@ -29,8 +29,8 @@ public class MessageSocketServer {
 
 	private final Logger logger = LoggerFactory.getLogger(MessageSocketServer.class);
 	
-	@Autowired
-	private MessageRepository messageRepository;
+//	@Autowired
+//	private MessageRepository messageRepository;
 
 	//private String use=messageRepository.getMessageOnly(11,3,4);
 	@OnOpen
@@ -43,25 +43,20 @@ public class MessageSocketServer {
 		String message = "User:" + username + " has Joined the Chat";
 		broadcast(message);
 
-//		sessionUsernameMap.put(session, username);
-//		usernameSessionMap.put(username, session);
-//		Integer sent=Integer.parseInt(username);
-//		Integer to=Integer.parseInt(sendTo);
-//		String loadMessage=messageRepository.getMessageOnly(sent,to);
-
 	}
 
+	//what happens when socket receives a message
 	@OnMessage
 	public void onMessage(Session session, String message) throws IOException {
 		// Handle new messages
 		logger.info("Entered into Message: Got Message:" + message);
 		String username = sessionUsernameMap.get(session);
 		
-//		usernameSessionMap.get(username).getBasicRemote().sendText(message);
-//		usernameSessionMap.get(sendTo).getBasicRemote().sendText(message);
 		broadcast(username + ": " + message);
 	}
 
+	
+	//what happens when we close that session
 	@OnClose
 	public void onClose(Session session) throws IOException {
 		logger.info("Entered into Close");
@@ -69,8 +64,6 @@ public class MessageSocketServer {
 		String username = sessionUsernameMap.get(session);
 		sessionUsernameMap.remove(session);
 		usernameSessionMap.remove(username);
-
-
 	}
 
 	@OnError

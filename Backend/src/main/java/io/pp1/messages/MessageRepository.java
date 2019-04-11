@@ -11,10 +11,23 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	
 	public List<Message> findAll();
 
-	@Query(value = "SELECT * FROM message u WHERE u.ticket_id = ?1 and u.user_1_id = ?2 and u.user_2_id = ?3", nativeQuery=true)
-	Message getMessage(Integer ticket_id, Integer user_1_id, Integer user_2_id);
+//	@Query(value = "SELECT * FROM message u WHERE u.ticket_id = ?1 and u.user_1_id = ?2 and u.user_2_id = ?3", nativeQuery=true)
+//	Message getMessage(Integer ticket_id, Integer user_1_id, Integer user_2_id);
+//	
+//	
+//	@Query(value = "SELECT message FROM message u WHERE (u.user_1_id =?2 or u.user_1_id =?3) and (u.user_2_id=?2 or u.user_2_id=?3)", nativeQuery=true)
+//	String getMessageOnly(Integer user_1_id, Integer user_2_id);
+//	
+//	
+//	@Query(value = "SELECT user_1_id FROM message u WHERE u.message_id = ?1", nativeQuery=true)
+//	Integer getUser1Id(Integer message_id);
+//	
+//	
+//	@Query(value = "SELECT user_2_id FROM message u WHERE u.message_id = ?1", nativeQuery=true)
+//	Integer getUser2Id(Integer message_id);
+//	
+	//gets entire conversation between two users
+	@Query(value = "SELECT * FROM message u WHERE u.net_id = ?1", nativeQuery=true)
+	Message[] getConvo(String net_id);
 	
-	
-	@Query(value = "SELECT message FROM message u WHERE (u.user_1_id =?2 or u.user_1_id =?3) and (u.user_2_id=?2 or u.user_2_id=?3)", nativeQuery=true)
-	String getMessageOnly(Integer user_1_id, Integer user_2_id);
 }
