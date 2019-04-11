@@ -6,10 +6,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class ChatPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private RecyclerView mChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
