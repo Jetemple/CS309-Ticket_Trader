@@ -126,8 +126,15 @@ public class popup_filter extends Activity{
         String sport = sportSpinner.getSelectedItem().toString();
         String opponent = opponentSpinner.getSelectedItem().toString();
 
+        if(sport.equals("All")){
+            sport = null;
+        }
+        if(opponent.equals("All")){
+            opponent=null;
+        }
+
         JSONObject ret = new JSONObject();
-        ret.put("date", game_date);
+        ret.put("game_date", game_date);
         ret.put("sport", sport);
         ret.put("opponent", opponent);
 

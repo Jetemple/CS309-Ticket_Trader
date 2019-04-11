@@ -1,8 +1,11 @@
 package com.example.tickettrader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +16,11 @@ import org.w3c.dom.Text;
 public class TicketEachActivity extends AppCompatActivity {
 
     private static final String TAG = "TicketEachActivity";
+    String sport ;
+    String awayLogo ;
+    int price;
+    int userID;
+    Button  btn_message;
 
 
     @Override
@@ -20,16 +28,30 @@ public class TicketEachActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_each);
 
+       btn_message = findViewById(R.id.btnMessage);
+
+
         getIncomingIntent();
+
+//        btn_message.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //@FIXME This needs to be changed to the desired message class where a new message is created.
+//                Intent intent = new Intent(TicketEachActivity.this, (!!MESSAGE_CLASS.class!!))
+//                intent.putExtra("userID",userID);
+//            }
+//        });
+
 
     }
 
     private void getIncomingIntent(){
 
 
-            String sport = getIntent().getStringExtra("sport");
-            String awayLogo = getIntent().getStringExtra("logoURL");
-            int price = getIntent().getIntExtra("price",-1);
+            sport = getIntent().getStringExtra("sport");
+            awayLogo = getIntent().getStringExtra("logoURL");
+            price = getIntent().getIntExtra("price",-1);
+            userID = getIntent().getIntExtra("userID",-1);
 
 
             loadPage(awayLogo, price, sport);
@@ -42,6 +64,8 @@ public class TicketEachActivity extends AppCompatActivity {
         ImageView isu_logo = findViewById(R.id.isuLogo);
         TextView tv_price = findViewById(R.id.priceTv);
         TextView tv_sport = findViewById(R.id.sportTV);
+        setPrice(price);
+
 //        TextView tv_gameDate = findViewById(R.id.)
 
 
@@ -52,15 +76,18 @@ public class TicketEachActivity extends AppCompatActivity {
         Glide.with(this).load("https://i.imgur.com/Mhi5WN9.png").into(isu_logo);
     }
 
+
+
 //    private void setPrice(String price){
 //
 //        TextView tv_price = findViewById(R.id.tv_sport);
 //        tv_price.setText(price);
 //    }
 
-//    private void setSport(String sport){
-//
-//        TextView tv_price = findViewById(R.id.tv_sport);
-//        tv_price.setText(sport);
-//    }
+    private void setPrice(int price){
+
+
+        TextView tv_price = findViewById(R.id.priceTv);
+        tv_price.setText("$"+String.valueOf(price));
+    }
 }
