@@ -134,7 +134,7 @@ public class popup_filter extends Activity{
         }
 
         JSONObject ret = new JSONObject();
-        ret.put("game_date", game_date);
+//        ret.put("game_date", game_date);
         ret.put("sport", sport);
         ret.put("opponent", opponent);
 

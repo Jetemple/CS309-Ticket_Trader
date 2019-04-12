@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity {
     see if the password and username that the endUser entered was registered or not. If it is registered,
     the POST request will return true and enter the app. If it isn't, then it returns false.
     */
-    private void loginVerify(final String userName, final String userPassword) {
+    void loginVerify(final String userName, final String userPassword) {
 
         String url = "http://cs309-pp-1.misc.iastate.edu:8080/users/login"; //Our Server
         //String url = "https://api.myjson.com/bins/19kf52"; //NO VPN Required
@@ -140,7 +140,6 @@ public class Login extends AppCompatActivity {
         });
 
         requestQueue.add(request);
-
     }
 
 }
