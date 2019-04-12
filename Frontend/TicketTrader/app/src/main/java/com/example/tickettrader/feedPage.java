@@ -123,7 +123,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
-    private void refresh(String url) {
+    public void refresh(String url) {
 
         feedData.clear();
 

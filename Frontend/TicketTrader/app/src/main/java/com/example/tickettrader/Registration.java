@@ -97,6 +97,11 @@ public class Registration extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //invalid1: needs to be a isu net ID
+        //invalid2: email already exists
+        //invalid3: password needs to be 8 characters and needs to contain at least 1 number and 1 letter
+
+
 
         //POSTS the JSON, the add it to the Request Queue
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, null, null);
