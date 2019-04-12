@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.tickettrader.Adapters.ChatAdapter;
@@ -28,6 +29,7 @@ public class Chat extends AppCompatActivity {
     private Button send;
     private ImageButton back;
     private String url;
+    private ListView mChat;
     private String otherUser;
     private String user;
     private DatabaseHelper dbHelper;
@@ -42,6 +44,7 @@ public class Chat extends AppCompatActivity {
         this.back = (ImageButton) findViewById(R.id.chat_back);
         this.message = (EditText) findViewById(R.id.mtext);
         this.send = (Button) findViewById(R.id.send_btn);
+        this.mChat = (ListView) findViewById(R.id.messages_view);
         this.otherUser = getIntent().getStringExtra("other_user");
         this.dbHelper = new DatabaseHelper(this);
         Cursor data = dbHelper.getData();
@@ -51,77 +54,76 @@ public class Chat extends AppCompatActivity {
         this.user = data.getString(1);
         //this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/message/" + this.user + "@iastate.edu/" + this.otherUser + "@iastate.edu";
         this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/websocket/admin1@iastate.edu/admin2@iastate.edu/2";
-        this.cAdapter = new ChatAdapter(this);
+        this.cAdapter = new ChatAdapter(Chat.this);
+        this.mChat.setAdapter(cAdapter);
 
-//        this.back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
+        Draft[] drafts = {new Draft_6455()};
+        try {
+            Log.d("trying", "");
+            cc = new WebSocketClient(new URI(url),(Draft) drafts[0]) {
+                @Override
+                public void onMessage(String message) {
+                    final Message m = new Message(message, 0);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            cAdapter.add(m);
+                        }
+                    });
+                    System.out.println(cAdapter.getItem(0));
+                }
+
+                @Override
+                public void onOpen(ServerHandshake handshake) {
+                    Log.d("open", "");
+                    System.out.println(00000000000000);
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    Log.d("close", "");
+                    System.out.println(reason);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    System.out.println("error");
+                    e.printStackTrace();
+                }
+            };
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        cc.connect();
 
         this.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("trying", "");
-                //System.out.println(00000000000000);
-                Draft[] drafts = {new Draft_6455()};
-                try {
-                    Log.d("trying", "");
-                    cc = new WebSocketClient(new URI(url),(Draft) drafts[0]) {
-                        @Override
-                        public void onMessage(String message) {
-                                Message m = new Message(message, 0);
-                                cAdapter.add(m);
-                                System.out.println(cAdapter.getItem(0));
-                        }
-
-                        @Override
-                        public void onOpen(ServerHandshake handshake) {
-                            Log.d("open", "");
-                            System.out.println(00000000000000);
-                        }
-
-                        @Override
-                        public void onClose(int code, String reason, boolean remote) {
-                            Log.d("close", "");
-                            System.out.println(reason);
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            System.out.println("error");
-                        }
-                    };
-                }
-                catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-                cc.connect();
+                finish();
             }
         });
 
-       // if(cc.isOpen()) {
-            this.send.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        this.send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                    if(cc.isOpen()){
-                        Log.d("hi", "");
-                        System.out.println(14);
-                    }
-
-                    try {
-                        cc.send(message.getText().toString());
-                        Message m = new Message(message.getText().toString(), 0);
-                        cAdapter.add(m);
-                        System.out.println(15);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println(16);
-                    }
+                if(cc.isOpen()){
+                    Log.d("hi", "");
+                    System.out.println(14);
                 }
-            });
+
+                try {
+                    cc.send(message.getText().toString());
+                    Message m = new Message(message.getText().toString(), 1);
+                    cAdapter.add(m);
+                    System.out.println(15);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println(16);
+                }
+            }
+        });
 
     }
 }
