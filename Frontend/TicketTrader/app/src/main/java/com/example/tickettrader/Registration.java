@@ -1,6 +1,8 @@
 package com.example.tickettrader;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +29,7 @@ public class Registration extends AppCompatActivity {
 
     private Button Back;
     private Button Register;
+    private Button Requirements;
     private EditText FirstName;
     private EditText LastName;
     private EditText netID;
@@ -40,6 +43,7 @@ public class Registration extends AppCompatActivity {
 
 
         //Initializes all of the buttons
+        Requirements = (Button) findViewById(R.id.btn_PasswordReqs);
         Back = (Button) findViewById(R.id.btnBack);
         Register = (Button) findViewById(R.id.btnRegister);
         FirstName = (EditText) findViewById(R.id.first_name); //Change to Email
@@ -53,6 +57,22 @@ public class Registration extends AppCompatActivity {
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
+
+        Requirements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(Registration.this).create();
+                alertDialog.setTitle("Password Requirements");
+                alertDialog.setMessage("8 Characters\nAt least:\n1 Uppercase\n1Special Character");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
 
 
         //Executes actions after Login is clicked
@@ -71,8 +91,6 @@ public class Registration extends AppCompatActivity {
             public void onClick(View v) {
                 register(FirstName.getText().toString(), LastName.getText().toString(), netID.getText().toString(), password.getText().toString());
 
-                Intent SecondActivity = new Intent(Registration.this, Login.class);
-                startActivity(SecondActivity);
 
             }
         });
@@ -97,6 +115,7 @@ public class Registration extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //Valid
         //invalid1: needs to be a isu net ID
         //invalid2: email already exists
         //invalid3: password needs to be 8 characters and needs to contain at least 1 number and 1 letter
@@ -104,8 +123,41 @@ public class Registration extends AppCompatActivity {
 
 
         //POSTS the JSON, the add it to the Request Queue
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, null, null);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,  new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Intent intent = new Intent(Registration.this, Login.class);
+
+                    JSONObject auth = response;
+                    String responseCode = auth.getString("response");
+
+                    if (responseCode.equals("Valid")) {
+                        Toast.makeText(Registration.this, "Registered", Toast.LENGTH_LONG).show();
+                        startActivity(intent);
+                    }
+                    if (responseCode.equals("invalid1")){
+                        Toast.makeText(Registration.this, "must be ISU net-id!", Toast.LENGTH_LONG).show();
+                    }
+                    if (responseCode.equals("invalid2")){
+                        Toast.makeText(Registration.this, "Email already exists!", Toast.LENGTH_LONG).show();
+                    }
+                    if (responseCode.equals("invalid3")){
+                        Toast.makeText(Registration.this, "Password does not meet requirements!", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
         requestQueue.add(jsonObjectRequest);
-//
+
     }
 }
