@@ -35,14 +35,13 @@ public class TicketEachActivity extends AppCompatActivity {
 
         getIncomingIntent();
 
-//        btn_message.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //@FIXME This needs to be changed to the desired message class where a new message is created.
-//                Intent intent = new Intent(TicketEachActivity.this, (!!MESSAGE_CLASS.class!!))
-//                intent.putExtra("userID",userID);
-//            }
-//        });
+        btn_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TicketEachActivity.this, Message_HTML.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
