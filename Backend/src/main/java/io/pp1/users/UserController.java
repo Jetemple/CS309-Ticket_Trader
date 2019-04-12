@@ -83,9 +83,17 @@ public class UserController {
 		}    
 		
 		Pattern p = Pattern.compile( "[0-9]" );
+		Pattern q = Pattern.compile("[a-zA-Z0-9]*");
 	    Matcher m = p.matcher(pass);
+	    Matcher n = q.matcher(pass);
+	    
 
-		if(!m.find()) {
+		if(!m.find() || !n.find()) {
+			
+			return 1;
+		}
+		
+		if(pass.equals(pass.toLowerCase())) {
 			
 			return 1;
 		}

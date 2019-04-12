@@ -40,8 +40,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	@Query(value = "SELECT * FROM ticket u WHERE u.game_location = ?1 ", nativeQuery=true)
 	List<Ticket> getTicketByLocation(String game_location);
 
-	@Query(value = "SELECT * FROM ticket u WHERE u.net_id = ?1", nativeQuery=true)
-	List<Ticket> getTicketBySellerID(String net_id);
+	@Query(value = "SELECT * FROM ticket u WHERE u.seller_id = ?1", nativeQuery=true)
+	List<Ticket> getTicketBySellerID(Integer seller_id);
 
 	@Query(value = "SELECT * FROM ticket u WHERE u.price = ?1", nativeQuery=true)
 	List<Ticket> getTicketByPricet(Integer price);

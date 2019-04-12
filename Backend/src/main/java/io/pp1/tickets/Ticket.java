@@ -16,7 +16,7 @@ public class Ticket {
 	private String game_date;
 	private String game_time;
 	private Integer price;
-	private String net_id;
+	private Integer seller_id;
 	private String opponent;
 	private String record;
 	private String LogoURL;
@@ -91,12 +91,12 @@ public class Ticket {
 		this.price = price;
 	}
 
-	public String getNet_id() {
-		return net_id;
+	public Integer getSeller_id() {
+		return seller_id;
 	}
 
-	public void setNet_id(String net_id) {
-		this.net_id = net_id;
+	public void setSeller_id(Integer seller_id) {
+		this.seller_id = seller_id;
 	}
 
 	public String getOpponent() {
