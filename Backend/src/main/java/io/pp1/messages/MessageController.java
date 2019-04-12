@@ -68,11 +68,11 @@ public class MessageController {
 //		return messageRepository.getConvoById(sender, receiver);
 //	}
 	
-	@RequestMapping(method = RequestMethod.GET, path = "/message/byId/{sender}")
-	public Message[] getConvoById(@PathVariable("sender") String sender) {
-		
-		return messageRepository.getConvoById(sender);
-	}
+//	@RequestMapping(method = RequestMethod.GET, path = "/message/byId/{sender}")
+//	public Message[] getConvoById(@PathVariable("sender") String sender) {
+//		
+//		return messageRepository.getConvoById(sender);
+//	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/message/{sender}/{receiver}")
 	public Message[] getConvo(@PathVariable("sender") String sender, @PathVariable("receiver") String receiver) {
