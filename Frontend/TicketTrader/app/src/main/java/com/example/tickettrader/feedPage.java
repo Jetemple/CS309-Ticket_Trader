@@ -321,6 +321,9 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         } else if (id == R.id.logout) {
             Intent login = new Intent(feedPage.this, Login.class);
             startActivity(login);
+        } else if (id == R.id.chat) {
+            Intent chat = new Intent(feedPage.this, ChatPage.class);
+            startActivity(chat);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
