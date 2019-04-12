@@ -53,14 +53,14 @@ public class MessageSocketServer {
 					message = message + toGoOver.getMessage() + "\n" + "Enter '#userName message' to send to user\n";
 				}
 			} else {
-				usernameSessionMap.get(seller).getBasicRemote().sendText("No messages for this ticket.");
+				usernameSessionMap.get(buyer).getBasicRemote().sendText("No messages for this ticket.");
 			}
 		} else {
 			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
 				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
 				message = toUse.getMessage();
 			} else {
-				usernameSessionMap.get(seller).getBasicRemote().sendText("Enter message to send to the Seller.\n");
+				usernameSessionMap.get(buyer).getBasicRemote().sendText("Enter message to send to the Seller.\n");
 			}
 		}
 		usernameSessionMap.get(buyer).getBasicRemote().sendText(message);
