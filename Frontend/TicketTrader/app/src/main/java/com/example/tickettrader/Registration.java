@@ -63,7 +63,7 @@ public class Registration extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(Registration.this).create();
                 alertDialog.setTitle("Password Requirements");
-                alertDialog.setMessage("8 Characters\nAt least:\n1 Uppercase\n1Special Character");
+                alertDialog.setMessage("8 Characters\nAt least: 1 Uppercase & 1 Special Character");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -90,14 +90,12 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 register(FirstName.getText().toString(), LastName.getText().toString(), netID.getText().toString(), password.getText().toString());
-
-
             }
         });
     }
 
 
-    private void register(final String FirstName, final String LastName, final String netID, final String password)
+    public void register(final String FirstName, final String LastName, final String netID, final String password)
     {
 
         String url = "http://cs309-pp-1.misc.iastate.edu:8080/users";
@@ -137,7 +135,7 @@ public class Registration extends AppCompatActivity {
                         startActivity(intent);
                     }
                     if (responseCode.equals("invalid1")){
-                        Toast.makeText(Registration.this, "must be ISU net-id!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Registration.this, "Must be ISU net-id!", Toast.LENGTH_LONG).show();
                     }
                     if (responseCode.equals("invalid2")){
                         Toast.makeText(Registration.this, "Email already exists!", Toast.LENGTH_LONG).show();
