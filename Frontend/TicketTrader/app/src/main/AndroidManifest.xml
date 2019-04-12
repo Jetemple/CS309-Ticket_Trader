@@ -11,25 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Chat"></activity>
+        <activity android:name=".Chat1"></activity>
+        <activity android:name=".Test" />
+        <activity android:name=".Chat" />
         <activity android:name=".ChatPage" />
-        <activity android:name=".ticket_info" />
-        <activity
-            android:name=".sellPage"
-            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".UserAccountPage" />
         <activity android:name=".Registration" />
         <activity android:name=".SecondActivity" />
-        <activity
-            android:name=".feedPage"
-            android:noHistory="true" />
-        <activity android:name=".Login">
+        <activity android:name=".TicketEachActivity" />
+        <activity android:name=".feedPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Login" />
+        <activity android:name=".sellPage" />
+        <activity
+            android:name=".popup_filter"
+            android:theme="@style/AppTheme.popUpTheme" />
     </application>
 
 </manifest>

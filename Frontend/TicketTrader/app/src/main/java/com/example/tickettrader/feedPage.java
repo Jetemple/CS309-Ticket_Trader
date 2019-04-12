@@ -3,6 +3,7 @@ package com.example.tickettrader;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.view.GravityCompat;
@@ -30,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +42,15 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     private RecyclerView mFeed;
     private feedAdapter mAdapter;
     private ImageButton bRefresh;
+    private ImageButton bFilter;
     RequestQueue requestQueue;
     String url;
 
     List<feed> feedData = new ArrayList<>();
+    JSONObject filter = new JSONObject();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,16 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.activity_feed_page);
         mFeed = findViewById(R.id.ticketList);
         bRefresh = findViewById(R.id.refresh);
+        bFilter = findViewById(R.id.filter);
+
+        try {
+            filter.put("opponent",null);
+            filter.put("game_date",null);
+            filter.put("sport",null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Feed");
@@ -76,9 +93,35 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
 
+        bFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(feedPage.this, popup_filter.class);
+
+//                intent.putExtra("data", (Parcelable) feedData);
+//                Bundle args = new Bundle();
+//                args.putSerializable("FEEDLIST", (Serializable)feedData);
+//                intent.putExtra("Bundle", args);
+                startActivityForResult(intent,999);
+
+            }
+        });
+
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 999 && resultCode == RESULT_OK){
+                try {
+                    JSONObject mJSONObject = new JSONObject(data.getStringExtra("json"));
+                    filter("http://cs309-pp-1.misc.iastate.edu:8080/tickets/filter", mJSONObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
 
     private void refresh(String url) {
 
@@ -106,6 +149,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 //                        User.setLogo(json_data.getString("image"));
                             Feed.setGame_Date(json_data.getString("game_date"));
                             Feed.setPrice(json_data.getInt("price"));
+                            Feed.setNet_id(json_data.getString("net_id"));
 
                             feedData.add(Feed);
 
@@ -113,6 +157,29 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 
                         mAdapter = new feedAdapter(feedPage.this, feedData);
                         mFeed.setAdapter(mAdapter);
+                        mAdapter.setOnItemClickListener(new feedAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                Intent intent = new Intent(feedPage.this, TicketEachActivity.class);
+                                int tmp_price = feedData.get(position).price;
+                                int tmp_ticketID = feedData.get(position).ticketID;
+                                int tmp_sellerID = feedData.get(position).sellerID;
+
+
+                                intent.putExtra("price", tmp_price);
+                                intent.putExtra("sport", feedData.get(position).sport);
+                                intent.putExtra("gameTime", feedData.get(position).gameTime);
+                                intent.putExtra("gameDate", feedData.get(position).gameDate);
+                                intent.putExtra("gameLocation", feedData.get(position).gameLocation);
+                                intent.putExtra("logoURL", feedData.get(position).logo);
+                                intent.putExtra("sellerID", feedData.get(position).sellerID);
+//                                intent.putExtra("ticketID", tmp_ticketID);
+                                intent.putExtra("net_id",feedData.get(position).net_id);
+
+                                startActivity(intent);
+
+                            }
+                        });
                         mFeed.setLayoutManager(new LinearLayoutManager(feedPage.this));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -131,6 +198,86 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
             requestQueue.add(request);
         }
     }
+
+    private void filter(String url, JSONObject filterData) {
+
+        feedData.clear();
+
+//    url = "https://api.myjson.com/bins/77i0u";
+        {
+            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, filterData, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("ticket");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject json_data = jsonArray.getJSONObject(i);
+
+                            feed Feed = new feed();
+                            Feed.setSport(json_data.getString("sport"));
+//                    Feed.setOpponent(json_data.getString("opponent"));
+                            Feed.setLogo(json_data.getString("logoURL"));
+                            Feed.setSport(json_data.getString("sport"));
+
+                            //User.setGameLocation(json_data.getString("gameLocation"));
+                            //User.setTicketiD(json_data.getString("ticketID"));
+//                        User.setLogo(json_data.getString("image"));
+                            Feed.setGame_Date(json_data.getString("game_date"));
+                            Feed.setPrice(json_data.getInt("price"));
+
+                            feedData.add(Feed);
+
+                        }
+
+                        mAdapter = new feedAdapter(feedPage.this, feedData);
+                        mFeed.setAdapter(mAdapter);
+                        mAdapter.setOnItemClickListener(new feedAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                Intent intent = new Intent(feedPage.this, TicketEachActivity.class);
+                                int tmp_price = feedData.get(position).price;
+                                int tmp_ticketID = feedData.get(position).ticketID;
+                                int tmp_sellerID = feedData.get(position).sellerID;
+
+
+                                intent.putExtra("price", tmp_price);
+                                intent.putExtra("sport", feedData.get(position).sport);
+                                intent.putExtra("gameTime", feedData.get(position).gameTime);
+                                intent.putExtra("gameDate", feedData.get(position).gameDate);
+                                intent.putExtra("gameLocation", feedData.get(position).gameLocation);
+                                intent.putExtra("logoURL", feedData.get(position).logo);
+                                intent.putExtra("sellerID", feedData.get(position).sellerID);
+                                intent.putExtra("ticketID", tmp_ticketID);
+
+                                startActivity(intent);
+
+                            }
+                        });
+                        mFeed.setLayoutManager(new LinearLayoutManager(feedPage.this));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),
+                                "Error: " + e.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(feedPage.this, "Check Internet Connection", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            requestQueue.add(request);
+        }
+    }
+
+
+
+
+
 
     @Override
     public void onBackPressed() {

@@ -34,7 +34,7 @@ public class ChatAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return this.messages.get(i);
+        return this.messages.get(i).getText();
     }
 
     @Override

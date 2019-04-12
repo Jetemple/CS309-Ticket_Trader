@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
@@ -31,13 +31,15 @@
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize"
         android:background="#fff">
 
         <ListView
             android:layout_width="match_parent"
             android:id="@+id/messages_view"
             android:layout_weight="2"
-            android:divider="#fff"
             android:layout_height="wrap_content"
             />
 
@@ -45,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="#fff"
             android:orientation="horizontal">
 
             <EditText
@@ -56,8 +57,8 @@
                 android:ems="10"
                 android:hint="Write a message"
                 android:inputType="text"
-                android:paddingHorizontal="10dp"
-                android:text="" />
+                android:textColor="@color/black"
+                android:paddingHorizontal="10dp" />
 
             <Button
                 android:id="@+id/send_btn"
