@@ -18,6 +18,7 @@ public class TicketEachActivity extends AppCompatActivity {
     private static final String TAG = "TicketEachActivity";
     String sport ;
     String awayLogo ;
+    String net_id;
     int price;
     int userID;
     Button  btn_message;
@@ -52,6 +53,7 @@ public class TicketEachActivity extends AppCompatActivity {
             awayLogo = getIntent().getStringExtra("logoURL");
             price = getIntent().getIntExtra("price",-1);
             userID = getIntent().getIntExtra("userID",-1);
+            net_id = getIntent().getStringExtra("net_id");
 
 
             loadPage(awayLogo, price, sport);

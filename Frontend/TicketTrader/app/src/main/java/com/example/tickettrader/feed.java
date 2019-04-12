@@ -12,6 +12,7 @@ public class feed {
     public int price;
     public String opponent;
     public String logo;
+    public String net_id;
 
 
     public void setTicketiD(int tickID) {
@@ -47,6 +48,10 @@ public class feed {
 
     public void setSellerID(int sellerIDData) {
         this.sellerID = sellerIDData;
+    }
+
+    public void setNet_id(String net_id) {
+        this.net_id = net_id;
     }
 
 

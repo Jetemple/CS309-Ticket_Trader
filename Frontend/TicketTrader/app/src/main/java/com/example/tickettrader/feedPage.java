@@ -149,6 +149,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 //                        User.setLogo(json_data.getString("image"));
                             Feed.setGame_Date(json_data.getString("game_date"));
                             Feed.setPrice(json_data.getInt("price"));
+                            Feed.setNet_id(json_data.getString("net_id"));
 
                             feedData.add(Feed);
 
@@ -172,7 +173,8 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                 intent.putExtra("gameLocation", feedData.get(position).gameLocation);
                                 intent.putExtra("logoURL", feedData.get(position).logo);
                                 intent.putExtra("sellerID", feedData.get(position).sellerID);
-                                intent.putExtra("ticketID", tmp_ticketID);
+//                                intent.putExtra("ticketID", tmp_ticketID);
+                                intent.putExtra("net_id",feedData.get(position).net_id);
 
                                 startActivity(intent);
 
