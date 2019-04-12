@@ -118,6 +118,7 @@ public class Chat extends AppCompatActivity {
                     Message m = new Message(message.getText().toString(), 1);
                     cAdapter.add(m);
                     System.out.println(15);
+                    message.setText("");
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(16);
