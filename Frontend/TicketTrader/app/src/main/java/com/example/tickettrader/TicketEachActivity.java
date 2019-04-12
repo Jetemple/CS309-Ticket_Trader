@@ -19,6 +19,7 @@ public class TicketEachActivity extends AppCompatActivity {
     String sport ;
     String awayLogo ;
     String net_id;
+    String date;
     int price;
     int userID;
     Button  btn_message;
@@ -54,17 +55,18 @@ public class TicketEachActivity extends AppCompatActivity {
             price = getIntent().getIntExtra("price",-1);
             userID = getIntent().getIntExtra("userID",-1);
             net_id = getIntent().getStringExtra("net_id");
+            date = getIntent().getStringExtra("gameDate");
 
 
-            loadPage(awayLogo, price, sport);
+            loadPage(awayLogo, price, sport,date);
 
     }
 
-    private void loadPage(String awayLogo, int price, String sport)
+    private void loadPage(String awayLogo, int price, String sport, String date)
     {
         ImageView away_logo = findViewById(R.id.awayLogo);
         ImageView isu_logo = findViewById(R.id.isuLogo);
-        TextView tv_price = findViewById(R.id.priceTv);
+        TextView tv_game_date = findViewById(R.id.game_date_ticket);
         TextView tv_sport = findViewById(R.id.sportTV);
         setPrice(price);
 
@@ -74,6 +76,7 @@ public class TicketEachActivity extends AppCompatActivity {
 
 //        tv_price.setText(price);
         tv_sport.setText(sport);
+        tv_game_date.setText(date);
         Glide.with(this).load(awayLogo).into(away_logo);
         Glide.with(this).load("https://i.imgur.com/Mhi5WN9.png").into(isu_logo);
     }
