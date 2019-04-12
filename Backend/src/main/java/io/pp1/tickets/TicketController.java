@@ -52,15 +52,11 @@ public class TicketController {
 		return new TicketService(ticketRepository.getTicketByID(id.getTicket_id()));
 	}
 
-<<<<<<< HEAD
-	@RequestMapping(method = RequestMethod.POST, path = "/tickets/seller_id")
-	public TicketService getSellerTickets(@RequestBody Ticket seller_id) {
-		return new TicketService(ticketRepository.getTicketBySellerID(seller_id.getSeller_id()));
-=======
+
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/net_id")
 	public TicketService getSellerTickets(@RequestBody Ticket net_id) {
 		return new TicketService(ticketRepository.getTicketBySellerID(net_id.getNet_id()));
->>>>>>> bf51fc12e8ca63d11b901c86fe43e9e8ee7d6278
+
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/location")
