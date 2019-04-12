@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class popup_filter extends Activity{
+public class popup_filter extends Activity {
     private EditText date;
-    private Spinner sportSpinner,  opponentSpinner;
+    private Spinner sportSpinner, opponentSpinner;
     int year, month, day;
     Button btnFilter;
     DatePickerDialog datePickerDialog;
@@ -41,7 +41,7 @@ public class popup_filter extends Activity{
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int) (width*.97),(int) (height*.97));
+        getWindow().setLayout((int) (width * .97), (int) (height * .97));
 
 
 //        Intent intent = getIntent();
@@ -57,27 +57,22 @@ public class popup_filter extends Activity{
 //        sOpponents.setAdapter(opponentAdapter);
 
 
-
-
-
-
         sportSpinner = (Spinner) findViewById(R.id.spinner);
         opponentSpinner = (Spinner) findViewById(R.id.spinner2);
 
 
         ArrayAdapter<String> sportAdapter = new ArrayAdapter<String>(popup_filter.this,
-                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.sport_array));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sport_array));
 
         sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sportSpinner.setAdapter(sportAdapter);
 
 
         ArrayAdapter<String> opponentAdapter = new ArrayAdapter<String>(popup_filter.this,
-                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.opponent_array));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.opponent_array));
 
         opponentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opponentSpinner.setAdapter(opponentAdapter);
-
 
 
         date = findViewById(R.id.Date_popup);
@@ -88,13 +83,13 @@ public class popup_filter extends Activity{
                 year = calendar.get(Calendar.YEAR);
                 month = calendar.get(Calendar.MONTH);
                 day = calendar.get(Calendar.DAY_OF_MONTH);
-                datePickerDialog=new DatePickerDialog(popup_filter.this, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(popup_filter.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        date.setText((month+1)+"/"+day+"/"+year);
+                        date.setText((month + 1) + "/" + day + "/" + year);
 
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -113,7 +108,7 @@ public class popup_filter extends Activity{
 
                 Intent i = new Intent(popup_filter.this, feedPage.class);
                 i.putExtra("json", ret.toString());
-                setResult(RESULT_OK,i);
+                setResult(RESULT_OK, i);
                 finish();
 
             }
@@ -122,15 +117,15 @@ public class popup_filter extends Activity{
 
 
     public JSONObject filter() throws JSONException {
-        String game_date = (month+1)+"/"+day+"/"+year;
+        String game_date = (month + 1) + "/" + day + "/" + year;
         String sport = sportSpinner.getSelectedItem().toString();
         String opponent = opponentSpinner.getSelectedItem().toString();
 
-        if(sport.equals("All")){
+        if (sport.equals("All")) {
             sport = null;
         }
-        if(opponent.equals("All")){
-            opponent=null;
+        if (opponent.equals("All")) {
+            opponent = null;
         }
 
         JSONObject ret = new JSONObject();

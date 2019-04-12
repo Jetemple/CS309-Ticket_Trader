@@ -21,7 +21,7 @@ public class jack_register_test {
 
     @Test
     public void register_success() {
-        //This tests the registration of a new user.
+        //Makes sure that the registration page follows all of the requirements and doesn't register a user.
         Registration test = mock(Registration.class);
         String firstName = "Test";
         String lastName = "Mockito";

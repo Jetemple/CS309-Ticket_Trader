@@ -16,29 +16,28 @@ import org.w3c.dom.Text;
 public class TicketEachActivity extends AppCompatActivity {
 
     private static final String TAG = "TicketEachActivity";
-    String sport ;
-    String awayLogo ;
+    String sport;
+    String awayLogo;
     String net_id;
     String date;
     int price;
     int userID;
-    Button  btn_message;
+    Button btn_message;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_each);
-
-       btn_message = findViewById(R.id.btnMessage);
-
-
+        btn_message = findViewById(R.id.btnMessage);
         getIncomingIntent();
 
         btn_message.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TicketEachActivity.this, Message_HTML.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(TicketEachActivity.this, Chat.class);
+                String otherUser = getIntent().getStringExtra("net_id");
+                intent.putExtra("other_user", otherUser);
                 startActivity(intent);
             }
         });
@@ -46,52 +45,42 @@ public class TicketEachActivity extends AppCompatActivity {
 
     }
 
-    private void getIncomingIntent(){
+    private void getIncomingIntent() {
 
 
-            sport = getIntent().getStringExtra("sport");
-            awayLogo = getIntent().getStringExtra("logoURL");
-            price = getIntent().getIntExtra("price",-1);
-            userID = getIntent().getIntExtra("userID",-1);
-            net_id = getIntent().getStringExtra("net_id");
-            date = getIntent().getStringExtra("gameDate");
+        sport = getIntent().getStringExtra("sport");
+        awayLogo = getIntent().getStringExtra("logoURL");
+        price = getIntent().getIntExtra("price", -1);
+        userID = getIntent().getIntExtra("userID", -1);
+        net_id = getIntent().getStringExtra("net_id");
+        date = getIntent().getStringExtra("gameDate");
 
 
-            loadPage(awayLogo, price, sport,date);
+        loadPage(awayLogo, price, sport, date, net_id);
 
     }
 
-    private void loadPage(String awayLogo, int price, String sport, String date)
-    {
+    private void loadPage(String awayLogo, int price, String sport, String date, String net_id) {
         ImageView away_logo = findViewById(R.id.awayLogo);
         ImageView isu_logo = findViewById(R.id.isuLogo);
         TextView tv_game_date = findViewById(R.id.game_date_ticket);
         TextView tv_sport = findViewById(R.id.sportTV);
         setPrice(price);
+        TextView tv_net_id = findViewById(R.id.netID_tv);
 
-//        TextView tv_gameDate = findViewById(R.id.)
-
-
-
-//        tv_price.setText(price);
         tv_sport.setText(sport);
         tv_game_date.setText(date);
+        tv_net_id.setText("Seller: " + net_id);
+
         Glide.with(this).load(awayLogo).into(away_logo);
         Glide.with(this).load("https://i.imgur.com/Mhi5WN9.png").into(isu_logo);
     }
 
 
-
-//    private void setPrice(String price){
-//
-//        TextView tv_price = findViewById(R.id.tv_sport);
-//        tv_price.setText(price);
-//    }
-
-    private void setPrice(int price){
+    private void setPrice(int price) {
 
 
         TextView tv_price = findViewById(R.id.priceTv);
-        tv_price.setText("$"+String.valueOf(price));
+        tv_price.setText("$" + String.valueOf(price));
     }
 }

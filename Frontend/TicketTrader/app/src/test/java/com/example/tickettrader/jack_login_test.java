@@ -26,7 +26,7 @@ public class jack_login_test {
 
     @Test
     public void login_fail() {
-        //This creates a Mock Object of the class that we have not fully implemented
+       //Tests to verify that a fake username and password will not work.
         Login test = mock(Login.class);
         String fakeUser = "liar";
         String fakePassword = "loser";

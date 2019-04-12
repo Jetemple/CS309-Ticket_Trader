@@ -24,7 +24,7 @@ public class jack_feed_test {
 
     @Test
     public void refresh_returnsFalse() {
-        //This creates a Mock Object of the class that we have not fully implemented
+        //This unit test tests to see what happens if an incorrect URL is put into the refresh page
         feedPage test = mock(feedPage.class);
         test.refresh("http://cs308-pp-1.misc.iastate.edu:8080/tickets");
 

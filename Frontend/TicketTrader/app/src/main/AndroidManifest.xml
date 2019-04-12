@@ -11,22 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Chat1"></activity>
-        <activity android:name=".Test" />
         <activity android:name=".Chat" />
         <activity android:name=".ChatPage" />
         <activity android:name=".UserAccountPage" />
-        <activity android:name=".Registration" />
+        <activity android:name=".Registration"
+            android:noHistory="true"/>
         <activity android:name=".SecondActivity" />
         <activity android:name=".TicketEachActivity" />
-        <activity android:name=".feedPage">
+        <activity android:name=".Login"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
+        <activity android:name=".feedPage" />
         <activity android:name=".sellPage" />
         <activity
             android:name=".popup_filter"

@@ -50,8 +50,6 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     JSONObject filter = new JSONObject();
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +59,9 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         bFilter = findViewById(R.id.filter);
 
         try {
-            filter.put("opponent",null);
-            filter.put("game_date",null);
-            filter.put("sport",null);
+            filter.put("opponent", null);
+            filter.put("game_date", null);
+            filter.put("sport", null);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,12 +95,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(feedPage.this, popup_filter.class);
-
-//                intent.putExtra("data", (Parcelable) feedData);
-//                Bundle args = new Bundle();
-//                args.putSerializable("FEEDLIST", (Serializable)feedData);
-//                intent.putExtra("Bundle", args);
-                startActivityForResult(intent,999);
+                startActivityForResult(intent, 999);
 
             }
         });
@@ -113,13 +106,13 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 999 && resultCode == RESULT_OK){
-                try {
-                    JSONObject mJSONObject = new JSONObject(data.getStringExtra("json"));
-                    filter("http://cs309-pp-1.misc.iastate.edu:8080/tickets/filter", mJSONObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        if (requestCode == 999 && resultCode == RESULT_OK) {
+            try {
+                JSONObject mJSONObject = new JSONObject(data.getStringExtra("json"));
+                filter("http://cs309-pp-1.misc.iastate.edu:8080/tickets/filter", mJSONObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -140,7 +133,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 
                             feed Feed = new feed();
                             Feed.setSport(json_data.getString("sport"));
-//                    Feed.setOpponent(json_data.getString("opponent"));
+                            Feed.setOpponent(json_data.getString("opponent"));
                             Feed.setLogo(json_data.getString("logoURL"));
                             Feed.setSport(json_data.getString("sport"));
 
@@ -174,7 +167,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                 intent.putExtra("logoURL", feedData.get(position).logo);
                                 intent.putExtra("sellerID", feedData.get(position).sellerID);
 //                                intent.putExtra("ticketID", tmp_ticketID);
-                                intent.putExtra("net_id",feedData.get(position).net_id);
+                                intent.putExtra("net_id", feedData.get(position).net_id);
 
                                 startActivity(intent);
 
@@ -217,13 +210,8 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 
                             feed Feed = new feed();
                             Feed.setSport(json_data.getString("sport"));
-//                    Feed.setOpponent(json_data.getString("opponent"));
                             Feed.setLogo(json_data.getString("logoURL"));
                             Feed.setSport(json_data.getString("sport"));
-
-                            //User.setGameLocation(json_data.getString("gameLocation"));
-                            //User.setTicketiD(json_data.getString("ticketID"));
-//                        User.setLogo(json_data.getString("image"));
                             Feed.setGame_Date(json_data.getString("game_date"));
                             Feed.setPrice(json_data.getInt("price"));
 
@@ -274,10 +262,6 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         }
         Toast.makeText(feedPage.this, "Filtered!", Toast.LENGTH_LONG).show();
     }
-
-
-
-
 
 
     @Override
