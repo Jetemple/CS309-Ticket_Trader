@@ -16,14 +16,14 @@ public class Message {
 	private String sender;
 	private String receiver;
 	private String message;
-	private Integer ticket_id;
+	private String ticket_id;
 	
 //	private Integer user_1_id;
 //	private Date localTime;
 //	private Integer user_2_id;
 
 
-	public Message(@NotNull Integer message_id, String sender,String receiver, String message, Integer ticket_id) {
+	public Message(@NotNull Integer message_id, String sender,String receiver, String message, String ticket_id) {
 		super();
 		this.message_id = message_id;
 		this.sender = sender;
@@ -37,6 +37,14 @@ public class Message {
 
 	public Message() {
 
+	}
+
+	public String getTicket_id() {
+		return ticket_id;
+	}
+
+	public void setTicket_id(String ticket_id) {
+		this.ticket_id = ticket_id;
 	}
 
 	public Integer getMessage_id() {
@@ -95,12 +103,6 @@ public class Message {
 //public void setUser_2_id(Integer user_2_id) {
 //	this.user_2_id = user_2_id;
 //}
-public Integer getTicket_id() {
-	return ticket_id;
-}
-public void setTicket_id(Integer ticket_id) {
-	this.ticket_id = ticket_id;
-}
 	// public void setLocalTime(Date localTime) {
 //		this.localTime = localTime;
 //	}

@@ -38,15 +38,15 @@ public class MessageSocketServer {
 	public void onOpen(Session session, @PathParam("seller") String seller, @PathParam("buyer") String buyer,
 			@PathParam("ticket") String ticket) throws IOException {
 		logger.info("Entered into Open");
-		Integer ticketInt = Integer.parseInt(ticket);
+//		Integer ticketInt = Integer.parseInt(ticket);
 		List<Message> messageList;
 		String message = "";
 		sessionUsernameMap.put(session, buyer);
 		usernameSessionMap.put(buyer, session);
 
 		if (buyer.equals(seller)) {
-			if (messageRepository.getMessageByTicket_ID(ticketInt).size() != 0) {
-				messageList = messageRepository.getMessageByTicket_ID(ticketInt);
+			if (messageRepository.getMessageByTicket_ID(ticket).size() != 0) {
+				messageList = messageRepository.getMessageByTicket_ID(ticket);
 				System.out.print("gets here");
 				for (int i = 0; i < messageList.size(); i++) {
 					Message toGoOver = messageList.get(i);
@@ -56,8 +56,8 @@ public class MessageSocketServer {
 				usernameSessionMap.get(buyer).getBasicRemote().sendText("No messages for this ticket.");
 			}
 		} else {
-			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
-				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
+			if (messageRepository.getMessageBySBT(seller, buyer, ticket) != null) {
+				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticket);
 				message = toUse.getMessage();
 			} else {
 				usernameSessionMap.get(buyer).getBasicRemote().sendText("Enter message to send to the Seller.\n");
@@ -71,30 +71,45 @@ public class MessageSocketServer {
 	public void onMessage(Session session, String message, @PathParam("seller") String seller,
 			@PathParam("buyer") String buyer, @PathParam("ticket") String ticket) throws IOException {
 		// Handle new messages
+		
 		logger.info("Entered into Message: Got Message:" + message);
 		String username = sessionUsernameMap.get(session);
-		Integer ticketInt = Integer.parseInt(ticket);
-
+//		Integer ticketInt = Integer.parseInt(ticket);
+		
+		//broadcast(message);
+//		if(message.charAt(0) == '#') {
+//
+//		String destUsername = message.substring(1, message.indexOf(' '));
+//		message = message.substring(destUsername.length() + 2);
+//		usernameSessionMap.get(destUsername).getBasicRemote().sendText(message);
+//		usernameSessionMap.get(seller).getBasicRemote().sendText(message);
+//		}
+//		else {
+//			
+//			usernameSessionMap.get(buyer).getBasicRemote().sendText(message);
+//			usernameSessionMap.get(seller).getBasicRemote().sendText(message);
+//		}
+//		
 		if (buyer.equals(seller) && message.charAt(0) == '#') {
 
 			String destUsername = message.substring(1, message.indexOf(' '));
 			message = message.substring(destUsername.length() + 2);
 			System.out.print(destUsername + "    " + message);
-			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
+			if (messageRepository.getMessageBySBT(seller, buyer, ticket) != null) {
 				usernameSessionMap.get(destUsername).getBasicRemote().sendText(buyer + ": " + message);
 				usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ": " + message);
 
-				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
+				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticket);
 				message = toUse.getMessage() + "\n" + buyer + ": " + message;
 				toUse.setMessage(message);
 				messageRepository.save(toUse);
 			}
 		} else {
-			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
+			if (messageRepository.getMessageBySBT(seller, buyer, ticket) != null) {
 				usernameSessionMap.get(buyer).getBasicRemote().sendText(buyer + ": " + message);
 				usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ": " + message);
 
-				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
+				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticket);
 				message = toUse.getMessage() + "\n" + buyer + ": " + message;
 				toUse.setMessage(message);
 				messageRepository.save(toUse);
@@ -103,7 +118,7 @@ public class MessageSocketServer {
 				usernameSessionMap.get(buyer).getBasicRemote().sendText(buyer + ": " + message);
 				usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ": " + message);
 				message = buyer + ": " + message;
-				Message newMessage = new Message(0, seller, buyer, message, ticketInt);
+				Message newMessage = new Message(0, seller, buyer, message, ticket);
 				messageRepository.save(newMessage);
 			}
 		}
@@ -125,4 +140,18 @@ public class MessageSocketServer {
 		logger.info("Entered into Error");
 	}
 
+    private static void broadcast(String message) 
+  	      throws IOException 
+  {	  
+  	sessionUsernameMap.forEach((session, username) -> {
+  		synchronized (session) {
+	            try {
+	                session.getBasicRemote().sendText(message);
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    });
+	}
+	
 }
