@@ -33,7 +33,7 @@ public class MessageSocketServer {
 	@Autowired
 	private MessageRepository messageRepository;
 
-
+// just testing CI/CD deployment so remove this if it works
 	@OnOpen
 	public void onOpen(Session session, @PathParam("seller") String seller, @PathParam("buyer") String buyer,
 			@PathParam("ticket") String ticket) throws IOException {
