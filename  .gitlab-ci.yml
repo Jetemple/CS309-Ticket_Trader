@@ -8,7 +8,7 @@ stages:
 maven-build:
   stage: mavenbuild
   tags:
-    - backend_tag
+    - shell_runner
   script:
     - cd Backend
     - mvn package -B
