@@ -17,25 +17,11 @@ public class Ticket {
 	private String game_time;
 	private Integer price;
 	private String net_id;
-	public String getNet_id() {
-		return net_id;
-	}
-
-	public void setNet_id(String net_id) {
-		this.net_id = net_id;
-	}
-
 	private String opponent;
 	private String record;
 	private String LogoURL;
 
-	public String getLogoURL() {
-		return LogoURL;
-	}
 
-	public void setLogoURL(String logoURL) {
-		LogoURL = logoURL;
-	}
 
 	public Ticket() {	
 	}
@@ -51,6 +37,23 @@ public class Ticket {
 //	this.game_time = game_time;
 //}
 
+
+
+	public String getLogoURL() {
+		return LogoURL;
+	}
+
+	public void setLogoURL(String logoURL) {
+		LogoURL = logoURL;
+	}
+
+	public String getNet_id() {
+		return net_id;
+	}
+
+	public void setNet_id(String net_id) {
+		this.net_id = net_id;
+	}
 	public Integer getTicket_id() {
 		return ticket_id;
 	}
