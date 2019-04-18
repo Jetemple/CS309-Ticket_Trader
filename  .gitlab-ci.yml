@@ -53,15 +53,15 @@ android-build:
   stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/gradlew
+    - chmod +x ./Frontend/TicketTrader/gradlew
   tags:
    - frontend_tag
   script:
-    - cd Frontend
+    - cd Frontend/TicketTrader
     - ./gradlew assemble
   artifacts:
     paths:
-    - Frontend/app/build/outputs/
+    - Frontend/TicketTrader/app/build/outputs/
     
 # To run Android unit tests.   
 unitTests:
@@ -69,9 +69,9 @@ unitTests:
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/gradlew
+    - chmod +x ./Frontend/TicketTrader/gradlew
   tags:
    - frontend_tag
   script:
-    - cd Frontend
+    - cd Frontend/TicketTrader
     - ./gradlew test
