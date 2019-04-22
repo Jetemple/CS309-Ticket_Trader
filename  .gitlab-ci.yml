@@ -3,7 +3,7 @@
 stages:
   - mavenbuild
 
-# tags: "shell" should match with the tag name provided to runner, for spring runner should execute in shell.kjb
+# tags: "shell" should match with the tag name provided to runner, for spring runner should execute in shell.
 
 maven-build:
   stage: mavenbuild
