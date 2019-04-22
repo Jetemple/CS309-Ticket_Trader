@@ -23,7 +23,7 @@ import io.pp1.messages.MessageRepository;
 @ServerEndpoint(value = "/websocket/{seller}/{buyer}/{ticket}", configurator = CustomConfigurator.class)
 @Component
 public class MessageSocketServer {
-
+	// ASLDKJASL:KDJASKL:DJA:LKSJDLK:SJD;lska
 	// Store all socket session and their corresponding username.
 	private static Map<Session, String> sessionUsernameMap = new HashMap<>();
 	private static Map<String, Session> usernameSessionMap = new HashMap<>();
