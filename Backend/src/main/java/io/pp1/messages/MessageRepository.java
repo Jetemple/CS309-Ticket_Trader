@@ -12,10 +12,14 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	public List<Message> findAll();
 
 	  @Query(value ="SELECT * FROM message u WHERE (u.sender = ?1 or u.receiver = ?1) and (u.sender = ?2 or u.receiver = ?2) and u.ticket_id = ?3", nativeQuery=true) 
-	  Message getMessageBySBT(String seller, String buyer, String ticket_id);
+	  Message getMessageBySBT(String seller, String buyer, Integer ticket_id);
 	
 	@Query(value = "SELECT * FROM message u WHERE u.ticket_id = ?1", nativeQuery=true)
 	List<Message> getMessageByTicket_ID(String ticket_id);
+	
+	@Query(value = "SELECT * FROM message u WHERE u.receiver= ?1 or u.sender = ?1", nativeQuery=true)
+	List<Message> getMessageByBuyer(String net_id);
+	
 //	
 //	
 //	@Query(value = "SELECT user_1_id FROM message u WHERE u.message_id = ?1", nativeQuery=true)
