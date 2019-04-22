@@ -39,8 +39,8 @@ autoDeploy:
   script:
     - cd Backend
     - mvn package
-    - sudo mv target/*.jar /target/Backend-0.0.1-SNAPSHOT.jar 
-    - sudo systemctl stop systemd-Backend-0.0.1-SNAPSHOT
-    - sudo systemctl start systemd-Backend-0.0.1-SNAPSHOT
+    - sudo mv lss/*.jar /lss/Backend.jar 
+    - sudo systemctl stop systemd-Backend
+    - sudo systemctl start systemd-Backend
 
     
