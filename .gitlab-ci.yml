@@ -53,11 +53,11 @@ android-build:
   stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/TicketTrader/gradlew
+    - chmod +x ./Frontend/TicketTrader/app/gradlew
   tags:
    - android
   script:
-    - cd Frontend/TicketTrader
+    - cd Frontend/TicketTrader/app
     - ./gradlew assemble
   artifacts:
     paths:
@@ -69,9 +69,9 @@ unitTests:
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/TicketTrader/gradlew
+    - chmod +x ./Frontend/TicketTrader/app/gradlew
   tags:
    - android
   script:
-    - cd Frontend/TicketTrader
+    - cd Frontend/TicketTrader/app
     - ./gradlew test
