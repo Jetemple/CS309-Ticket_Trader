@@ -42,6 +42,5 @@ autoDeploy:
     - sudo mv target/*.jar /target/web-demo.jar 
     - sudo systemctl stop systemd-web-demo
     - sudo systemctl start systemd-web-demo
-
-
+# should work testing
     
