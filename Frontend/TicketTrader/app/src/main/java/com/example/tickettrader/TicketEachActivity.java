@@ -20,6 +20,7 @@ public class TicketEachActivity extends AppCompatActivity {
     String awayLogo;
     String net_id;
     String date;
+    String ticketId;
     int price;
     int userID;
     Button btn_message;
@@ -38,6 +39,8 @@ public class TicketEachActivity extends AppCompatActivity {
                 Intent intent = new Intent(TicketEachActivity.this, Chat.class);
                 String otherUser = getIntent().getStringExtra("net_id");
                 intent.putExtra("other_user", otherUser);
+                ticketId = getIntent().getIntExtra("ticket_id", 0) + "";
+                intent.putExtra("ticket_id", ticketId);
                 startActivity(intent);
             }
         });
