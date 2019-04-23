@@ -42,5 +42,36 @@ autoDeploy:
     - sudo mv target/*.jar /target/web-demo.jar 
     - sudo systemctl stop system-web-demo
     - sudo systemctl start system-web-demo
-# should work testing
+# Above code works with backed
     
+# To build android projects
+# Notice that we cd into Android_test folder which contains all Android files before building apk.    
+# Ensure the tag matches with the tag created for Android runner
+# Android runner should have docker as executor.
+android-build:
+  image: javiersantos/android-ci:latest
+  stage: androidbuild
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/TicketTrader/gradlew
+  tags:
+   - android
+  script:
+    - cd Frontend/TicketTrader
+    - ./gradlew assemble
+  artifacts:
+    paths:
+    - Frontend/TicketTrader/app/build/outputs/
+    
+# To run Android unit tests.   
+unitTests:
+  image: javiersantos/android-ci:latest
+  stage: androidtest
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/TicketTrader/gradlew
+  tags:
+   - android
+  script:
+    - cd Frontend/TicketTrader
+    - ./gradlew test
