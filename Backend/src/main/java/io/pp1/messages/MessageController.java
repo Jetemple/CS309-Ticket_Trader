@@ -22,7 +22,12 @@ public class MessageController {
 		return new MessageService(messageRepository.findAll());
 	}
 
-	
+	/**
+	 * 
+	 * Adding the message to the database for security reasons
+	 * 
+	 * @param message
+	 */
 	//sends message to database
 	@RequestMapping(method = RequestMethod.POST, path = "/message")
 	public void addMessage(@RequestBody Message message) {
@@ -74,11 +79,21 @@ public class MessageController {
 //		return messageRepository.getConvoById(sender);
 //	}
 	
+	/**
+	 * @param sender
+	 * @param receiver
+	 * @return
+	 * 
+	 * Retrieves list of messages sent and received between two users, indicating who is the sender
+	 */
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/message/{sender}/{receiver}")
 	public Message[] getConvo(@PathVariable("sender") String sender, @PathVariable("receiver") String receiver) {
 		
 		return messageRepository.getConvo(sender, receiver);
 	}
+	
+	
 	@RequestMapping(method = RequestMethod.DELETE, path = "/message")
 	public void delete(@RequestBody Message message) {
 		messageRepository.deleteById(message.getMessage_id());
