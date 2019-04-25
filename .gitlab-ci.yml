@@ -69,9 +69,9 @@ unitTests:
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/TicketTrader/app/gradlew
+    - chmod +x ./Frontend/TicketTrader/gradlew
   tags:
    - android
   script:
-    - cd Frontend/TicketTrader/app
+    - cd Frontend/TicketTrader
     - ./gradlew test
