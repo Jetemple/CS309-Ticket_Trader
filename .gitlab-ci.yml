@@ -57,7 +57,7 @@ android-build:
   tags:
    - android
   script:
-    - cd Frontend/TicketTrader/app
+    - cd Frontend/TicketTrader
     - ./gradlew assemble
   artifacts:
     paths:
