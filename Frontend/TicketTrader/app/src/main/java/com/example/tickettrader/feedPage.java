@@ -164,7 +164,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                 String tmpSellerID = String.valueOf((feedData.get(position).net_id));
                                 Intent intent = new Intent(feedPage.this, TicketEachActivity.class);
 
-                                if(tmpSellerID.equals(user)){
+                                if(tmpSellerID.equalsIgnoreCase(user)){
                                     intent = new Intent(feedPage.this, TicketEachActivitySeller.class);
                                 }
                                 int tmp_price = feedData.get(position).price;

@@ -88,7 +88,8 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 Scanner sc = new Scanner(price.getText().toString());
-                int priceNum = sc.nextInt();
+//                int priceNum = sc.nextInt();
+                 int priceNum = 0;
 
                 sellTicket(opponent.getText().toString(),
                         sport.getSelectedItem().toString(),
@@ -115,7 +116,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             jsonObject.put("game_time", time);
             jsonObject.put("price", price);
             jsonObject.put("game_location", location);
-            jsonObject.put("seller_id", userId);
+            jsonObject.put("net_id", userId);
             jsonObject.put("ticket_id", 0);
         } catch (JSONException e) {
             e.printStackTrace();

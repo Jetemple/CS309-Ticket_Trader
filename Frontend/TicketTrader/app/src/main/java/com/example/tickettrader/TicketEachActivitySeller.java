@@ -8,9 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 
@@ -24,11 +32,13 @@ public class TicketEachActivitySeller extends AppCompatActivity {
     String awayLogo;
     String net_id;
     String date;
-    String ticketId;
+    int ticketId;
     int price;
     int userID;
     Button btn_message;
     Button btn_delete;
+    String url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets/delete"; //Our Server
+    RequestQueue requestQueue;
 
 
     @Override
@@ -39,13 +49,22 @@ public class TicketEachActivitySeller extends AppCompatActivity {
         btn_delete = findViewById(R.id.btnDelete);
         getIncomingIntent();
 
+
+        //Used for Volley
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+
+        requestQueue.start();
+
+
         btn_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TicketEachActivitySeller.this, Chat.class);
                 String otherUser = getIntent().getStringExtra("net_id");
                 intent.putExtra("other_user", otherUser);
-                ticketId = getIntent().getIntExtra("ticket_id", 0) + "";
+                ticketId = getIntent().getIntExtra("ticket_id", 0);
                 intent.putExtra("ticket_id", ticketId);
                 startActivity(intent);
             }
@@ -54,15 +73,15 @@ public class TicketEachActivitySeller extends AppCompatActivity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ticketId = getIntent().getIntExtra("ticket_id", 0) + "";
-                String url = "http://cs309-pp-1.misc.iastate.edu:8080/users/ticket";
+                ticketId = getIntent().getIntExtra("ticket_id", 0);
 
                 JSONObject ret = new JSONObject();
                 try {
-                    ret.put("ticketID",ticketId);
+                    ret.put("ticket_id",ticketId);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                delete(ret);
             }
         });
 
@@ -98,6 +117,31 @@ public class TicketEachActivitySeller extends AppCompatActivity {
 
         Glide.with(this).load(awayLogo).into(away_logo);
         Glide.with(this).load("https://i.imgur.com/Mhi5WN9.png").into(isu_logo);
+    }
+
+    private void delete (JSONObject data) {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, data, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+
+        requestQueue.add(request);
+
+        Intent intent = new Intent(TicketEachActivitySeller.this, feedPage.class);
+        startActivity(intent);
+
+        Toast.makeText(getApplicationContext(),
+                "Deleted!",
+                Toast.LENGTH_LONG).show();
     }
 
 

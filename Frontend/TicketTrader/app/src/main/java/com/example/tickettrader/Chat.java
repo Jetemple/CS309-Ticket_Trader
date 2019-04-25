@@ -52,8 +52,8 @@ public class Chat extends AppCompatActivity {
         data.moveToNext();
         data.moveToNext();
         this.user = data.getString(1);
-        //this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/message/" + this.user + "@iastate.edu/" + this.otherUser + "@iastate.edu";
-        this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/websocket/jetemple@iastate.edu/admin1@iastate.edu/" + ticketId;
+        this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/websocket/" + this.otherUser + "/" + this.user + "/" + ticketId;
+//        this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/websocket/jetemple@iastate.edu/admin1@iastate.edu/" + ticketId;
 
         this.cAdapter = new ChatAdapter(Chat.this);
         this.mChat.setAdapter(cAdapter);
