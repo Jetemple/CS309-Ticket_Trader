@@ -51,7 +51,6 @@ public class MessageSocketServer {
 		//logger just records what is happening
 		logger.info("Entered into Open");
 		//taking Integer and storing it
-		Integer ticketInt = Integer.parseInt(ticket);
 		Integer ticketInt = Integer.valueOf(ticket);
 		List<Message> messageList;
 		
