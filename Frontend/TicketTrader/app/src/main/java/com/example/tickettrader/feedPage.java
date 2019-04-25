@@ -2,6 +2,7 @@ package com.example.tickettrader;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -45,6 +46,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     private feedAdapter mAdapter;
     private ImageButton bRefresh;
     private ImageButton bFilter;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         mFeed = findViewById(R.id.ticketList);
         bRefresh = findViewById(R.id.refresh);
         bFilter = findViewById(R.id.filter);
+        dbHelper = new DatabaseHelper(this);
         url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
 
         //Sets all the filter data to NULL
@@ -120,7 +123,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     // This method takes the data from the database from the url. The data that is returned is a JSON
     // array. It is then parsed and facilitates the feedAdapter Adapter to set the different values
     // in each of the XML's and their cards.
-    public void refresh(String url) {
+    public void refresh(final String url) {
 
         feedData.clear();
 
@@ -153,7 +156,17 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                         mAdapter.setOnItemClickListener(new feedAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
+                                Cursor data = dbHelper.getData();
+                                data.moveToNext();
+                                data.moveToNext();
+                                data.moveToNext();
+                                String user = data.getString(1);
+                                String tmpSellerID = String.valueOf((feedData.get(position).net_id));
                                 Intent intent = new Intent(feedPage.this, TicketEachActivity.class);
+
+                                if(tmpSellerID.equals(user)){
+                                    intent = new Intent(feedPage.this, TicketEachActivitySeller.class);
+                                }
                                 int tmp_price = feedData.get(position).price;
                                 int tmp_ticketID = feedData.get(position).ticketID;
                                 int tmp_sellerID = feedData.get(position).sellerID;

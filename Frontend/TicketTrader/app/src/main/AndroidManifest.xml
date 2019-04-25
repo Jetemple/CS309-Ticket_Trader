@@ -18,9 +18,9 @@
             android:name=".Registration"
             android:noHistory="true" />
         <activity android:name=".TicketEachActivity" />
+        <activity android:name=".TicketEachActivitySeller" />
         <activity
-            android:name=".feedPage"
-            android:noHistory="true">
+            android:name=".feedPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
