@@ -2,6 +2,8 @@ package io.pp1.messages;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.pp1.tickets.Ticket;
 
 @RestController
 public class MessageController {
@@ -79,13 +83,10 @@ public class MessageController {
 //		return messageRepository.getConvoById(sender);
 //	}
 	
-	/**
-	 * @param sender
-	 * @param receiver
-	 * @return
-	 * 
-	 * Retrieves list of messages sent and received between two users, indicating who is the sender
-	 */
+	@RequestMapping(method = RequestMethod.POST, path = "/message/buyer")
+	public List<Message> getByPrice(@RequestBody Message message) {
+		return messageRepository.getMessageByBuyer(message.getReceiver());
+	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/message/{sender}/{receiver}")
 	public Message[] getConvo(@PathVariable("sender") String sender, @PathVariable("receiver") String receiver) {

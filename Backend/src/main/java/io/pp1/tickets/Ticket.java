@@ -58,6 +58,19 @@ public class Ticket {
 		return ticket_id;
 	}
 
+	public Ticket(@NotNull Integer ticket_id, String sport, String game_location, String game_date, String game_time,
+		Integer price, String net_id, String opponent) {
+	super();
+	this.ticket_id = ticket_id;
+	this.sport = sport;
+	this.game_location = game_location;
+	this.game_date = game_date;
+	this.game_time = game_time;
+	this.price = price;
+	this.net_id = net_id;
+	this.opponent = opponent;
+}
+
 	public void setTicket_id(Integer ticket_id) {
 		this.ticket_id = ticket_id;
 	}
