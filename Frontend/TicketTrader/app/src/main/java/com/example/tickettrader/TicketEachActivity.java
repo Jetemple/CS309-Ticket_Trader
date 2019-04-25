@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 public class TicketEachActivity extends AppCompatActivity {
 
     private static final String TAG = "TicketEachActivity";

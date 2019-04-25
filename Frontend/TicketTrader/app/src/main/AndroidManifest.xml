@@ -17,7 +17,6 @@
         <activity
             android:name=".Registration"
             android:noHistory="true" />
-        <activity android:name=".SecondActivity" />
         <activity android:name=".TicketEachActivity" />
         <activity
             android:name=".feedPage"

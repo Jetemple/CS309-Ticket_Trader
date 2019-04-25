@@ -2,23 +2,20 @@ package com.example.tickettrader;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,11 +30,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class feedPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    RequestQueue requestQueue;
+    String url;
+    List<feed> feedData = new ArrayList<>();
+    JSONObject filter = new JSONObject();
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -45,21 +45,18 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     private feedAdapter mAdapter;
     private ImageButton bRefresh;
     private ImageButton bFilter;
-    RequestQueue requestQueue;
-    String url;
-
-    List<feed> feedData = new ArrayList<>();
-    JSONObject filter = new JSONObject();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_page);
+        requestQueue = Volley.newRequestQueue(this);
         mFeed = findViewById(R.id.ticketList);
         bRefresh = findViewById(R.id.refresh);
         bFilter = findViewById(R.id.filter);
+        url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
 
+        //Sets all the filter data to NULL
         try {
             filter.put("opponent", null);
             filter.put("game_date", null);
@@ -69,10 +66,10 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         }
 
 
+        //Sets up the Side Drawer
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Feed");
         setSupportActionBar(toolbar);
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,15 +77,13 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        requestQueue = Volley.newRequestQueue(this);
-//        url = "https://api.myjson.com/bins/dndee"; //With opponent and logo
-        url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
+
         refresh(url);
 
         bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refresh("http://cs309-pp-1.misc.iastate.edu:8080/tickets");//Refresh data test
+                refresh(url);//Refresh data test
                 Toast.makeText(feedPage.this, "Refreshed!", Toast.LENGTH_LONG).show();
             }
         });
@@ -105,6 +100,9 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 
     }
 
+
+    // When the filter page is done. It will run filter with the requested data to filter found in the
+    // mJSONObject.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -118,11 +116,14 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
+
+    // This method takes the data from the database from the url. The data that is returned is a JSON
+    // array. It is then parsed and facilitates the feedAdapter Adapter to set the different values
+    // in each of the XML's and their cards.
     public void refresh(String url) {
 
         feedData.clear();
 
-//    url = "https://api.myjson.com/bins/77i0u";
         {
             final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
@@ -138,10 +139,6 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                             Feed.setOpponent(json_data.getString("opponent"));
                             Feed.setLogo(json_data.getString("logoURL"));
                             Feed.setSport(json_data.getString("sport"));
-
-                            //User.setGameLocation(json_data.getString("gameLocation"));
-                            //User.setTicketiD(json_data.getString("ticketID"));
-//                        User.setLogo(json_data.getString("image"));
                             Feed.setGame_Date(json_data.getString("game_date"));
                             Feed.setPrice(json_data.getInt("price"));
                             Feed.setNet_id(json_data.getString("net_id"));
@@ -169,9 +166,9 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                 intent.putExtra("gameLocation", feedData.get(position).gameLocation);
                                 intent.putExtra("logoURL", feedData.get(position).logo);
                                 intent.putExtra("sellerID", feedData.get(position).sellerID);
-//                                intent.putExtra("ticketID", tmp_ticketID);
                                 intent.putExtra("net_id", feedData.get(position).net_id);
                                 intent.putExtra("ticket_id", feedData.get(position).ticketID);
+                                intent.putExtra("ticketID", tmp_ticketID);
 
                                 startActivity(intent);
 
@@ -196,11 +193,11 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
+    //This method is used to filter the data based on the filter criteria found in the filter page.
     private void filter(String url, JSONObject filterData) {
 
         feedData.clear();
 
-//    url = "https://api.myjson.com/bins/77i0u";
         {
             final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, filterData, new Response.Listener<JSONObject>() {
                 @Override
@@ -278,8 +275,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Closing Activity")
                     .setMessage("Are you sure you want to close this activity?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                    {
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             finish();

@@ -2,9 +2,9 @@ package com.example.tickettrader;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +20,6 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,14 +45,14 @@ public class Registration extends AppCompatActivity {
         Requirements = (Button) findViewById(R.id.btn_PasswordReqs);
         Back = (Button) findViewById(R.id.btnBack);
         Register = (Button) findViewById(R.id.btnRegister);
-        FirstName = (EditText) findViewById(R.id.first_name); //Change to Email
-        LastName = (EditText) findViewById(R.id.last_name); //Change to Password
-        netID = (EditText) findViewById(R.id.net_id); //Change to Confirm Password4
-        password = (EditText)findViewById(R.id.password);
+        FirstName = (EditText) findViewById(R.id.first_name);
+        LastName = (EditText) findViewById(R.id.last_name);
+        netID = (EditText) findViewById(R.id.net_id);
+        password = (EditText) findViewById(R.id.password);
 
 
         //Setups the Requests for Volley
-        Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
@@ -75,7 +74,7 @@ public class Registration extends AppCompatActivity {
         });
 
 
-        //Executes actions after Login is clicked
+        //Executes actions after Back is clicked
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,18 +94,17 @@ public class Registration extends AppCompatActivity {
     }
 
 
-    public void register(final String FirstName, final String LastName, final String netID, final String password)
-    {
+    public void register(final String FirstName, final String LastName, final String netID, final String password) {
 
         String url = "http://cs309-pp-1.misc.iastate.edu:8080/users";
         JSONObject jsonObject = new JSONObject();
 
 
         //Creates a JSON to get ready to POST
-        try{
-            jsonObject.put("first_name",FirstName);
-            jsonObject.put("last_name",LastName);
-            jsonObject.put("net_Id",netID);
+        try {
+            jsonObject.put("first_name", FirstName);
+            jsonObject.put("last_name", LastName);
+            jsonObject.put("net_Id", netID);
             jsonObject.put("password", password);
 
         } catch (JSONException e) {
@@ -119,9 +117,8 @@ public class Registration extends AppCompatActivity {
         //invalid3: password needs to be 8 characters and needs to contain at least 1 number and 1 letter
 
 
-
         //POSTS the JSON, the add it to the Request Queue
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,  new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -134,13 +131,13 @@ public class Registration extends AppCompatActivity {
                         Toast.makeText(Registration.this, "Registered", Toast.LENGTH_LONG).show();
                         startActivity(intent);
                     }
-                    if (responseCode.equals("invalid1")){
+                    if (responseCode.equals("invalid1")) {
                         Toast.makeText(Registration.this, "Must be ISU net-id!", Toast.LENGTH_LONG).show();
                     }
-                    if (responseCode.equals("invalid2")){
+                    if (responseCode.equals("invalid2")) {
                         Toast.makeText(Registration.this, "Email already exists!", Toast.LENGTH_LONG).show();
                     }
-                    if (responseCode.equals("invalid3")){
+                    if (responseCode.equals("invalid3")) {
                         Toast.makeText(Registration.this, "Password does not meet requirements!", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {

@@ -1,16 +1,15 @@
 package com.example.tickettrader;
 
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.tickettrader.Adapters.ChatAdapter;
 
@@ -19,7 +18,6 @@ import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -65,7 +63,7 @@ public class Chat extends AppCompatActivity {
         Draft[] drafts = {new Draft_6455()};
         try {
             Log.d("trying", "");
-            cc = new WebSocketClient(new URI(url),(Draft) drafts[0]) {
+            cc = new WebSocketClient(new URI(url), (Draft) drafts[0]) {
                 @Override
                 public void onMessage(String message) {
                     final Message m = new Message(message, 0);
@@ -94,8 +92,7 @@ public class Chat extends AppCompatActivity {
                     e.printStackTrace();
                 }
             };
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         cc.connect();

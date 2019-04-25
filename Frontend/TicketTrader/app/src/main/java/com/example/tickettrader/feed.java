@@ -23,7 +23,9 @@ public class feed {
         this.logo = photoData;
     }
 
-    public void setOpponent(String opponentData){this.opponent = opponent;}
+    public void setOpponent(String opponentData) {
+        this.opponent = opponent;
+    }
 
     public void setSport(String sportData) {
         this.sport = sportData;
@@ -41,8 +43,7 @@ public class feed {
         this.gameTime = timeData;
     }
 
-    public void setPrice(int priceData)
-    {
+    public void setPrice(int priceData) {
         this.price = priceData;
     }
 
@@ -53,8 +54,6 @@ public class feed {
     public void setNet_id(String net_id) {
         this.net_id = net_id;
     }
-
-
 
 
 }

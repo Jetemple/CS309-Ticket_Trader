@@ -18,11 +18,11 @@ public class ChatAdapter extends BaseAdapter {
     private List<Message> messages = new ArrayList<>();
     private Context context;
 
-    public ChatAdapter(Context ct){
+    public ChatAdapter(Context ct) {
         this.context = ct;
     }
 
-    public void add(Message message){
+    public void add(Message message) {
         this.messages.add(message);
         notifyDataSetChanged();
     }
@@ -48,7 +48,7 @@ public class ChatAdapter extends BaseAdapter {
         LayoutInflater messageInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         Message message = this.messages.get(i);
 
-        if(message.getSent() == 1){
+        if (message.getSent() == 1) {
             view = messageInflater.inflate(R.layout.my_message, null);
             holder.messageBody = (TextView) view.findViewById(R.id.message_text);
             view.setTag(holder);
