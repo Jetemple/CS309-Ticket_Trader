@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
-	@Query(value = "SELECT * FROM ticket ORDER BY ticket_id DESC", nativeQuery=true)
+	@Query(value = "SELECT * FROM ticket u where u.sold = 0 ORDER BY ticket_id DESC", nativeQuery=true)
 	List<Ticket> findAll();
 	
 	@Query(value = "SELECT * FROM ticket u WHERE u.ticket_id = ?1", nativeQuery=true)
