@@ -34,9 +34,10 @@ public class MessageSocketServer {
 	private MessageRepository messageRepository;
 
 	/**
-	 * Takes in session, seller, buyer and ticket to use as specifiers for the opening
-	 * sequence of actions of the socket connection. Sockets put in hashmaps and strings are 
-	 * parsed and sent between them/
+	 * Takes in session, seller, buyer and ticket to use as specifiers for the
+	 * opening sequence of actions of the socket connection. Sockets put in hashmaps
+	 * and strings are parsed and sent between them/
+	 * 
 	 * @param session
 	 * @param seller
 	 * @param buyer
@@ -47,23 +48,23 @@ public class MessageSocketServer {
 	@OnOpen
 	public void onOpen(Session session, @PathParam("seller") String seller, @PathParam("buyer") String buyer,
 			@PathParam("ticket") String ticket) throws IOException {
-		
-		//logger just records what is happening
+
+		// logger just records what is happening
 		logger.info("Entered into Open");
-		//taking Integer and storing it
+		// taking Integer and storing it
 		Integer ticketInt = Integer.valueOf(ticket);
 		List<Message> messageList;
-		
-		//developing string
-		String message = "";
-		
-		//hashmap taking in buyer, and using session as key
-		sessionUsernameMap.put(session, buyer);
-		//this is taking in session, and using buy as id 
-		usernameSessionMap.put(buyer, session);
 
-		
-		//mechanics
+		// developing string
+		String message = "";
+
+		// hashmap taking in buyer, and using session as key
+		sessionUsernameMap.put(session, buyer);
+		// this is taking in session, and using buy as id
+		usernameSessionMap.put(buyer, session);
+		// hashmap taking in buyer, and using session as key
+
+		// mechanics
 		if (buyer.equals(seller)) {
 			if (messageRepository.getMessageByTicket_ID(ticket).size() != 0) {
 				messageList = messageRepository.getMessageByTicket_ID(ticket);
@@ -72,7 +73,7 @@ public class MessageSocketServer {
 					Message toGoOver = messageList.get(i);
 					message = message + toGoOver.getMessage() + "\n";
 				}
-				message= message+ "\n" + "Enter '#userName message' to send to user\n";
+				message = message + "Enter '#userName message' to send to user\n";
 			} else {
 				usernameSessionMap.get(buyer).getBasicRemote().sendText("No messages for this ticket.");
 			}
@@ -88,8 +89,9 @@ public class MessageSocketServer {
 	}
 
 	/**
-	 * This determines the sequence of code to be ran when a socket receives a message
-	 * Logger will log the info, message is sent.
+	 * This determines the sequence of code to be ran when a socket receives a
+	 * message Logger will log the info, message is sent.
+	 * 
 	 * @param session
 	 * @param message
 	 * @param seller
@@ -104,18 +106,16 @@ public class MessageSocketServer {
 		// Handle new messages
 		logger.info("Entered into Message:: Got Message" + message);
 		Integer ticketInt = Integer.valueOf(ticket);
-
 		if (buyer.equals(seller) && message.charAt(0) == '#') {
-
 			String destUsername = message.substring(1, message.indexOf(' '));
 			message = message.substring(destUsername.length() + 2);
 			System.out.print(destUsername + "    " + message);
 			if (messageRepository.getMessageBySBT(seller, destUsername, ticketInt) != null) {
-
 				if (usernameSessionMap.get(destUsername) != null) {
-					usernameSessionMap.get(destUsername).getBasicRemote().sendText(message);
+					usernameSessionMap.get(destUsername).getBasicRemote().sendText(seller + ":" + message);
+				} else {
+					usernameSessionMap.get(seller).getBasicRemote().sendText("Message sent to user");
 				}
-				
 				Message toUse = messageRepository.getMessageBySBT(seller, destUsername, ticketInt);
 				message = toUse.getMessage() + "\n" + seller + ": " + message;
 				toUse.setMessage(message);
@@ -125,47 +125,28 @@ public class MessageSocketServer {
 			}
 		} else {
 			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
-				// usernameSessionMap.get(buyer).getBasicRemote().sendText(buyer + ": " +
-				// message);
-				// usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ": " +
-				// message);
-
 				if (usernameSessionMap.get(seller) != null) {
-					usernameSessionMap.get(seller).getBasicRemote().sendText(message);
+					usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ":" + message);
 				}
-
 				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
 				message = toUse.getMessage() + "\n" + buyer + ": " + message;
 				toUse.setMessage(message);
 				messageRepository.save(toUse);
-
-				// usernameSessionMap.get(seller).getBasicRemote().sendText(message);
-
-				// usernameSessionMap.get(buyer).getBasicRemote().sendText(buyer + ": " +
-				// message);
 			} else {
-				// usernameSessionMap.get(buyer).getBasicRemote().sendText(buyer + ": " +
-				// message);
-				// usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ": " +
-				// message);
-
 				if (usernameSessionMap.get(seller) != null) {
-					usernameSessionMap.get(seller).getBasicRemote().sendText(message);
+					usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ":" + message);
 				}
-
 				message = buyer + ": " + message;
 				Message newMessage = new Message(0, seller, buyer, message, ticket);
 				messageRepository.save(newMessage);
 
-				// usernameSessionMap.get(buyer).getBasicRemote().sendText(buyer + ": " +
-				// message);
 			}
 		}
 	}
-	
+
 	/**
-	 * Sequence of code when closing the socket. Session is removed 
-	 * from the hashmap
+	 * Sequence of code when closing the socket. Session is removed from the hashmap
+	 * 
 	 * @param session
 	 * @throws IOException
 	 */
@@ -174,7 +155,6 @@ public class MessageSocketServer {
 	@OnClose
 	public void onClose(Session session) throws IOException {
 		logger.info("Entered into Close");
-
 		String username = sessionUsernameMap.get(session);
 		sessionUsernameMap.remove(session);
 		usernameSessionMap.remove(username);
@@ -182,6 +162,7 @@ public class MessageSocketServer {
 
 	/**
 	 * Sequence of code during error.
+	 * 
 	 * @param session
 	 * @param throwable
 	 */
