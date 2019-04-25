@@ -53,7 +53,7 @@ android-build:
   stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/TicketTrader/app/gradlew
+    - chmod +x ./Frontend/TicketTrader/gradlew
   tags:
    - android
   script:
