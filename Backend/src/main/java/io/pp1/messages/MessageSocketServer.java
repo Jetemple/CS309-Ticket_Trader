@@ -33,17 +33,37 @@ public class MessageSocketServer {
 	@Autowired
 	private MessageRepository messageRepository;
 
+	/**
+	 * Takes in session, seller, buyer and ticket to use as specifiers for the opening
+	 * sequence of actions of the socket connection. Sockets put in hashmaps and strings are 
+	 * parsed and sent between them/
+	 * @param session
+	 * @param seller
+	 * @param buyer
+	 * @param ticket
+	 * @throws IOException
+	 */
 
 	@OnOpen
 	public void onOpen(Session session, @PathParam("seller") String seller, @PathParam("buyer") String buyer,
 			@PathParam("ticket") String ticket) throws IOException {
+		
+		//logger just records what is happening
 		logger.info("Entered into Open");
+		//taking Integer and storing it
 		Integer ticketInt = Integer.parseInt(ticket);
 		List<Message> messageList;
+		
+		//developing string
 		String message = "";
+		
+		//hashmap taking in buyer, and using session as key
 		sessionUsernameMap.put(session, buyer);
+		//this is taking in session, and using buy as id 
 		usernameSessionMap.put(buyer, session);
 
+		
+		//mechanics
 		if (buyer.equals(seller)) {
 			if (messageRepository.getMessageByTicket_ID(ticketInt).size() != 0) {
 				messageList = messageRepository.getMessageByTicket_ID(ticketInt);
@@ -66,6 +86,16 @@ public class MessageSocketServer {
 		usernameSessionMap.get(buyer).getBasicRemote().sendText(message);
 	}
 
+	/**
+	 * This determines the sequence of code to be ran when a socket receives a message
+	 * Logger will log the info, message is sent.
+	 * @param session
+	 * @param message
+	 * @param seller
+	 * @param buyer
+	 * @param ticket
+	 * @throws IOException
+	 */
 	// what happens when socket receives a message
 	@OnMessage
 	public void onMessage(Session session, String message, @PathParam("seller") String seller,
@@ -108,6 +138,13 @@ public class MessageSocketServer {
 			}
 		}
 	}
+	
+	/**
+	 * Sequence of code when closing the socket. Session is removed 
+	 * from the hashmap
+	 * @param session
+	 * @throws IOException
+	 */
 
 	// what happens when we close that session
 	@OnClose
@@ -119,6 +156,11 @@ public class MessageSocketServer {
 		usernameSessionMap.remove(username);
 	}
 
+	/**
+	 * Sequence of code during error.
+	 * @param session
+	 * @param throwable
+	 */
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		// Do error handling here

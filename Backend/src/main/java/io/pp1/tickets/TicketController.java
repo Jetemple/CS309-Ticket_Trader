@@ -20,6 +20,12 @@ public class TicketController {
 		return new TicketService(ticketRepository.findAll());
 	}
 
+	/**
+	 * Filtering mechanism used to filter the data in a parsable way to the front end
+	 * Sent as TicketService to identify object 
+	 * @param filter
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/filter")
 	public TicketService getTicketsByFilter(@RequestBody Ticket filter) {
 		if(filter.getGame_date()!=null && filter.getSport()!=null && filter.getOpponent()!=null) {

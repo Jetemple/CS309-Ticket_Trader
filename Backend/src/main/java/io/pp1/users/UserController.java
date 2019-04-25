@@ -46,6 +46,12 @@ public class UserController {
 		return userRepository.existsById(id);
 	}
 	
+	/**serves as login, uses password encoder 
+	 * to hash the given password and compare it with the one it has 
+	 * @param user
+	 * @return
+	 */
+	
 	@PostMapping(value = "/users/login")
 	public User userLogin(@RequestBody final User user) {
 		
@@ -74,6 +80,13 @@ public class UserController {
 		return userRepository.existByNetID(users.getNet_Id());
 	}
 	
+	/**
+	 * 
+	 * Checkes if passwod contains alphanumeric, and atleast 1 capital letter
+	 * and if 8 chars. Returns 1 if any error found
+	 * @param pass
+	 * @return
+	 */
 	private int checkPass(String pass) {
 		
 		if(pass.length()<8) {
@@ -101,6 +114,13 @@ public class UserController {
 		return 0;
 	}
 
+	/**
+	 * Serves as registration. Cannot have duplicate emails and refers to Checkpass
+	 * for condition to make sure the password is secure enough to be hashed.
+	 * 
+	 * @param users
+	 * @return
+	 */
 	
 	@PostMapping(value = "/users")
 	public StringResponse post(@RequestBody final User users){
