@@ -39,11 +39,11 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
 
         //Initializes all of the UI aspects
-        userName = (EditText) findViewById(R.id.etName);
-        Password = (EditText) findViewById(R.id.etPassword);
-        Info = (TextView) findViewById(R.id.incorrectAttempts);
+        userName = (EditText) findViewById(R.id.etUsernameLogin);
+        Password = (EditText) findViewById(R.id.etPasswordLogin);
+        Info = (TextView) findViewById(R.id.tvIncorrectAttempts);
         Login = (Button) findViewById(R.id.btnLogin);
-        Register = (Button) findViewById(R.id.btnRegister);
+        Register = (Button) findViewById(R.id.btnRegisterLogin);
         dbHelper = new DatabaseHelper(this);
 
         //Used for Volley

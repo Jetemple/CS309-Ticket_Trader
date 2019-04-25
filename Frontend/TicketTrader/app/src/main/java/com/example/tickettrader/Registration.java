@@ -44,7 +44,7 @@ public class Registration extends AppCompatActivity {
         //Initializes all of the buttons
         Requirements = (Button) findViewById(R.id.btn_PasswordReqs);
         Back = (Button) findViewById(R.id.btnBack);
-        Register = (Button) findViewById(R.id.btnRegister);
+        Register = (Button) findViewById(R.id.btnRegisterLogin);
         FirstName = (EditText) findViewById(R.id.first_name);
         LastName = (EditText) findViewById(R.id.last_name);
         netID = (EditText) findViewById(R.id.net_id);
