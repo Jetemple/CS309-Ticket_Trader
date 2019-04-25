@@ -10,6 +10,7 @@ public class Ticket {
 	@Id
 	@NotNull
 	private Integer ticket_id;
+	private Boolean sold;
 	
 	private String sport;
 	private String game_location;
@@ -24,6 +25,7 @@ public class Ticket {
 
 
 	public Ticket() {	
+		sold=false;
 	}
 	
 //	public Ticket(Integer ticket_id, String sport, String game_location, String game_date,  Integer game_time,Integer price, Integer seller_id) {
@@ -41,6 +43,14 @@ public class Ticket {
 
 	public String getLogoURL() {
 		return LogoURL;
+	}
+
+	public Boolean getSold() {
+		return sold;
+	}
+
+	public void setSold(Boolean sold) {
+		this.sold = sold;
 	}
 
 	public void setLogoURL(String logoURL) {

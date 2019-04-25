@@ -51,7 +51,6 @@ public class MessageSocketServer {
 		//logger just records what is happening
 		logger.info("Entered into Open");
 		//taking Integer and storing it
-		Integer ticketInt = Integer.parseInt(ticket);
 		Integer ticketInt = Integer.valueOf(ticket);
 		List<Message> messageList;
 		
@@ -71,8 +70,9 @@ public class MessageSocketServer {
 				System.out.print("gets here");
 				for (int i = 0; i < messageList.size(); i++) {
 					Message toGoOver = messageList.get(i);
-					message = message + toGoOver.getMessage() + "\n" + "Enter '#userName message' to send to user\n";
+					message = message + toGoOver.getMessage() + "\n";
 				}
+				message= message+ "\n" + "Enter '#userName message' to send to user\n";
 			} else {
 				usernameSessionMap.get(buyer).getBasicRemote().sendText("No messages for this ticket.");
 			}

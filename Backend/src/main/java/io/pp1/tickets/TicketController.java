@@ -79,9 +79,16 @@ public class TicketController {
 		ticketRepository.save(ticket);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, path = "/tickets/{ticket_id}")
-	public void delete(@PathVariable Integer ticket_id) {
-		ticketRepository.deleteById(ticket_id);
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets/sold") 
+	public void markSold(@RequestBody final Ticket ticket) {
+		boolean sold=true;
+		ticket.setSold(sold);
+		ticketRepository.save(ticket);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, path = "/tickets/delete")
+	public void delete(@RequestBody final Ticket ticket) {
+		ticketRepository.deleteById(ticket.getTicket_id());
 	}
 	
 }
