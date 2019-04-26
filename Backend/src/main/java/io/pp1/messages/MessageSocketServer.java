@@ -59,9 +59,9 @@ public class MessageSocketServer {
 		String message = "";
 
 		// hashmap taking in buyer, and using session as key
-		sessionUsernameMap.put(session, buyer);
+		sessionUsernameMap.put(session, buyer+ticket);
 		// this is taking in session, and using buy as id
-		usernameSessionMap.put(buyer, session);
+		usernameSessionMap.put(buyer+ticket, session);
 		// hashmap taking in buyer, and using session as key
 
 		// mechanics
@@ -75,17 +75,17 @@ public class MessageSocketServer {
 				}
 				message = message + "Enter '#userName message' to send to user\n";
 			} else {
-				usernameSessionMap.get(buyer).getBasicRemote().sendText("No messages for this ticket.");
+				usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText("No messages for this ticket.");
 			}
 		} else {
 			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
 				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
 				message = toUse.getMessage();
 			} else {
-				usernameSessionMap.get(buyer).getBasicRemote().sendText("Enter message to send to the Seller.\n");
+				usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText("Enter message to send to the Seller.\n");
 			}
 		}
-		usernameSessionMap.get(buyer).getBasicRemote().sendText(message);
+		usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText(message);
 	}
 
 	/**
@@ -111,30 +111,30 @@ public class MessageSocketServer {
 			message = message.substring(destUsername.length() + 2);
 			System.out.print(destUsername + "    " + message);
 			if (messageRepository.getMessageBySBT(seller, destUsername, ticketInt) != null) {
-				if (usernameSessionMap.get(destUsername) != null) {
-					usernameSessionMap.get(destUsername).getBasicRemote().sendText(seller + ":" + message);
+				if (usernameSessionMap.get(destUsername+ticket) != null) {
+					usernameSessionMap.get(destUsername+ticket).getBasicRemote().sendText(seller + ":" + message);
 				} else {
-					usernameSessionMap.get(seller).getBasicRemote().sendText("Message sent to user");
+					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText("Message sent to user");
 				}
 				Message toUse = messageRepository.getMessageBySBT(seller, destUsername, ticketInt);
 				message = toUse.getMessage() + "\n" + seller + ": " + message;
 				toUse.setMessage(message);
 				messageRepository.save(toUse);
 			} else {
-				usernameSessionMap.get(seller).getBasicRemote().sendText("Wrong contact name, try again.");
+				usernameSessionMap.get(seller+ticket).getBasicRemote().sendText("Wrong contact name, try again.");
 			}
 		} else {
 			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
-				if (usernameSessionMap.get(seller) != null) {
-					usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ":" + message);
+				if (usernameSessionMap.get(seller+ticket) != null) {
+					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText(buyer + ":" + message);
 				}
 				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
 				message = toUse.getMessage() + "\n" + buyer + ": " + message;
 				toUse.setMessage(message);
 				messageRepository.save(toUse);
 			} else {
-				if (usernameSessionMap.get(seller) != null) {
-					usernameSessionMap.get(seller).getBasicRemote().sendText(buyer + ":" + message);
+				if (usernameSessionMap.get(seller+ticket) != null) {
+					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText(buyer + ":" + message);
 				}
 				message = buyer + ": " + message;
 				Message newMessage = new Message(0, seller, buyer, message, ticket);
