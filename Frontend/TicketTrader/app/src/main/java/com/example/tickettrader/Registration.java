@@ -104,7 +104,7 @@ public class Registration extends AppCompatActivity {
         try {
             jsonObject.put("first_name", FirstName);
             jsonObject.put("last_name", LastName);
-            jsonObject.put("net_Id", netID);
+            jsonObject.put("net_Id", netID.toLowerCase());
             jsonObject.put("password", password);
 
         } catch (JSONException e) {

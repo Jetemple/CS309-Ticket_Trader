@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
         //Makes a JSON using the inputted userName and password
         JSONObject loginInfo = new JSONObject();
         try {
-            loginInfo.put("net_Id", userName);
+            loginInfo.put("net_Id", userName.toLowerCase());
             loginInfo.put("password", userPassword);
 
         } catch (JSONException e) {
