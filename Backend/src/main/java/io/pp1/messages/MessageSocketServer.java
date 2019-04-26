@@ -71,16 +71,16 @@ public class MessageSocketServer {
 				System.out.print("gets here");
 				for (int i = 0; i < messageList.size(); i++) {
 					Message toGoOver = messageList.get(i);
-					message = message + toGoOver.getMessage() + "\n";
+					message = message +"\nMessages From :"+messageList.get(i).getReceiver()+"\n"+ toGoOver.getMessage() + "\n";
 				}
-				message = message + "Enter '#userName message' to send to user\n";
+				message = message + "\nEnter '#userName message' to send to user\n";
 			} else {
 				usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText("No messages for this ticket.");
 			}
 		} else {
 			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
 				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
-				message = toUse.getMessage();
+				message = toUse.getMessage()+"Enter message to send to the buyer.\n";
 			} else {
 				usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText("Enter message to send to the Seller.\n");
 			}
