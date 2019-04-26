@@ -1,11 +1,13 @@
 package com.example.tickettrader;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+
+// This method is only used if we cannot get the message to work natively. It will load an HTML
+// And uses the .JS file to open a socket.
 public class Message_HTML extends AppCompatActivity {
 
     WebView webHtmlCss;

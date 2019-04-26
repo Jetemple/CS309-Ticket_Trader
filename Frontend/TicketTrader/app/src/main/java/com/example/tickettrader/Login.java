@@ -1,13 +1,13 @@
 package com.example.tickettrader;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -25,13 +25,11 @@ import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
 
-    final private String server_URL = "https://cs309-pp-1.misc.iastate.edu:8080/users";
     private EditText userName;
     private EditText Password;
     private TextView Info;
     private Button Login;
     private Button Register;
-    private int Counter;
     private DatabaseHelper dbHelper;
     RequestQueue requestQueue;
 
@@ -41,11 +39,11 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
 
         //Initializes all of the UI aspects
-        userName = (EditText) findViewById(R.id.etName);
-        Password = (EditText) findViewById(R.id.etPassword);
-        Info = (TextView) findViewById(R.id.incorrectAttempts);
+        userName = (EditText) findViewById(R.id.etUsernameLogin);
+        Password = (EditText) findViewById(R.id.etPasswordLogin);
+        Info = (TextView) findViewById(R.id.tvIncorrectAttempts);
         Login = (Button) findViewById(R.id.btnLogin);
-        Register = (Button) findViewById(R.id.btnRegister);
+        Register = (Button) findViewById(R.id.btnRegisterLogin);
         dbHelper = new DatabaseHelper(this);
 
         //Used for Volley
@@ -85,8 +83,6 @@ public class Login extends AppCompatActivity {
     void loginVerify(final String userName, final String userPassword) {
 
         String url = "http://cs309-pp-1.misc.iastate.edu:8080/users/login"; //Our Server
-        //String url = "https://api.myjson.com/bins/19kf52"; //NO VPN Required
-
 
         //Makes a JSON using the inputted userName and password
         JSONObject loginInfo = new JSONObject();
@@ -118,13 +114,11 @@ public class Login extends AppCompatActivity {
                         Intent intent = new Intent(com.example.tickettrader.Login.this, feedPage.class);
                         startActivity(intent);
                     } else {
-                        //@TODO
-                        /*
-                        Need to figure out how to slow down brute force attacks by doing something
-                        if there are too many false requests.
-                        */
 
-                        //Info.setText("# of attempts remaining: 2");
+                        Toast.makeText(getApplicationContext(),
+                                "Incorrect Login!",
+                                Toast.LENGTH_LONG).show();
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -2,18 +2,18 @@ package com.example.tickettrader;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UserAccountPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class UserAccountPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -28,19 +28,19 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_account_page);
 
-        user_pic = (ImageView)findViewById(R.id.user_pic);
-        name = (TextView)findViewById(R.id.name);
-        netID = (TextView)findViewById(R.id.net_id);
-        userID = (TextView)findViewById(R.id.user_id);
+        user_pic = (ImageView) findViewById(R.id.user_pic);
+        name = (TextView) findViewById(R.id.name);
+        netID = (TextView) findViewById(R.id.net_id);
+        userID = (TextView) findViewById(R.id.user_id);
         dbHelper = new DatabaseHelper(this);
 
         Cursor data = dbHelper.getData();
 
-        if(data.getCount() < 0){
+        if (data.getCount() < 0) {
             name.setText("Name");
             netID.setText("Net ID");
             userID.setText("User ID");
-        } else{
+        } else {
             data.moveToNext();
             String first = data.getString(1);
             data.moveToNext();

@@ -1,9 +1,9 @@
 package com.example.tickettrader;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -13,49 +13,36 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.io.Serializable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class popup_filter extends Activity {
-    private EditText date;
-    private Spinner sportSpinner, opponentSpinner;
     int year, month, day;
     Button btnFilter;
     DatePickerDialog datePickerDialog;
+    private EditText date;
+    private Spinner sportSpinner, opponentSpinner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_filter);
-
         btnFilter = findViewById(R.id.btnFilter);
-        //Change how much of the screen the popup window fills (in percent)
+
+        /*
+        This is used to reorient the size of the filter popup page. So it actually looks like a popup
+         */
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         getWindow().setLayout((int) (width * .97), (int) (height * .97));
 
-
-//        Intent intent = getIntent();
-//        Bundle args = intent.getBundleExtra("Bundle");
-//        List<feed> feedData = new ArrayList<>();
-//        feedData = feedPage.retFeedData();
-        String[] sportArray = getResources().getStringArray(R.array.sport_array);
-        String[] opponentArray = getResources().getStringArray(R.array.opponent_array);
-
-//        ArrayAdapter<String> sportAdaper = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sportArray);
-//        ArrayAdapter<String> opponentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, opponentArray);
-//        sOpponents.findViewById(R.id.spinner);
-//        sOpponents.setAdapter(opponentAdapter);
-
+        /*
+        These next lines of code assign the spinners to collect the data for the specific filter.
+         */
 
         sportSpinner = (Spinner) findViewById(R.id.spinner);
         opponentSpinner = (Spinner) findViewById(R.id.spinner2);
@@ -74,6 +61,9 @@ public class popup_filter extends Activity {
         opponentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opponentSpinner.setAdapter(opponentAdapter);
 
+        /*
+        Assigns the date from the picker. Doesn't really work currently @FixMe
+         */
 
         date = findViewById(R.id.Date_popup);
         date.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +83,7 @@ public class popup_filter extends Activity {
                 datePickerDialog.show();
             }
         });
+
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +107,9 @@ public class popup_filter extends Activity {
     }
 
 
+        /*
+       Filters all of the data then goes back to the feed page with the selected filter.
+        */
     public JSONObject filter() throws JSONException {
         String game_date = (month + 1) + "/" + day + "/" + year;
         String sport = sportSpinner.getSelectedItem().toString();
@@ -129,6 +123,7 @@ public class popup_filter extends Activity {
         }
 
         JSONObject ret = new JSONObject();
+//        This is omitted until we can get a functioning data picker in XML
 //        ret.put("game_date", game_date);
         ret.put("sport", sport);
         ret.put("opponent", opponent);
