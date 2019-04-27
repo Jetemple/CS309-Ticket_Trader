@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.example.tickettrader.GuestFeedPage;
 import com.example.tickettrader.R;
 import com.example.tickettrader.feed;
 
 import java.util.List;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.tickettrader.feedPage;
 
 // This is an adapter that helps manage the ticket data that is received from the server.
 // the data is parsed as JSON. Within this adapter there is a ViewHolder that assigns all of
@@ -45,8 +48,13 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // Inflate the layout when viewholder created
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.feed_card, parent, false);
-        MyHolder holder = new MyHolder(view);
+        View view;
+        if(this.context.getClass().equals(GuestFeedPage.class)) {
+            view=inflater.inflate(R.layout.guest_feed_card, parent,false);
+        } else {
+            view=inflater.inflate(R.layout.feed_card, parent,false);
+        }
+        MyHolder holder=new MyHolder(view);
         return holder;
     }
 
@@ -87,15 +95,16 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sport = (TextView) itemView.findViewById(R.id.sport);
             ISU = (ImageView) itemView.findViewById(R.id.isuLogo);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        mListener.onItemClick(position);
-                    }
-                }
-            });
+            if(context.getClass().equals(feedPage.class)) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            mListener.onItemClick(position);
+                        }
+                        }
+            });}
 
 
         }
