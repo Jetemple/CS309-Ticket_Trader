@@ -88,7 +88,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            filter("http://cs309-pp-1.misc.iastate.edu:8080/tickets/filter",filter);
+            filter("http://cs309-pp-1.misc.iastate.edu:8080/tickets/net_id",filter);
         }
         else{
             refresh(url);
