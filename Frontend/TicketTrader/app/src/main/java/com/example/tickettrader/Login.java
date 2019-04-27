@@ -28,7 +28,7 @@ public class Login extends AppCompatActivity {
     final private String server_URL = "https://cs309-pp-1.misc.iastate.edu:8080/users";
     private EditText userName;
     private EditText Password;
-    private TextView Info;
+    private TextView guestFeed;
     private Button Login;
     private Button Register;
     private int Counter;
@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity {
         //Initializes all of the UI aspects
         userName = (EditText) findViewById(R.id.etName);
         Password = (EditText) findViewById(R.id.etPassword);
-        Info = (TextView) findViewById(R.id.incorrectAttempts);
+        guestFeed = (TextView) findViewById(R.id.guest_feed);
         Login = (Button) findViewById(R.id.btnLogin);
         Register = (Button) findViewById(R.id.btnRegister);
         dbHelper = new DatabaseHelper(this);
@@ -57,8 +57,14 @@ public class Login extends AppCompatActivity {
 
         //@FIXME
         //Need to change this when we figure out a brute force stopper.
-        Info.setText("# of attempts remaining: 3");
 
+        guestFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, GuestFeedPage.class);
+                startActivity(intent);
+            }
+        });
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +112,6 @@ public class Login extends AppCompatActivity {
                     JSONObject auth = response;
                     String verify = auth.getString("password");
 
-                    Info.setText(verify);
                     if (verify.equals("true")) {
                         dbHelper.removeAll();
 
