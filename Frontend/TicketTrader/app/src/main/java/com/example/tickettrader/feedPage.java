@@ -48,6 +48,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     private ImageButton bFilter;
     DatabaseHelper dbHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
             filter.put("opponent", null);
             filter.put("game_date", null);
             filter.put("sport", null);
+            filter.put("user_id",null);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,8 +82,19 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if (!(getIntent().getStringExtra("net_id").equals(null))){
+            try {
+                filter.put("net_id",getIntent().getStringExtra("net_id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            filter("http://cs309-pp-1.misc.iastate.edu:8080/tickets/filter",filter);
+        }
+        else{
+            refresh(url);
+        }
 
-        refresh(url);
+
 
         bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
