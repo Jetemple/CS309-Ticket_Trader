@@ -2,6 +2,7 @@ package io.pp1.messages;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,49 @@ public class MessageController {
 //		
 //		return messageRepository.getConvoById(sender);
 //	}
+	
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/message/people")
+	public List<String> getPeople(@RequestBody Ticket id) {
+		int tracker = 0;
+		List<Message> people = messageRepository.getPeople(id.getNet_id());
+		List<String> listPeople = new ArrayList<String>();
+		for (int i = 0; i < people.size(); i++) {
+			if (!people.get(i).getReceiver().equalsIgnoreCase(id.getNet_id())) {
+				if (listPeople.size() == 0) {
+					listPeople.add(people.get(i).getReceiver());
+					System.out.print(people.get(i).getReceiver() + " " + listPeople.size());
+				} else {
+					for (int j = 0; j < listPeople.size(); j++) {
+						if (people.get(i).getReceiver().equalsIgnoreCase(listPeople.get(j))) {
+							tracker++;
+						}
+					}
+					if (tracker == 0) {
+						listPeople.add(people.get(i).getReceiver());
+					}
+				}
+				tracker = 0;
+			} else if (!people.get(i).getSender().equalsIgnoreCase(id.getNet_id())) {
+				if (listPeople.size() == 0) {
+					listPeople.add(people.get(i).getSender());
+					System.out.print(people.get(i).getSender() + " " + listPeople.size());
+				} else {
+					for (int k = 0; k < listPeople.size(); k++) {
+
+						if (people.get(i).getSender().equalsIgnoreCase(listPeople.get(k))) {
+							tracker++;
+						}
+					}
+					if (tracker == 0) {
+						listPeople.add(people.get(i).getSender());
+					}
+				}
+				tracker = 0;
+			}
+		}
+		return listPeople;
+	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/message/buyer")
 	public List<Message> getByPrice(@RequestBody Message message) {

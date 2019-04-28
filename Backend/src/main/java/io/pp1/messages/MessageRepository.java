@@ -32,5 +32,9 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	//gets entire conversation between two users
 	@Query(value = "SELECT * FROM message u WHERE (u.sender = ?1 or u.receiver = ?1) and (u.sender = ?2 or u.receiver =?2)", nativeQuery=true)
 	Message[] getConvo(String sender, String receiver);
+
+	
+	@Query(value = "SELECT * FROM message u WHERE u.receiver= ?1 or u.sender = ?1", nativeQuery=true)
+	List<Message> getPeople(String net_id);
 	
 }
