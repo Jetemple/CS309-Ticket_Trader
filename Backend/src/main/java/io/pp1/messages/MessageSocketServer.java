@@ -71,9 +71,15 @@ public class MessageSocketServer {
 				System.out.print("gets here");
 				for (int i = 0; i < messageList.size(); i++) {
 					Message toGoOver = messageList.get(i);
-					message = message +"\nMessages From :"+messageList.get(i).getReceiver()+"\n"+ toGoOver.getMessage() + "\n";
+					if(message.isEmpty()) {
+						message=toGoOver.getMessage();
+					}
+					else {
+					message=message+"\n"+toGoOver.getMessage();
+					//message = message +"\nMessages From :"+messageList.get(i).getReceiver()+"\n"+ toGoOver.getMessage() + "\n";
+					}
 				}
-				message = message + "\nEnter '#userName message' to send to user\n";
+				//message = message + "\nEnter '#userName message' to send to user\n";
 			} else {
 				usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText("No messages for this ticket.");
 			}
@@ -113,12 +119,12 @@ public class MessageSocketServer {
 			System.out.print(destUsername + "    " + message);
 			if (messageRepository.getMessageBySBT(seller, destUsername, ticketInt) != null) {
 				if (usernameSessionMap.get(destUsername+ticket) != null) {
-					usernameSessionMap.get(destUsername+ticket).getBasicRemote().sendText(seller + ":" + message);
+					usernameSessionMap.get(destUsername+ticket).getBasicRemote().sendText(seller + "\n" + message);
 				} else {
 					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText("Message sent to user");
 				}
 				Message toUse = messageRepository.getMessageBySBT(seller, destUsername, ticketInt);
-				message = toUse.getMessage() + "\n" + seller + ": " + message;
+				message = toUse.getMessage() + "\n" + seller + "\n" + message;
 				toUse.setMessage(message);
 				messageRepository.save(toUse);
 			} else {
@@ -127,17 +133,17 @@ public class MessageSocketServer {
 		} else {
 			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
 				if (usernameSessionMap.get(seller+ticket) != null) {
-					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText(buyer + ":" + message);
+					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText(buyer + "\n" + message);
 				}
 				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
-				message = toUse.getMessage() + "\n" + buyer + ": " + message;
+				message = toUse.getMessage() + "\n" + buyer + "\n" + message;
 				toUse.setMessage(message);
 				messageRepository.save(toUse);
 			} else {
 				if (usernameSessionMap.get(seller+ticket) != null) {
-					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText(buyer + ":" + message);
+					usernameSessionMap.get(seller+ticket).getBasicRemote().sendText(buyer + "\n" + message);
 				}
-				message = buyer + ": " + message;
+				message = buyer + "\n" + message;
 				Message newMessage = new Message(0, seller, buyer, message, ticket);
 				messageRepository.save(newMessage);
 
