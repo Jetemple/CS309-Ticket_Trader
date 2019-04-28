@@ -80,10 +80,11 @@ public class MessageSocketServer {
 		} else {
 			if (messageRepository.getMessageBySBT(seller, buyer, ticketInt) != null) {
 				Message toUse = messageRepository.getMessageBySBT(seller, buyer, ticketInt);
-				message = toUse.getMessage()+"Enter message to send to the buyer.\n";
-			} else {
-				usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText("Enter message to send to the Seller.\n");
+				message = toUse.getMessage();
 			}
+//			 else {
+//				usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText("Enter message to send to the Seller.\n");
+//			}
 		}
 		usernameSessionMap.get(buyer+ticket).getBasicRemote().sendText(message);
 	}
