@@ -37,6 +37,7 @@ public class TicketEachActivitySeller extends AppCompatActivity {
     int userID;
     Button btn_message;
     Button btn_delete;
+    Button btn_sold;
     String url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets/delete"; //Our Server
     RequestQueue requestQueue;
 
@@ -82,6 +83,13 @@ public class TicketEachActivitySeller extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 delete(ret);
+            }
+        });
+
+        btn_sold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
