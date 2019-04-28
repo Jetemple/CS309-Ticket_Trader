@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,13 +23,17 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
     private TextView name;
     private TextView netID;
     private TextView userID;
+    private Button myTickets;
     DatabaseHelper dbHelper;
+    String net,first,last,user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_account_page);
 
+        myTickets = (Button) findViewById(R.id.btnMyTickets);
         user_pic = (ImageView) findViewById(R.id.user_pic);
         name = (TextView) findViewById(R.id.name);
         netID = (TextView) findViewById(R.id.net_id);
@@ -42,17 +48,17 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
             userID.setText("User ID");
         } else {
             data.moveToNext();
-            String first = data.getString(1);
+            first = data.getString(1);
             data.moveToNext();
-            String last = data.getString(1);
+            last = data.getString(1);
             data.moveToNext();
             name.setText("Name: " + first + " " + last);
 
-            String net = data.getString(1);
+            net = data.getString(1);
             data.moveToNext();
             netID.setText("Net ID: " + net);
 
-            String user = data.getString(1);
+            user = data.getString(1);
             userID.setText("User ID: " + user);
         }
 
@@ -68,6 +74,16 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        myTickets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(com.example.tickettrader.UserAccountPage.this,feedPage.class);
+                intent.putExtra("net_id",net);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

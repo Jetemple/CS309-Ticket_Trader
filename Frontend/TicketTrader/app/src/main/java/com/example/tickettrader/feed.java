@@ -13,6 +13,7 @@ public class feed {
     public String opponent;
     public String logo;
     public String net_id;
+    public boolean yourTicket;
 
 
     public void setTicketiD(int tickID) {
@@ -54,6 +55,11 @@ public class feed {
     public void setNet_id(String net_id) {
         this.net_id = net_id;
     }
+
+    public void setYourTicket(boolean yourTicket) { this.yourTicket = yourTicket;
+    }
+
+
 
 
 }

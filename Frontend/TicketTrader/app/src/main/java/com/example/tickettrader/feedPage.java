@@ -36,7 +36,7 @@ import java.util.List;
 
 public class feedPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     RequestQueue requestQueue;
-    String url;
+    String url, netID;
     List<feed> feedData = new ArrayList<>();
     JSONObject filter = new JSONObject();
     private Toolbar toolbar;
@@ -47,6 +47,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     private ImageButton bRefresh;
     private ImageButton bFilter;
     DatabaseHelper dbHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +60,19 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         dbHelper = new DatabaseHelper(this);
         url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
 
+
+        Cursor data = dbHelper.getData();
+        data.moveToNext();
+        data.moveToNext();
+        data.moveToNext();
+        netID = data.getString(1);
+
         //Sets all the filter data to NULL
         try {
             filter.put("opponent", null);
             filter.put("game_date", null);
             filter.put("sport", null);
+            filter.put("user_id",null);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,8 +89,19 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if (getIntent()!=null && getIntent().getExtras()!=null){
+            try {
+                filter.put("net_id",getIntent().getStringExtra("net_id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            filter("http://cs309-pp-1.misc.iastate.edu:8080/tickets/net_id",filter);
+        }
+        else{
+            refresh(url);
+        }
 
-        refresh(url);
+
 
         bRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +167,16 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                             Feed.setNet_id(json_data.getString("net_id"));
                             Feed.setTicketiD(json_data.getInt("ticket_id"));
 
+
+                            //This makes a check mark appear if the current logged in user is selling this ticket
+                            if(netID.equals(json_data.getString("net_id"))){
+                                Feed.setYourTicket(true);
+                            }
+                            else{
+                                Feed.setYourTicket(false);
+                            }
+
+
                             feedData.add(Feed);
 
                         }
@@ -170,6 +200,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                 int tmp_price = feedData.get(position).price;
                                 int tmp_ticketID = feedData.get(position).ticketID;
                                 int tmp_sellerID = feedData.get(position).sellerID;
+
 
 
                                 intent.putExtra("price", tmp_price);
@@ -228,6 +259,14 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                             Feed.setSport(json_data.getString("sport"));
                             Feed.setGame_Date(json_data.getString("game_date"));
                             Feed.setPrice(json_data.getInt("price"));
+
+                            //This makes a check mark appear if the current logged in user is selling this ticket
+                            if(netID.equals(json_data.getString("net_id"))){
+                                Feed.setYourTicket(true);
+                            }
+                            else{
+                                Feed.setYourTicket(false);
+                            }
 
                             feedData.add(Feed);
 
@@ -324,7 +363,8 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         int id = item.getItemId();
 
         if (id == R.id.feed) {
-            // Handle the camera action
+            Intent feed = new Intent(feedPage.this, feedPage.class);
+            startActivity(feed);
         } else if (id == R.id.sell) {
             Intent sell = new Intent(feedPage.this, sellPage.class);
             startActivity(sell);
