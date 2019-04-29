@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.pp1.users.User;
+import io.pp1.users.UserRepository;
+
 @RestController
 public class TicketController {
 
 	@Autowired
 	private TicketRepository ticketRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/tickets")
 	public TicketService getAll() {
@@ -63,6 +68,11 @@ public class TicketController {
 		return new TicketService(ticketRepository.getTicketBySellerID(net_id.getNet_id()));
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets/buyer")
+	public TicketService getBuyerTickets(@RequestBody Ticket buyer) {
+		return new TicketService(ticketRepository.getTicketByBuyer(buyer.getBuyer()));
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/location")
 	public TicketService getByLocation(@RequestBody Ticket game_location) {
 		return new TicketService(ticketRepository.getTicketByLocation(game_location.getGame_location()));
@@ -76,6 +86,8 @@ public class TicketController {
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets") // @PostMapping(value = "/tickets")
 	public void persist(@RequestBody final Ticket ticket) {
 		ticket.setLogoURL(ticketRepository.getIconURL(ticket.getOpponent()));
+		List<User> toUse = userRepository.getUserByNetID(ticket.getNet_id());
+		ticket.setRating(toUse.get(0).getRating());
 		ticketRepository.save(ticket);
 	}
 
@@ -83,6 +95,14 @@ public class TicketController {
 	public void markSold(@RequestBody final Ticket ticket) {
 		List<Ticket> markSold=ticketRepository.getTicketByID(ticket.getTicket_id());
 		markSold.get(0).setSold(true);
+		markSold.get(0).setBuyer(ticket.getBuyer());
+		ticketRepository.save(markSold.get(0));
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets/rated") 
+	public void markRated(@RequestBody final Ticket ticket) {
+		List<Ticket> markSold=ticketRepository.getTicketByID(ticket.getTicket_id());
+		markSold.get(0).setRated(true);
 		ticketRepository.save(markSold.get(0));
 	}
 	

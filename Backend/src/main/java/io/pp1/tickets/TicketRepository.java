@@ -49,4 +49,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	@Query(value = "SELECT url FROM logo u WHERE u.img_name = ?1", nativeQuery=true)
 	String getIconURL(String opponent);
 	
+	@Query(value = "SELECT * FROM ticket u WHERE u.buyer = ?1", nativeQuery=true)
+	List<Ticket> getTicketByBuyer(String net_id);
+	
 }

@@ -19,13 +19,17 @@ public class Ticket {
 	private Integer price;
 	private String net_id;
 	private String opponent;
-	private String record;
+	private Integer rating;
 	private String LogoURL;
+	private String buyer;
+	private Boolean rated;
+//	private Integer userRating;
 
 
 
 	public Ticket() {	
 		sold=false;
+		rated=false;
 	}
 	
 //	public Ticket(Integer ticket_id, String sport, String game_location, String game_date,  Integer game_time,Integer price, Integer seller_id) {
@@ -43,6 +47,22 @@ public class Ticket {
 
 	public String getLogoURL() {
 		return LogoURL;
+	}
+
+	public Boolean getRated() {
+		return rated;
+	}
+
+	public void setRated(Boolean rated) {
+		this.rated = rated;
+	}
+
+	public String getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(String buyer) {
+		this.buyer = buyer;
 	}
 
 	public Boolean getSold() {
@@ -133,12 +153,20 @@ public class Ticket {
 		this.opponent = opponent;
 	}
 
-	public String getRecord() {
-		return record;
+//	public Integer getuserRating() {
+//		return userRating;
+//	}
+//
+//	public void setuserRating(Integer userRating) {
+//		this.userRating = userRating;
+//	}
+
+	public Integer getRating() {
+		return rating;
 	}
 
-	public void setRecord(String record) {
-		this.record = record;
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}	
 	
 }

@@ -23,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query(value = "SELECT * FROM user u WHERE u.net_id= ?1", nativeQuery=true)
 	User existByNetID(String netId);
 	
+	@Query(value = "SELECT * FROM user u WHERE u.net_id= ?1", nativeQuery=true)
+	List<User> getUserByNetID(String netId);
+	
 }
