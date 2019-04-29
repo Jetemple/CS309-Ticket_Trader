@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.pp1.users.User;
+import io.pp1.users.UserRepository;
+
 @RestController
 public class TicketController {
 
 	@Autowired
 	private TicketRepository ticketRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/tickets")
 	public TicketService getAll() {
@@ -81,7 +86,8 @@ public class TicketController {
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets") // @PostMapping(value = "/tickets")
 	public void persist(@RequestBody final Ticket ticket) {
 		ticket.setLogoURL(ticketRepository.getIconURL(ticket.getOpponent()));
-		//ticket.setUserRating(userRating);
+		List<User> toUse = userRepository.getUserByNetID(ticket.getNet_id());
+		ticket.setRating(toUse.get(0).getRating());
 		ticketRepository.save(ticket);
 	}
 
