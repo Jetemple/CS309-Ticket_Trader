@@ -18,15 +18,15 @@ public class RatingController {
 		private RatingRepository ratingRepository;
 		
 		
-		@RequestMapping(method = RequestMethod.POST, path = "/rating/net_id")
-		public RatingService getRating(@RequestBody Ticket net_id) {
-			return new RatingService(ratingRepository.getRatingByID(net_id.getNet_id()));
-		}
-		
-		@RequestMapping(method = RequestMethod.POST, path = "/rating")
-		public RatingService getRating(@RequestBody Ticket net_id) {
-			return new RatingService(ratingRepository.getRatingByID(net_id.getNet_id()));
-		}
+//		@RequestMapping(method = RequestMethod.POST, path = "/rating/net_id")
+//		public RatingService getRating(@RequestBody Ticket net_id) {
+//			return new RatingService(ratingRepository.getRatingByID(net_id.getNet_id()));
+//		}
+//		
+//		@RequestMapping(method = RequestMethod.POST, path = "/rating")
+//		public RatingService getRating(@RequestBody Ticket net_id) {
+//			return new RatingService(ratingRepository.getRatingByID(net_id.getNet_id()));
+//		}
 		
 		
 }
