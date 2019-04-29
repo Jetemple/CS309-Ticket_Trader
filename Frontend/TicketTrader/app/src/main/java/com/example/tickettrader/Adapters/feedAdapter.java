@@ -74,6 +74,14 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(current.yourTicket==true){
             myHolder.checkmark.setVisibility(View.VISIBLE);
         }
+        if(current.sold==true)
+        {
+            myHolder.review.setVisibility(View.VISIBLE);
+        }
+        if(current.sold==false)
+        {
+            myHolder.review.setVisibility(View.INVISIBLE);
+        }
 //        myHolder.gameTime.setText("Start time: " + current.gameTime);
         Glide.with(context).load(current.logo).into(myHolder.logo);
         Glide.with(context).load("https://i.imgur.com/Mhi5WN9.png").into(myHolder.ISU);
@@ -89,7 +97,7 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //Sets up holder for iteration of the RecyclerView
     class MyHolder extends RecyclerView.ViewHolder {
 
-        TextView name, username, email, price, gameDate, gameTime, opponent, sport;
+        TextView name, username, email, price, gameDate, gameTime, opponent, sport, review;
         ImageView logo, ISU, checkmark;
 
         // Constructor to get widget reference
@@ -101,6 +109,7 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sport = (TextView) itemView.findViewById(R.id.sport);
             ISU = (ImageView) itemView.findViewById(R.id.isuLogo);
             checkmark = (ImageView) itemView.findViewById(R.id.youTicket);
+            review = (TextView) itemView.findViewById(R.id.tvRate);
 
             if(context.getClass().equals(feedPage.class)) {
                 itemView.setOnClickListener(new View.OnClickListener() {
