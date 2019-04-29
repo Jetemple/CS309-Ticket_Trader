@@ -17,6 +17,26 @@
         <item>Wrestling</item>
     </string-array>
 
+    <string-array name="sport_array_sell">
+        <item>Basketball</item>
+        <item>Football</item>
+        <item>Softball</item>
+        <item>Volleyball</item>
+        <item>Wrestling</item>
+    </string-array>
+
+
+    <string-array name="opponent_array_sell">
+        <item>Iowa</item>
+        <item>TCU</item>
+        <item>Texas Tech</item>
+        <item>Baylor</item>
+        <item>Kansas</item>
+        <item>Kansas State</item>
+        <item>Oklahoma State</item>
+        <item>Texas</item>
+    </string-array>
+
 
     <string-array name="opponent_array">
         <item>All</item>
