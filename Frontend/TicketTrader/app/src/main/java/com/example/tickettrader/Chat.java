@@ -1,15 +1,16 @@
 package com.example.tickettrader;
 
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.tickettrader.Adapters.ChatAdapter;
 
@@ -18,8 +19,10 @@ import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Scanner;
 
 
 public class Chat extends AppCompatActivity {
@@ -34,7 +37,7 @@ public class Chat extends AppCompatActivity {
     private WebSocketClient cc;
     private ChatAdapter cAdapter;
     private int ticketId;
-    private String strTicketId;
+    int temp = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,34 +49,60 @@ public class Chat extends AppCompatActivity {
         this.send = (Button) findViewById(R.id.send_btn);
         this.mChat = (ListView) findViewById(R.id.messages_view);
         this.otherUser = getIntent().getStringExtra("other_user");
-        this.ticketId = getIntent().getIntExtra("ticket_id",0);
+        this.ticketId = getIntent().getIntExtra("ticket_id", 0);
         this.dbHelper = new DatabaseHelper(this);
         Cursor data = dbHelper.getData();
         data.moveToNext();
         data.moveToNext();
         data.moveToNext();
-        strTicketId = String.valueOf(ticketId);
         this.user = data.getString(1);
-        this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/websocket/" + this.otherUser.toLowerCase() + "/" + this.user.toLowerCase() + "/" + strTicketId;
-//        this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/websocket/jetemple@iastate.edu/admin1@iastate.edu/" + ticketId;
+        this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/websocket/" + this.user + "@iastate.edu/" + this.otherUser + "@iastate.edu/" + ticketId;
 
         this.cAdapter = new ChatAdapter(Chat.this);
         this.mChat.setAdapter(cAdapter);
 
-
         Draft[] drafts = {new Draft_6455()};
         try {
             Log.d("trying", "");
-            cc = new WebSocketClient(new URI(url), (Draft) drafts[0]) {
+            cc = new WebSocketClient(new URI(url),(Draft) drafts[0]) {
                 @Override
                 public void onMessage(String message) {
-                    final Message m = new Message(message, 0);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            cAdapter.add(m);
+                    if(temp == 0 && message != null) {
+                        temp = 1;
+                        String oldChat = message;
+                        Scanner sc = new Scanner(oldChat);
+                        String tempSc;
+
+                        while(sc.hasNextLine()) {
+                            tempSc = sc.nextLine();
+
+                            if(tempSc.equals(user + "@iastate.edu")) {
+                                final Message m = new Message(sc.nextLine(), 1, user);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cAdapter.add(m);
+                                    }
+                                });
+                            } else {
+                                final Message m = new Message(sc.nextLine(), 0, otherUser);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cAdapter.add(m);
+                                    }
+                                });
+                            }
                         }
-                    });
+                    } else {
+                        final Message m = new Message(message, 0, otherUser);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                cAdapter.add(m);
+                            }
+                        });
+                    }
                 }
 
                 @Override
@@ -93,7 +122,8 @@ public class Chat extends AppCompatActivity {
                     e.printStackTrace();
                 }
             };
-        } catch (URISyntaxException e) {
+        }
+        catch (URISyntaxException e) {
             e.printStackTrace();
         }
         cc.connect();

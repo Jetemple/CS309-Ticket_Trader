@@ -68,17 +68,17 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         myHolder.price.setText("$" + current.price);
         myHolder.gameDate.setText(current.gameDate);
         myHolder.sport.setText(current.sport);
-        if(current.yourTicket==false){
+        if(current.yourTicket==false && myHolder.checkmark != null){
             myHolder.checkmark.setVisibility(View.GONE);
         }
-        if(current.yourTicket==true){
+        if(current.yourTicket==true && myHolder.checkmark != null){
             myHolder.checkmark.setVisibility(View.VISIBLE);
         }
-        if(current.sold==true)
+        if(current.sold==true && myHolder.checkmark != null)
         {
             myHolder.review.setVisibility(View.VISIBLE);
         }
-        if(current.sold==false)
+        if(current.sold==false && myHolder.checkmark != null)
         {
             myHolder.review.setVisibility(View.INVISIBLE);
         }
