@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -51,6 +52,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell_page);
 
+
         opponent = (Spinner) findViewById(R.id.opponent_team);
         sport = (Spinner) findViewById(R.id.game_sport);
         date = (EditText) findViewById(R.id.game_date);
@@ -73,7 +75,7 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
 
 
 
-        ArrayAdapter opponentAdapter = ArrayAdapter.createFromResource(this, R.array.opponent_array_sell,android.R.layout.simple_list_item_1);
+        final ArrayAdapter opponentAdapter = ArrayAdapter.createFromResource(this, R.array.opponent_array_sell,android.R.layout.simple_list_item_1);
         opponentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         opponent.setAdapter(opponentAdapter);
 
@@ -104,28 +106,32 @@ public class sellPage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
 
-
-                new AlertDialog.Builder(sellPage.this)
-                        .setTitle("Sell Ticket")
-                        .setMessage("Are all the details correct?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                int priceNum = Integer.parseInt(price.getText().toString());
-                                sellTicket(opponent.getSelectedItem().toString(),
-                                        sport.getSelectedItem().toString(),
-                                        date.getText().toString(),
-                                        time.getText().toString(),priceNum);
-                                Intent intent = new Intent(sellPage.this,com.example.tickettrader.feedPage.class);
-                                startActivity(intent);
-                            }
-
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
+                if (opponent.getSelectedItem().toString().equals("Select One") || sport.getSelectedItem().toString().equals("Select One")) {
+                    Toast.makeText(sellPage.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
+                } else {
 
 
+                    new AlertDialog.Builder(sellPage.this)
+                            .setTitle("Sell Ticket")
+                            .setMessage("Are all the details correct?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    int priceNum = Integer.parseInt(price.getText().toString());
+                                    sellTicket(opponent.getSelectedItem().toString(),
+                                            sport.getSelectedItem().toString(),
+                                            date.getText().toString(),
+                                            time.getText().toString(), priceNum);
+                                    Intent intent = new Intent(sellPage.this, com.example.tickettrader.feedPage.class);
+                                    startActivity(intent);
+                                }
 
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+
+
+                }
             }
         });
     }

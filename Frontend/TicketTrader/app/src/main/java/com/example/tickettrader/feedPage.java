@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     private ImageButton bRefresh;
     private ImageButton bFilter;
     DatabaseHelper dbHelper;
+    SwipeRefreshLayout swipeContainer;
 
 
     @Override
@@ -60,6 +62,28 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         dbHelper = new DatabaseHelper(this);
         url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
         type = "default";
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+
+            public void onRefresh() {
+
+                updatePage();
+
+            }
+
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+
+                android.R.color.holo_green_light,
+
+                android.R.color.holo_orange_light,
+
+                android.R.color.holo_red_light);
 
 
         Cursor data = dbHelper.getData();
@@ -381,6 +405,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         else{
             refresh(url);
         }
+        swipeContainer.setRefreshing(false);
     }
 
 
@@ -446,4 +471,5 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
