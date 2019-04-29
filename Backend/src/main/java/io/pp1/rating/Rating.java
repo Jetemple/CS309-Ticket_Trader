@@ -1,7 +1,5 @@
 package io.pp1.rating;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;

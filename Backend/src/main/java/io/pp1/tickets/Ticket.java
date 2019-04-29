@@ -22,11 +22,13 @@ public class Ticket {
 	private String record;
 	private String LogoURL;
 	private String buyer;
+	private Boolean rated;
 
 
 
 	public Ticket() {	
 		sold=false;
+		rated=false;
 	}
 	
 //	public Ticket(Integer ticket_id, String sport, String game_location, String game_date,  Integer game_time,Integer price, Integer seller_id) {
@@ -44,6 +46,14 @@ public class Ticket {
 
 	public String getLogoURL() {
 		return LogoURL;
+	}
+
+	public Boolean getRated() {
+		return rated;
+	}
+
+	public void setRated(Boolean rated) {
+		this.rated = rated;
 	}
 
 	public String getBuyer() {
