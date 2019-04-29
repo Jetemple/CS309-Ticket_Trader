@@ -3,6 +3,7 @@ package com.example.tickettrader;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Build;
 
 public class NotifChannel extends Application {
@@ -27,4 +28,6 @@ public class NotifChannel extends Application {
             manager.createNotificationChannel(channel);
         }
     }
+
+
 }

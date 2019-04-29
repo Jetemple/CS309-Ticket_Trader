@@ -42,27 +42,27 @@ public class NotificationService extends Service {
         this.user = data.getString(1);
         this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/webNote/" + this.user;
         this.connectToServer();
-        System.out.println("000");
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //cc.close();
+        cc.close();
     }
 
     public void sendOnChannel() {
-        this.notificationManager = NotificationManagerCompat.from(this);
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+        this.notificationManager = NotificationManagerCompat.from(NotificationService.this);
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(NotificationService.this, CHANNEL_ID)
                 //.setSmallIcon(R.drawable.ic_announcement_black_24dp)
                 .setContentTitle("")
                 .setContentText("You sold a ticket")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
 
-        this.notificationManager.notify(1, notification);
+        System.out.println("000");
+
+        this.notificationManager.notify(1, notification.build());
     }
 
     public void connectToServer() {

@@ -16,14 +16,20 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.tickettrader.Adapters.ChatPageAdapter;
 import com.example.tickettrader.Adapters.feedAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
@@ -33,6 +39,9 @@ public class ChatPage extends AppCompatActivity implements NavigationView.OnNavi
     private String url;
     private DatabaseHelper dbHelper;
     private String user;
+    private List<contact> contactList;
+    private ChatPageAdapter adapter;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,8 @@ public class ChatPage extends AppCompatActivity implements NavigationView.OnNavi
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
         this.navigationView.setNavigationItemSelectedListener(this);
 
+        this.requestQueue = Volley.newRequestQueue(this);
+        this.contactList = new ArrayList<>();
         this.dbHelper = new DatabaseHelper(this);
         Cursor data = dbHelper.getData();
         data.moveToNext();
@@ -58,27 +69,64 @@ public class ChatPage extends AppCompatActivity implements NavigationView.OnNavi
         data.moveToNext();
         this.user = data.getString(1);
         this.mChat = findViewById(R.id.messages);
-        this.url = "http://cs309-pp-1.misc.iastate.edu:8080/message/people";
+        this.url = "http://cs309-pp-1.misc.iastate.edu:8080/message/people/" + this.user;
         this.getContactsList(this.url);
     }
 
     public void getContactsList(String url) {
-        JSONObject jsonObject = new JSONObject();
+//        JSONObject jsonObject = new JSONObject();
+//
+//        try {
+//            jsonObject.put("net_id", this.user);
+//        } catch(JSONException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            jsonObject.put("net_id", this.user);
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-//                try {
-//
-//                } catch(JSONException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    JSONArray jsonArray = response.getJSONArray("message");
+                    String sender;
+                    String receiver;
+                    String ticketID;
+
+                    for(int i = 0; i < jsonArray.length(); i++)
+                    {
+                        JSONObject json_data = jsonArray.getJSONObject(i);
+                        sender = json_data.getString("sender");
+                        receiver = json_data.getString("receiver");
+                        ticketID = json_data.getString("ticket_id");
+
+                        contact cont;
+                        if(user.equals(receiver)) {
+                            cont = new contact(sender, ticketID);
+                        } else {
+                            cont = new contact(receiver, ticketID);
+                        }
+
+                        contactList.add(cont);
+                    }
+
+                    adapter = new ChatPageAdapter(ChatPage.this, contactList);
+                    mChat.setAdapter(adapter);
+
+                    adapter.setOnItemClickListener(new ChatPageAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Intent intent = new Intent(ChatPage.this, Chat.class);
+                            intent.putExtra("other_user", contactList.get(position).getName());
+                            //int temp = contactList.get(position).getTicketId().p;
+                            intent.putExtra("ticket_id", contactList.get(position).getTicketId());
+                            startActivity(intent);
+                        }
+                    });
+
+                    mChat.setLayoutManager(new LinearLayoutManager(ChatPage.this));
+
+                } catch(JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -87,6 +135,8 @@ public class ChatPage extends AppCompatActivity implements NavigationView.OnNavi
 
             }
         });
+
+        requestQueue.add(request);
     }
 
     @Override

@@ -80,11 +80,10 @@ public class TicketEachActivity extends AppCompatActivity {
         btn_sold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    buyTicket();
-                System.out.println("1444444");
+                    //buyTicket();
                 startService(new Intent(TicketEachActivity.this, NotificationService.class));
                 Intent intent = new Intent(TicketEachActivity.this,feedPage.class);
-                    startActivity(intent);
+                    //startActivity(intent);
             }
         });
 

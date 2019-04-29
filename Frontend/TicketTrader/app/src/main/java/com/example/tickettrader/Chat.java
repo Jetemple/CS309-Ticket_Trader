@@ -76,22 +76,26 @@ public class Chat extends AppCompatActivity {
                         while(sc.hasNextLine()) {
                             tempSc = sc.nextLine();
 
-                            if(tempSc.equals(user + "@iastate.edu")) {
-                                final Message m = new Message(sc.nextLine(), 1, user);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        cAdapter.add(m);
-                                    }
-                                });
-                            } else {
-                                final Message m = new Message(sc.nextLine(), 0, otherUser);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        cAdapter.add(m);
-                                    }
-                                });
+                            if(sc.hasNextLine()) {
+                                System.out.println(user);
+                                System.out.println(tempSc);
+                                if(tempSc.equals(user)) {
+                                    final Message m = new Message(sc.nextLine(), 1, user);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            cAdapter.add(m);
+                                        }
+                                    });
+                                } else {
+                                    final Message m = new Message(sc.nextLine(), 0, otherUser);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            cAdapter.add(m);
+                                        }
+                                    });
+                                }
                             }
                         }
                     } else {
