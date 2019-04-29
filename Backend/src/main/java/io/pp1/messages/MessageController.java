@@ -99,19 +99,23 @@ public class MessageController {
 //		return l; 
 //	}
 	
-	@RequestMapping(method = RequestMethod.POST, path = "/message/people")
-	public List<String> getPeople(@RequestBody Ticket id) {
+	@RequestMapping(method = RequestMethod.GET, path = "/message/people/{net_id}")
+	public MessageService getPeople(@PathVariable String net_id) {
 		
 		int tracker = 0;
-		List<Message> people = messageRepository.getPeople(id.getNet_id());
+		List<Message> people = messageRepository.getPeople(net_id);
 		List<String> listPeople = new ArrayList<String>();
 		
+//		for(int i=0; i<people.size(); i++) {
+//			
+//			listPeople.add(people.get(i).getReceiver() + ", " + people.get(i).getTicket_id());
+//		}
 		
 		
 		for (int i = 0; i < people.size(); i++) {
-			if (!people.get(i).getReceiver().equalsIgnoreCase(id.getNet_id())) {
+			if (!people.get(i).getReceiver().equalsIgnoreCase(net_id)) {
 				if (listPeople.size() == 0) {
-					listPeople.add(people.get(i).getReceiver() + ", " + people.get(i).getTicket_id());
+					listPeople.add(people.get(i).getReceiver() + "," + people.get(i).getTicket_id());
 					System.out.print(people.get(i).getReceiver() + " " + listPeople.size());
 				} else {
 					for (int j = 0; j < listPeople.size(); j++) {
@@ -120,13 +124,13 @@ public class MessageController {
 						}
 					}
 					if (tracker == 0) {
-						listPeople.add(people.get(i).getReceiver() + ", " + people.get(i).getTicket_id());
+						listPeople.add(people.get(i).getReceiver() + "," + people.get(i).getTicket_id());
 					}
 				}
 				tracker = 0;
-			} else if (!people.get(i).getSender().equalsIgnoreCase(id.getNet_id())) {
+			} else if (!people.get(i).getSender().equalsIgnoreCase(net_id)) {
 				if (listPeople.size() == 0) {
-					listPeople.add(people.get(i).getSender() + ", " + people.get(i).getTicket_id());
+					listPeople.add(people.get(i).getSender() + "," + people.get(i).getTicket_id());
 					System.out.print(people.get(i).getSender() + " " + listPeople.size());
 				} else {
 					for (int k = 0; k < listPeople.size(); k++) {
@@ -136,14 +140,14 @@ public class MessageController {
 						}
 					}
 					if (tracker == 0) {
-						listPeople.add(people.get(i).getSender() + ", " + people.get(i).getTicket_id());
+						listPeople.add(people.get(i).getSender() + "," + people.get(i).getTicket_id());
 					}
 				}
 				tracker = 0;
 			}
 		}
 		
-		return listPeople;
+		return new MessageService(people);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/message/buyer")

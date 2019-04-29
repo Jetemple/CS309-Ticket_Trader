@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnOpen;
+import javax.websocket.OnMessage;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -48,6 +49,13 @@ public class NotificationSocketServer {
 		net_idSessionMap.get(net_id).getBasicRemote().sendText(message);
 	}
 	
+	@OnMessage
+	public void OnMessage(Session session, @PathParam("net_id") String net_id, String message) throws IOException
+	{
+		
+		logger.info("Entered into Message:: Got Message" + message);
+		net_idSessionMap.get(net_id).getBasicRemote().sendText(message);
+	}
 	
 	@OnClose
 	public void onClose(Session session) throws IOException{
