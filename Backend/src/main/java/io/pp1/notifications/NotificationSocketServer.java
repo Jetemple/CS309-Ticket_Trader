@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import io.pp1.messages.CustomConfigurator;
 import io.pp1.messages.MessageSocketServer;
 
-@ServerEndpoint(value = "/webNote/{net_id}/{ticket_id}", configurator = CustomConfigurator.class)
+@ServerEndpoint(value = "/webNote/{net_id}", configurator = CustomConfigurator.class)
 @Component
 public class NotificationSocketServer {
 
@@ -34,14 +34,14 @@ public class NotificationSocketServer {
 	private NotificationRepository notificationRepository;
 	
 	@OnOpen
-	public void onOpen(Session session, @PathParam("net_id")String net_id, @PathParam("ticket_id") String ticket_id) throws IOException
+	public void onOpen(Session session, @PathParam("net_id")String net_id) throws IOException
 	{
 		//record log info
 		logger.info(net_id + " Has received notification: ");
 		
 		//store use seller_id to
 		//store message that tickt is sold in varaible
-		String message = "You have sold ticket number: " + ticket_id;
+		String message = "Your ticket has been sold!";
 		net_idSessionMap.put(net_id, session);
 		
 		//send it
