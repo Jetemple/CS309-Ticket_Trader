@@ -88,6 +88,7 @@ public class TicketController {
 	public void markSold(@RequestBody final Ticket ticket) {
 		List<Ticket> markSold=ticketRepository.getTicketByID(ticket.getTicket_id());
 		markSold.get(0).setSold(true);
+		markSold.get(0).setBuyer(ticket.getBuyer());
 		ticketRepository.save(markSold.get(0));
 	}
 	
