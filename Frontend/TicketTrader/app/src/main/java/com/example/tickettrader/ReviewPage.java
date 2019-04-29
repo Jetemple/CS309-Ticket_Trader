@@ -28,7 +28,7 @@ public class ReviewPage extends AppCompatActivity {
     int ticketID;
     RequestQueue requestQueue;
     RatingBar ratingBar;
-    TextView rating;
+    TextView rating, sellerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -37,6 +37,7 @@ public class ReviewPage extends AppCompatActivity {
         submitRating = findViewById(R.id.btnRate);
         ratingBar = findViewById(R.id.rating_bar);
         rating = findViewById(R.id.tvRating);
+        sellerName = findViewById(R.id.sellerID_review);
 
         //Used for Volley
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
@@ -46,6 +47,8 @@ public class ReviewPage extends AppCompatActivity {
 
         sellerID = getIntent().getStringExtra("sellerID");
         ticketID = getIntent().getIntExtra("ticket_id",0);
+
+        sellerName.setText(sellerID);
 
         submitRating.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +70,6 @@ public class ReviewPage extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//            jsonOBJ.put("sold",true);
 
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,"http://cs309-pp-1.misc.iastate.edu:8080/tickets/rated", jsonOBJ, new Response.Listener<JSONObject>() {
