@@ -19,11 +19,11 @@ public class Ticket {
 	private Integer price;
 	private String net_id;
 	private String opponent;
-	private String record;
+	private Integer record;
 	private String LogoURL;
 	private String buyer;
 	private Boolean rated;
-	private Integer userRating;
+//	private Integer userRating;
 
 
 
@@ -47,14 +47,6 @@ public class Ticket {
 
 	public String getLogoURL() {
 		return LogoURL;
-	}
-
-	public Integer getUserRating() {
-		return userRating;
-	}
-
-	public void setUserRating(Integer userRating) {
-		this.userRating = userRating;
 	}
 
 	public Boolean getRated() {
@@ -161,11 +153,11 @@ public class Ticket {
 		this.opponent = opponent;
 	}
 
-	public String getRecord() {
+	public Integer getRecord() {
 		return record;
 	}
 
-	public void setRecord(String record) {
+	public void setRecord(Integer record) {
 		this.record = record;
 	}	
 	
