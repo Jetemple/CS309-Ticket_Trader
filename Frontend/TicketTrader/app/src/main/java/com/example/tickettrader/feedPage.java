@@ -276,6 +276,8 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                             Feed.setPrice(json_data.getInt("price"));
                             Feed.setNet_id(json_data.getString("net_id"));
                             Feed.setRating(json_data.getInt("rating"));
+                            Feed.setTicketiD(json_data.getInt("ticket_id"));
+                            Feed.setRated(json_data.getBoolean("rated"));
 
                             //This makes a check mark appear if the current logged in user is selling this ticket
                             if(netID.equals(json_data.getString("net_id"))){
@@ -303,7 +305,13 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                 data.moveToNext();
                                 String currentUser = data.getString(1);
                                 if(type.equals("buyer")) {
-                                    Intent intent = new Intent(feedPage.this, ReviewPage.class);
+                                    if(feedData.get(position).rated==false){
+                                        Intent intent = new Intent(feedPage.this, ReviewPage.class);
+                                        intent.putExtra("sellerID", feedData.get(position).net_id);
+                                        intent.putExtra("ticket_id",feedData.get(position).ticketID);
+                                        startActivity(intent);
+                                    }
+
 //                                    intent.putExtra("currentUser",currentUser);
 //                                    int tmp_price = feedData.get(position).price;
 //                                    int tmp_ticketID = feedData.get(position).ticketID;
@@ -316,10 +324,9 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 //                                    intent.putExtra("gameDate", feedData.get(position).gameDate);
 //                                    intent.putExtra("gameLocation", feedData.get(position).gameLocation);
 //                                    intent.putExtra("logoURL", feedData.get(position).logo);
-                                    intent.putExtra("sellerID", feedData.get(position).net_id);
 //                                    intent.putExtra("ticketID", tmp_ticketID);
 
-                                    startActivity(intent);
+
                                 }
                                 else{String tmpSellerID = String.valueOf((feedData.get(position).net_id));
                                     Intent intent = new Intent(feedPage.this, TicketEachActivity.class);

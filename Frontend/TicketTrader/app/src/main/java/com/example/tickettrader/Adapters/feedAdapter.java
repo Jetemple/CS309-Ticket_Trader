@@ -74,11 +74,11 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(current.yourTicket==true){
             myHolder.checkmark.setVisibility(View.VISIBLE);
         }
-        if(current.sold==true)
+        if(current.sold==true && current.rated==false)
         {
             myHolder.review.setVisibility(View.VISIBLE);
         }
-        if(current.sold==false)
+        if(current.sold==false || current.rated==true)
         {
             myHolder.review.setVisibility(View.INVISIBLE);
         }
@@ -109,7 +109,7 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sport = (TextView) itemView.findViewById(R.id.sport);
             ISU = (ImageView) itemView.findViewById(R.id.isuLogo);
             checkmark = (ImageView) itemView.findViewById(R.id.youTicket);
-            review = (TextView) itemView.findViewById(R.id.tvRate);
+            review = (TextView) itemView.findViewById(R.id.tvRate_card);
 
             if(context.getClass().equals(feedPage.class)) {
                 itemView.setOnClickListener(new View.OnClickListener() {

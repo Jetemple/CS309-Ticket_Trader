@@ -24,6 +24,7 @@ import org.json.JSONObject;
 public class ReviewPage extends AppCompatActivity {
     Button submitRating;
     String currentUser, sellerID;
+    int ticketID;
     RequestQueue requestQueue;
     RatingBar ratingBar;
     TextView rating;
@@ -43,6 +44,7 @@ public class ReviewPage extends AppCompatActivity {
         requestQueue.start();
 
         sellerID = getIntent().getStringExtra("sellerID");
+        ticketID = getIntent().getIntExtra("ticket_id",0);
 
         submitRating.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +61,14 @@ public class ReviewPage extends AppCompatActivity {
             jsonOBJ.put("net_id",sellerID);
             jsonOBJ.put("rating", ratingBar.getRating());
             jsonOBJ.put("rating_id",0);
+            jsonOBJ.put("ticket_id",ticketID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 //            jsonOBJ.put("sold",true);
 
 
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,"http://cs309-pp-1.misc.iastate.edu:8080/rating", jsonOBJ, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,"http://cs309-pp-1.misc.iastate.edu:8080/tickets/rated", jsonOBJ, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 

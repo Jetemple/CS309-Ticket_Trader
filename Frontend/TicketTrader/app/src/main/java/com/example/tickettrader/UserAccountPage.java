@@ -52,12 +52,12 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
         url = "http://cs309-pp-1.misc.iastate.edu:8080/users";
 
         myTickets = (Button) findViewById(R.id.btnMyTickets);
-        ticketsBought = (Button) findViewById(R.id.btnTicketsBought);
+        ticketsBought = (Button) findViewById(R.id.btnTicketsBought_profile);
         user_pic = (ImageView) findViewById(R.id.user_pic);
         name = (TextView) findViewById(R.id.name);
         netID = (TextView) findViewById(R.id.net_id);
         userID = (TextView) findViewById(R.id.user_id);
-        starRating = (TextView) findViewById(R.id.tvStarRating);
+//        starRating = (TextView) findViewById(R.id.tvStarRating_profile);
         dbHelper = new DatabaseHelper(this);
 
         Cursor data = dbHelper.getData();
@@ -68,7 +68,7 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
 
-        getUserRating(url);
+//        getUserRating(url);
 
 
 
@@ -129,34 +129,34 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
         });
     }
 
-    void getUserRating(String url){
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-
-                    JSONObject auth = response;
-                    rating = auth.getString("rating");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
-            }
-        });
-
-        starRating.setText(rating);
-        requestQueue.add(request);
-
-
-
-    }
+//    void getUserRating(String url){
+//
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//
+//                    JSONObject auth = response;
+//                    rating = auth.getString("rating");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//
+//            }
+//        });
+//
+//        starRating.setText(rating);
+//        requestQueue.add(request);
+//
+//
+//
+//    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
