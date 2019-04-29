@@ -151,9 +151,9 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/tvRate"
-                android:layout_width="89dp"
-                android:layout_height="31dp"
+                android:id="@+id/tvRate_card"
+                android:layout_width="88dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"

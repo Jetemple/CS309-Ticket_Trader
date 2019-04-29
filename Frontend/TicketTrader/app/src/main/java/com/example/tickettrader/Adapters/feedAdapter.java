@@ -1,6 +1,8 @@
 package com.example.tickettrader.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,13 +76,19 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(current.yourTicket==true && myHolder.checkmark != null){
             myHolder.checkmark.setVisibility(View.VISIBLE);
         }
-        if(current.sold==true && myHolder.checkmark != null)
+        if(current.sold==true && current.rated==false)
         {
             myHolder.review.setVisibility(View.VISIBLE);
+            myHolder.review.setTypeface(null, Typeface.BOLD);
         }
         if(current.sold==false && myHolder.checkmark != null)
         {
             myHolder.review.setVisibility(View.INVISIBLE);
+        }
+        if(current.rated==true)
+        {
+            myHolder.review.setText("Thanks for your review!");
+            myHolder.review.setTextColor(Color.BLUE);
         }
 //        myHolder.gameTime.setText("Start time: " + current.gameTime);
         Glide.with(context).load(current.logo).into(myHolder.logo);
@@ -109,7 +117,7 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sport = (TextView) itemView.findViewById(R.id.sport);
             ISU = (ImageView) itemView.findViewById(R.id.isuLogo);
             checkmark = (ImageView) itemView.findViewById(R.id.youTicket);
-            review = (TextView) itemView.findViewById(R.id.tvRate);
+            review = (TextView) itemView.findViewById(R.id.tvRate_card);
 
             if(context.getClass().equals(feedPage.class)) {
                 itemView.setOnClickListener(new View.OnClickListener() {

@@ -16,6 +16,7 @@ public class feed {
     public boolean yourTicket;
     public boolean sold;
     public int rating;
+    public boolean rated;
 
 
     public void setTicketiD(int tickID) {
@@ -63,6 +64,8 @@ public class feed {
     public void setSold(boolean sold) { this.sold = sold;}
 
     public void setRating(int rating) {this.rating = rating;}
+
+    public void setRated(boolean rated) {this.rated = rated;}
     }
 
 
