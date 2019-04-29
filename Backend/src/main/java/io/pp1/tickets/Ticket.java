@@ -23,6 +23,7 @@ public class Ticket {
 	private String LogoURL;
 	private String buyer;
 	private Boolean rated;
+	private Integer userRating;
 
 
 
@@ -46,6 +47,14 @@ public class Ticket {
 
 	public String getLogoURL() {
 		return LogoURL;
+	}
+
+	public Integer getUserRating() {
+		return userRating;
+	}
+
+	public void setUserRating(Integer userRating) {
+		this.userRating = userRating;
 	}
 
 	public Boolean getRated() {

@@ -81,6 +81,7 @@ public class TicketController {
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets") // @PostMapping(value = "/tickets")
 	public void persist(@RequestBody final Ticket ticket) {
 		ticket.setLogoURL(ticketRepository.getIconURL(ticket.getOpponent()));
+		//ticket.setUserRating(userRating);
 		ticketRepository.save(ticket);
 	}
 
@@ -92,7 +93,12 @@ public class TicketController {
 		ticketRepository.save(markSold.get(0));
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets/rated") 
+	public void markRated(@RequestBody final Ticket ticket) {
+		List<Ticket> markSold=ticketRepository.getTicketByID(ticket.getTicket_id());
+		markSold.get(0).setRated(true);
+		ticketRepository.save(markSold.get(0));
+	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/delete")
 	public void delete(@RequestBody final Ticket ticket) {

@@ -18,6 +18,7 @@ public class User {
 	private String first_name;
 	private String last_name;
 	private String net_id;
+	private Integer rating;
 	
 	public User() {
 		
@@ -33,6 +34,14 @@ public class User {
 		this.net_id = net_id;
 	}
 	
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
 	public Integer getUser_Id() {
 		return user_id;
 	}
