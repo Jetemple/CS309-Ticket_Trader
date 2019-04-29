@@ -233,6 +233,10 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
     //This method is used to filter the data based on the filter criteria found in the filter page.
     private void filter(String url, JSONObject filterData) {
 
+        if(type.equals("buyer")||type.equals("seller")){
+            bFilter.setVisibility(View.INVISIBLE);
+        }
+
         feedData.clear();
 
         {

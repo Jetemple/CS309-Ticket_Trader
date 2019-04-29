@@ -75,17 +75,22 @@ public class feedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         if(current.yourTicket==true && myHolder.checkmark != null){
             myHolder.checkmark.setVisibility(View.VISIBLE);
+            myHolder.review.setVisibility(View.INVISIBLE);
+            if(current.sold==true){
+                myHolder.review.setText("SOLD!");
+                myHolder.review.setVisibility(View.VISIBLE);
+            }
         }
-        if(current.sold==true && current.rated==false)
+        else if(current.sold==true && current.rated==false)
         {
             myHolder.review.setVisibility(View.VISIBLE);
             myHolder.review.setTypeface(null, Typeface.BOLD);
         }
-        if(current.sold==false && myHolder.checkmark != null)
+        else if(current.sold==false && myHolder.checkmark != null)
         {
             myHolder.review.setVisibility(View.INVISIBLE);
         }
-        if(current.rated==true)
+        else if(current.rated==true)
         {
             myHolder.review.setText("Thanks for your review!");
             myHolder.review.setTextColor(Color.BLUE);
