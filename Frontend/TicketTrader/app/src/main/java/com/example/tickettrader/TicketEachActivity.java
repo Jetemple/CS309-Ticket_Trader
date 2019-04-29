@@ -81,6 +81,7 @@ public class TicketEachActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     buyTicket();
+                System.out.println("1444444");
                 startService(new Intent(TicketEachActivity.this, NotificationService.class));
                 Intent intent = new Intent(TicketEachActivity.this,feedPage.class);
                     startActivity(intent);

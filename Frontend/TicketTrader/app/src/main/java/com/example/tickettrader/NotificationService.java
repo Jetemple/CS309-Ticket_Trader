@@ -42,6 +42,7 @@ public class NotificationService extends Service {
         this.user = data.getString(1);
         this.url = "ws://cs309-pp-1.misc.iastate.edu:8080/webNote/" + this.user;
         this.connectToServer();
+        System.out.println("000");
         return START_STICKY;
     }
 
@@ -54,7 +55,7 @@ public class NotificationService extends Service {
     public void sendOnChannel() {
         this.notificationManager = NotificationManagerCompat.from(this);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_announcement_black_24dp)
+                //.setSmallIcon(R.drawable.ic_announcement_black_24dp)
                 .setContentTitle("")
                 .setContentText("You sold a ticket")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
