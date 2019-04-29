@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.pp1.rating.Rating;
+import io.pp1.rating.RatingRepository;
 import io.pp1.users.User;
 import io.pp1.users.UserRepository;
 
@@ -18,7 +20,10 @@ public class TicketController {
 	@Autowired
 	private TicketRepository ticketRepository;
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository userRepository;	
+	@Autowired
+	private RatingRepository ratingRepository;
+
 
 	@RequestMapping(method = RequestMethod.GET, path = "/tickets")
 	public TicketService getAll() {
@@ -104,6 +109,21 @@ public class TicketController {
 		List<Ticket> markSold=ticketRepository.getTicketByID(ticket.getTicket_id());
 		markSold.get(0).setRated(true);
 		ticketRepository.save(markSold.get(0));
+		Rating rating = new Rating();
+		rating.setNet_id(ticket.getNet_id());
+		rating.setRating(ticket.getRating());
+		rating.setRating_id(0);
+		 ratingRepository.save(rating);
+			List<Rating> ratings =ratingRepository.getRatingByID(rating.getNet_id());
+			int totalRatings=0;
+			for(int i=0;i<ratings.size();i++) {
+				totalRatings+= ratings.get(i).getRating();
+			}
+			double checking= Math.round(totalRatings/(ratings.size()+0.0));
+			totalRatings= (int)checking;
+			User userRating=userRepository.existByNetID(rating.getNet_id());
+			userRating.setRating(totalRatings);
+			userRepository.save(userRating);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/delete")
