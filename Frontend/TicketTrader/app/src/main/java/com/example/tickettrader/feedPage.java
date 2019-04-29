@@ -77,12 +77,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 
         });
 
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-
-                android.R.color.holo_green_light,
-
-                android.R.color.holo_orange_light,
-
+        swipeContainer.setColorSchemeResources(android.R.color.holo_red_dark,
                 android.R.color.holo_red_light);
 
 
