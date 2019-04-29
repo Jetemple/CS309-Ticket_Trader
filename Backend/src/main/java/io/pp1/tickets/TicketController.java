@@ -81,9 +81,9 @@ public class TicketController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/sold") 
 	public void markSold(@RequestBody final Ticket ticket) {
-		boolean sold=true;
-		ticket.setSold(sold);
-		ticketRepository.save(ticket);
+		List<Ticket> markSold=ticketRepository.getTicketByID(ticket.getTicket_id());
+		markSold.get(0).setSold(true);
+		ticketRepository.save(markSold.get(0));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/delete")
