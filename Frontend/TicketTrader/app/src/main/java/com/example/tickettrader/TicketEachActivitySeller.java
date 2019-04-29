@@ -65,7 +65,7 @@ public class TicketEachActivitySeller extends AppCompatActivity {
                 Intent intent = new Intent(TicketEachActivitySeller.this, Chat.class);
                 String otherUser = getIntent().getStringExtra("net_id");
                 intent.putExtra("other_user", otherUser);
-                ticketId = getIntent().getIntExtra("ticket_id", 0);
+
                 intent.putExtra("ticket_id", ticketId);
                 startActivity(intent);
             }
@@ -76,20 +76,13 @@ public class TicketEachActivitySeller extends AppCompatActivity {
             public void onClick(View v) {
                 ticketId = getIntent().getIntExtra("ticket_id", 0);
 
-                JSONObject ret = new JSONObject();
+                JSONObject jsonOBJ = new JSONObject();
                 try {
-                    ret.put("ticket_id",ticketId);
+                    jsonOBJ.put("ticket_id",ticketId);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                delete(ret);
-            }
-        });
-
-        btn_sold.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                delete(jsonOBJ);
             }
         });
 
@@ -98,7 +91,7 @@ public class TicketEachActivitySeller extends AppCompatActivity {
 
     private void getIncomingIntent() {
 
-
+        ticketId = getIntent().getIntExtra("ticket_id", 0);
         sport = getIntent().getStringExtra("sport");
         awayLogo = getIntent().getStringExtra("logoURL");
         price = getIntent().getIntExtra("price", -1);
@@ -159,4 +152,5 @@ public class TicketEachActivitySeller extends AppCompatActivity {
         TextView tv_price = findViewById(R.id.priceTv);
         tv_price.setText("$" + String.valueOf(price));
     }
+
 }

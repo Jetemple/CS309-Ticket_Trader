@@ -14,6 +14,7 @@ public class feed {
     public String logo;
     public String net_id;
     public boolean yourTicket;
+    public boolean sold;
 
 
     public void setTicketiD(int tickID) {
@@ -56,7 +57,9 @@ public class feed {
         this.net_id = net_id;
     }
 
-    public void setYourTicket(boolean yourTicket) { this.yourTicket = yourTicket;
+    public void setYourTicket(boolean yourTicket) { this.yourTicket = yourTicket;}
+
+    public void setSold(boolean sold) { this.sold = sold;
     }
 
 

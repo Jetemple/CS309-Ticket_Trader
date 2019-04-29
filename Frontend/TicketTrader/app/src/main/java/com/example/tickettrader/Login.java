@@ -39,8 +39,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
 
         //Initializes all of the UI aspects
-        userName = (EditText) findViewById(R.id.etName);
-        Password = (EditText) findViewById(R.id.etPassword);
+        userName = (EditText) findViewById(R.id.etUsernameLogin);
+        Password = (EditText) findViewById(R.id.etPasswordLogin);
         guestFeed = (TextView) findViewById(R.id.guest_feed);
         Login = (Button) findViewById(R.id.btnLogin);
         Register = (Button) findViewById(R.id.btnRegisterLogin);

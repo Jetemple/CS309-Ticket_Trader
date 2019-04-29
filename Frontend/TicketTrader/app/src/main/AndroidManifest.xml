@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".GuestFeedPage" />
+        <activity android:name=".ReviewPage"/>
         <activity android:name=".Chat" />
         <activity android:name=".ChatPage" />
         <activity android:name=".UserAccountPage" />

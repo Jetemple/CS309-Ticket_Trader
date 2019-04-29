@@ -23,7 +23,7 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
     private TextView name;
     private TextView netID;
     private TextView userID;
-    private Button myTickets;
+    private Button myTickets, ticketsBought;
     DatabaseHelper dbHelper;
     String net,first,last,user;
 
@@ -34,6 +34,7 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
         setContentView(R.layout.activity_user_account_page);
 
         myTickets = (Button) findViewById(R.id.btnMyTickets);
+        ticketsBought = (Button) findViewById(R.id.btnTicketsBought);
         user_pic = (ImageView) findViewById(R.id.user_pic);
         name = (TextView) findViewById(R.id.name);
         netID = (TextView) findViewById(R.id.net_id);
@@ -80,6 +81,18 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
             public void onClick(View v) {
                 Intent intent = new Intent(com.example.tickettrader.UserAccountPage.this,feedPage.class);
                 intent.putExtra("net_id",net);
+                intent.putExtra("type","seller");
+                startActivity(intent);
+
+            }
+        });
+
+        ticketsBought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(com.example.tickettrader.UserAccountPage.this,feedPage.class);
+                intent.putExtra("net_id",net);
+                intent.putExtra("type","buyer");
                 startActivity(intent);
 
             }
