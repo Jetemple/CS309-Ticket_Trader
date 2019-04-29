@@ -23,8 +23,15 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class TicketEachActivity extends AppCompatActivity {
 
@@ -74,6 +81,7 @@ public class TicketEachActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     buyTicket();
+                startService(new Intent(TicketEachActivity.this, NotificationService.class));
                 Intent intent = new Intent(TicketEachActivity.this,feedPage.class);
                     startActivity(intent);
             }
@@ -129,6 +137,8 @@ public class TicketEachActivity extends AppCompatActivity {
     }
 
     private void buyTicket(){
+
+
         try {
             JSONObject jsonOBJ = new JSONObject();
             jsonOBJ.put("ticket_id",ticketId);
@@ -159,3 +169,4 @@ public class TicketEachActivity extends AppCompatActivity {
 
     }
 }
+

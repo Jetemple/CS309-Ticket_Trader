@@ -48,7 +48,7 @@ public class NotificationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cc.close();
+        //cc.close();
     }
 
     public void sendOnChannel() {
