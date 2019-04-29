@@ -46,8 +46,8 @@ public class TicketEachActivitySeller extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_each_seller);
-        btn_message = findViewById(R.id.btnMessage);
-        btn_delete = findViewById(R.id.btnDelete);
+        btn_message = findViewById(R.id.btnMessage_seller);
+        btn_delete = findViewById(R.id.btnDelete_seller);
         getIncomingIntent();
 
 
@@ -105,12 +105,12 @@ public class TicketEachActivitySeller extends AppCompatActivity {
     }
 
     private void loadPage(String awayLogo, int price, String sport, String date, String net_id) {
-        ImageView away_logo = findViewById(R.id.awayLogo);
-        ImageView isu_logo = findViewById(R.id.isuLogo);
-        TextView tv_game_date = findViewById(R.id.game_date_ticket);
-        TextView tv_sport = findViewById(R.id.sportTV);
+        ImageView away_logo = findViewById(R.id.awayLogo_seller);
+        ImageView isu_logo = findViewById(R.id.isuLogo_seller);
+        TextView tv_game_date = findViewById(R.id.game_date_ticket_seller);
+        TextView tv_sport = findViewById(R.id.sportTV_seller);
         setPrice(price);
-        TextView tv_net_id = findViewById(R.id.netID_tv);
+        TextView tv_net_id = findViewById(R.id.netID_tv_seller);
 
         tv_sport.setText(sport);
         tv_game_date.setText(date);
@@ -148,7 +148,7 @@ public class TicketEachActivitySeller extends AppCompatActivity {
     private void setPrice(int price) {
 
 
-        TextView tv_price = findViewById(R.id.priceTv);
+        TextView tv_price = findViewById(R.id.priceTv_seller);
         tv_price.setText("$" + String.valueOf(price));
     }
 
