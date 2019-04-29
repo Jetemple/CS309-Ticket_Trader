@@ -59,6 +59,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
         bFilter = findViewById(R.id.filter);
         dbHelper = new DatabaseHelper(this);
         url = "http://cs309-pp-1.misc.iastate.edu:8080/tickets";
+        type = "default";
 
 
         Cursor data = dbHelper.getData();
@@ -296,11 +297,11 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                         mAdapter.setOnItemClickListener(new feedAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
-//                                Cursor data = dbHelper.getData();
-//                                data.moveToNext();
-//                                data.moveToNext();
-//                                data.moveToNext();
-//                                String currentUser = data.getString(1);
+                                Cursor data = dbHelper.getData();
+                                data.moveToNext();
+                                data.moveToNext();
+                                data.moveToNext();
+                                String currentUser = data.getString(1);
                                 if(type.equals("buyer")) {
                                     Intent intent = new Intent(feedPage.this, ReviewPage.class);
 //                                    intent.putExtra("currentUser",currentUser);
@@ -320,8 +321,11 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
 
                                     startActivity(intent);
                                 }
-                                else{
+                                else{String tmpSellerID = String.valueOf((feedData.get(position).net_id));
                                     Intent intent = new Intent(feedPage.this, TicketEachActivity.class);
+                                    if(tmpSellerID.equalsIgnoreCase(currentUser)){
+                                        intent = new Intent(feedPage.this, TicketEachActivitySeller.class);
+                                    }
                                     int tmp_price = feedData.get(position).price;
                                     int tmp_ticketID = feedData.get(position).ticketID;
                                     int tmp_sellerID = feedData.get(position).sellerID;

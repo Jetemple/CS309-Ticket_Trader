@@ -114,7 +114,6 @@ public class TicketEachActivitySeller extends AppCompatActivity {
 
         tv_sport.setText(sport);
         tv_game_date.setText(date);
-        tv_net_id.setText("Seller: " + net_id);
 
         Glide.with(this).load(awayLogo).into(away_logo);
         Glide.with(this).load("https://i.imgur.com/Mhi5WN9.png").into(isu_logo);
