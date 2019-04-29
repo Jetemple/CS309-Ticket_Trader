@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +37,11 @@ public class TicketEachActivity extends AppCompatActivity {
     int ticketId;
     int price;
     int userID;
+    int rating;
     Button btn_message, btn_sold;
     RequestQueue requestQueue;
+    RatingBar starBar;
+
 
 
     @Override
@@ -88,6 +92,7 @@ public class TicketEachActivity extends AppCompatActivity {
         net_id = getIntent().getStringExtra("net_id");
         date = getIntent().getStringExtra("gameDate");
         buyer = getIntent().getStringExtra("buyer");
+        rating = getIntent().getIntExtra("userRating",0);
 
 
         loadPage(awayLogo, price, sport, date, net_id);
@@ -101,7 +106,12 @@ public class TicketEachActivity extends AppCompatActivity {
         TextView tv_sport = findViewById(R.id.sportTV);
         setPrice(price);
         TextView tv_net_id = findViewById(R.id.netID_tv);
+        TextView starRating = findViewById(R.id.textStarRating);
+        starBar = findViewById(R.id.starBar);
 
+
+        starBar.setRating((float) rating);
+//        starRating.setText(String.valueOf(rating));
         tv_sport.setText(sport);
         tv_game_date.setText(date);
         tv_net_id.setText("Seller: " + net_id);

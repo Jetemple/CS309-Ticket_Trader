@@ -14,6 +14,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class UserAccountPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
@@ -23,15 +38,18 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
     private TextView name;
     private TextView netID;
     private TextView userID;
+    private TextView starRating;
     private Button myTickets, ticketsBought;
     DatabaseHelper dbHelper;
-    String net,first,last,user;
+    String net,first,last,user, rating, url;
+    RequestQueue requestQueue;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_account_page);
+        url = "http://cs309-pp-1.misc.iastate.edu:8080/users";
 
         myTickets = (Button) findViewById(R.id.btnMyTickets);
         ticketsBought = (Button) findViewById(R.id.btnTicketsBought);
@@ -39,9 +57,21 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
         name = (TextView) findViewById(R.id.name);
         netID = (TextView) findViewById(R.id.net_id);
         userID = (TextView) findViewById(R.id.user_id);
+        starRating = (TextView) findViewById(R.id.tvStarRating);
         dbHelper = new DatabaseHelper(this);
 
         Cursor data = dbHelper.getData();
+
+        //Used for Volley
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        getUserRating(url);
+
+
+
 
         if (data.getCount() < 0) {
             name.setText("Name");
@@ -97,6 +127,35 @@ public class UserAccountPage extends AppCompatActivity implements NavigationView
 
             }
         });
+    }
+
+    void getUserRating(String url){
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONObject auth = response;
+                    rating = auth.getString("rating");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+
+        starRating.setText(rating);
+        requestQueue.add(request);
+
+
+
     }
 
     @Override

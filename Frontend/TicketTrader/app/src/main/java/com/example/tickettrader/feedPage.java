@@ -178,6 +178,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                             Feed.setPrice(json_data.getInt("price"));
                             Feed.setNet_id(json_data.getString("net_id"));
                             Feed.setTicketiD(json_data.getInt("ticket_id"));
+                            Feed.setRating(json_data.getInt("rating"));
 
 
                             //This makes a check mark appear if the current logged in user is selling this ticket
@@ -225,6 +226,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                 intent.putExtra("ticket_id", feedData.get(position).ticketID);
                                 intent.putExtra("ticketID", tmp_ticketID);
                                 intent.putExtra("buyer",currentUser);
+                                intent.putExtra("userRating", feedData.get(position).rating);
 
                                 startActivity(intent);
 
@@ -272,6 +274,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                             Feed.setGame_Date(json_data.getString("game_date"));
                             Feed.setPrice(json_data.getInt("price"));
                             Feed.setNet_id(json_data.getString("net_id"));
+                            Feed.setRating(json_data.getInt("rating"));
 
                             //This makes a check mark appear if the current logged in user is selling this ticket
                             if(netID.equals(json_data.getString("net_id"))){
@@ -332,6 +335,7 @@ public class feedPage extends AppCompatActivity implements NavigationView.OnNavi
                                     intent.putExtra("logoURL", feedData.get(position).logo);
                                     intent.putExtra("sellerID", feedData.get(position).sellerID);
                                     intent.putExtra("ticketID", tmp_ticketID);
+                                    intent.putExtra("userRating", feedData.get(position).rating);
 
                                     startActivity(intent);
                                 }
