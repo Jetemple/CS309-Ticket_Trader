@@ -21,6 +21,7 @@ public class Ticket {
 	private String opponent;
 	private String record;
 	private String LogoURL;
+	private String buyer;
 
 
 
@@ -43,6 +44,14 @@ public class Ticket {
 
 	public String getLogoURL() {
 		return LogoURL;
+	}
+
+	public String getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(String buyer) {
+		this.buyer = buyer;
 	}
 
 	public Boolean getSold() {

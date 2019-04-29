@@ -63,6 +63,11 @@ public class TicketController {
 		return new TicketService(ticketRepository.getTicketBySellerID(net_id.getNet_id()));
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/tickets/buyer")
+	public TicketService getBuyerTickets(@RequestBody Ticket buyer) {
+		return new TicketService(ticketRepository.getTicketByBuyer(buyer.getBuyer()));
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/location")
 	public TicketService getByLocation(@RequestBody Ticket game_location) {
 		return new TicketService(ticketRepository.getTicketByLocation(game_location.getGame_location()));
@@ -85,6 +90,8 @@ public class TicketController {
 		markSold.get(0).setSold(true);
 		ticketRepository.save(markSold.get(0));
 	}
+	
+	
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/tickets/delete")
 	public void delete(@RequestBody final Ticket ticket) {
