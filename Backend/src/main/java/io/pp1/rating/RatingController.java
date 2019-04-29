@@ -23,7 +23,8 @@ public class RatingController {
 			for(int i=0;i<ratings.size();i++) {
 				totalRatings+= ratings.get(i).getRating();
 			}
-			totalRatings= (int) Math.ceil(totalRatings/ratings.size());
+			double checking= Math.round(totalRatings/(ratings.size()+0.0));
+			totalRatings= (int)checking;
 			return totalRatings;
 		}
 		
